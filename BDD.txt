@@ -1,9 +1,9 @@
-Compétences (inspiration Marvel/DC) : (niveau entre 1 et 5)
-  - Feu : physique ou zone
-  - Electricité : physique ou zone
-  - Invisibilité : 
-  - Soin : contact ou zone
-  - Elasticité : résistance et physique
+Compétences [couleur][stades : changement][CC || D || S][effet] :
+  - Feu [rouge][I-V : augm. des dégâts][D][dégâts résiduels sur l'ennemi]
+  - Electricité [bleu || jaune][I-V : augm. des dégâts][D][ennemi paralysé]
+  - Invisibilité [gris || blanc][I-III : augm. la durée][S][pas de contre-attaque]
+  - Soin [vert][I-V : augm. efficacité][
+  - Elasticité [marron?] : résistance et physique
   - Acide : à distance
   - Poison : au contact (ennemi non machine)
 
