@@ -4,7 +4,7 @@ Manipulation du temps et de l'espace
 Puzzle/Platformer
 
 Graphique (tout est éclairé ou pas -> gérer la lumière (2e version)) -> pour représenter les stats : on fait des cartes
-Baston
+Baston -> Des parties de la salle -> quand repéré -> des pièges qui isolent .
 //BDD (personnages, loots, boss,...)
 Generateur de niveaux (21*15)
 Menu 	-> play  	-> Continue -> call jeu ...
