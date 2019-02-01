@@ -23,6 +23,7 @@ Stats : base + ecardtype
 Compétences -> retour dans le temps (trouver le mec qui l'a) (objet ou compétence)
 		-> Mettre des proba sur les compétences qu'ils peuvent avoir -> on met un
 genre de gaussienne -> les meilleures et les pires sont dures a avoir
+	-> Limiter les effets des compétences ou les augmenter en fonction du terrain
 
 Boss -> Enigmes + Baston
 Apres boss -> récompenses
