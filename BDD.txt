@@ -25,10 +25,12 @@ Boss (avec les mécaniques bien expliquées) : 3 boss
   - Un animal qui contrôle son armée
 
 Stats pour les personnages :
-PV
-MANA / ENERGIE
-VITESSE
-...
+  - PV
+  - MANA / ENERGIE
+  - VITESSE
+  - Vitesse d'attaque
+  - Dégats d'attaque (pour l'attaque automatique)
+  - Resistance
 
 
 Objets (one use - hors combat)
