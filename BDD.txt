@@ -1,8 +1,15 @@
-Compétences :
-
+Compétences (inspiration Marvel/DC) :
+  - Feu (physique ou zone)
+  - Electricité (physique ou zone)
+  - Invisibilité
+  - Soin 
 
 Types de personnages :
-
+  - Tortue : perso principal, compétence fixe (Warp)
+  - Oiseau : personnage de base (Soin) 
+  - Singe : perso physique et défensif
+  - Chien : perso 
+  
 
 Boss (avec les mécaniques bien expliquées) : 3 boss
 
@@ -10,6 +17,7 @@ Boss (avec les mécaniques bien expliquées) : 3 boss
 Stats pour les personnages :
 PV
 MANA / ENERGIE
+VITESSE
 ...
 
 
