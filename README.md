@@ -3,10 +3,10 @@ Manipulation du temps et de l'espace
 
 Puzzle/Platformer
 
-Graphique -> pour représenter les stats : on fait des cartes
+Graphique (tout est éclairé ou pas -> gérer la lumière (2e version)) -> pour représenter les stats : on fait des cartes
 Baston
 //BDD (personnages, loots, boss,...)
-Generateur de niveaux
+Generateur de niveaux (21*15)
 Menu 	-> play  	-> Continue -> call jeu ...
 			-> Start new -> choisir son stuff/équipe -> call jeu ...
 	-> ranking (historique des run)
