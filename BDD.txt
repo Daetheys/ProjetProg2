@@ -1,0 +1,20 @@
+Compétences :
+
+
+Types de personnages :
+
+
+Boss (avec les mécaniques bien expliquées) : 3 boss
+
+
+Stats pour les personnages :
+PV
+MANA / ENERGIE
+...
+
+
+Objets (one use)
+
+
+Stuff (équipement) (réservé à la classe du personnage, à des caractéristiques)
+
