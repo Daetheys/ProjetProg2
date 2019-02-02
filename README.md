@@ -30,6 +30,9 @@ Compétences -> retour dans le temps (trouver le mec qui l'a)
 	    -> on met un genre de gaussienne -> les meilleures et les pires sont dures a avoir
 	-> Limiter les effets des compétences ou les augmenter en fonction du terrain
 
+Stratégie :
+	À chaque nouvel étage, un combat se déclanche immédiatemment. On doit bien déployer ses unités en fonction des faiblesses des différents ennemis et du terrain d'affrontement. Une fois le combat remporté, se déclanche un compte à rebours avant que l'étage soit automatiquement scéllé. On ne peut récupérer qu'un nombre limité d'animaux et d'équipements à cause de la limite de temps et des moyens de détruire les dispositifs de sécurité qui dépendent des équipements. 
+
 Boss -> Enigmes + Baston
 Apres boss -> récompenses
 
