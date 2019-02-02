@@ -1,7 +1,11 @@
 # ProjetProg2
-Manipulation du temps et de l'espace
+Pouvoirs psychiques :
+	- Manipulation du temps : obtenu vers la fin, une sorte de "new game +" pour retourner au début avec une bonne équipe, débloque les meilleurs équipements
+	- Manipulation de l'espace : obtenu dès le début, utilisable une seule fois par combat, débloque les équipements de base
 
-Puzzle/Platformer
+Idée générale du scénario :
+	Au niveau -1 d'un labo expérimentant sur le renforcement des capacités intellectuelles, une tortue (Tom ?) acquiert par accident le pouvoir de manipuler localement l'espace, à l'aide de ce pouvoir elle s'échappe mais la sortie est fermée automatiquement. Son seul espoir est de rejoindre le prototype du téléporteur au niveau -15. Elle commence à rassembler d'autres animaux doués d'intelligence et des armes pour détruire les systèmes de sécurité et decsendre.
+
 
 Graphique (tout est éclairé ou pas -> gérer la lumière (2e version)) -> pour représenter les stats : on fait des cartes
 Baston -> Des parties de la salle -> quand repéré -> des pièges qui isolent .
@@ -20,9 +24,10 @@ Stats : base + ecardtype
 	-> Mana / Energie
 	-> 
 
-Compétences -> retour dans le temps (trouver le mec qui l'a) (objet ou compétence)
-		-> Mettre des proba sur les compétences qu'ils peuvent avoir -> on met un
-genre de gaussienne -> les meilleures et les pires sont dures a avoir
+Compétences -> retour dans le temps (trouver le mec qui l'a)
+	    -> sinon : obtenue par un objet
+	    -> Mettre des affinités aux armes qu'ils peuvent utiliser
+	    -> on met un genre de gaussienne -> les meilleures et les pires sont dures a avoir
 	-> Limiter les effets des compétences ou les augmenter en fonction du terrain
 
 Boss -> Enigmes + Baston
