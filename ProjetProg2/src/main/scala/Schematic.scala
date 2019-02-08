@@ -1,62 +1,62 @@
 object Possibilities =
-  val verticals = Array(Array[Bool](true,false,false,false,false),
-                        Array[Bool](false,true,false,false,false),
-                        Array[Bool](false,false,true,false,false),
-                        Array[Bool](false,false,false,true,false),
-                        Array[Bool](false,false,false,false,true),
-                        Array[Bool](true,false,false,true,false),
-                        Array[Bool](false,true,false,false,true),
-                        Array[Bool](true,false,false,false,true))
-  val inner = Array(Array[Bool](true,false,false),Array[Bool](false,true,false),Array[Bool](false,false,true))
-  val outer = Array(Array[Bool](true,false,false,false,false,false,false,false,false),
-                    Array[Bool](false,true,false,false,false,false,false,false,false),
-                    Array[Bool](false,false,true,false,false,false,false,false,false),
-                    Array[Bool](false,false,false,true,false,false,false,false,false),
-                    Array[Bool](false,false,false,false,true,false,false,false,false),
-                    Array[Bool](false,false,false,false,false,true,false,false,false),
-                    Array[Bool](false,false,false,false,false,false,true,false,false),
-                    Array[Bool](false,false,false,false,false,false,false,true,false),
-                    Array[Bool](false,false,false,false,false,false,false,false,true),
-                    Array[Bool](true,false,true,false,false,false,false,false,false),
-                    Array[Bool](true,false,false,true,false,false,false,false,false),
-                    Array[Bool](true,false,false,false,true,false,false,false,false),
-                    Array[Bool](true,false,false,false,false,true,false,false,false),
-                    Array[Bool](true,false,false,false,false,false,true,false,false),
-                    Array[Bool](true,false,false,false,false,false,false,true,false),
-                    Array[Bool](true,false,false,false,false,false,false,false,true),
-                    Array[Bool](false,true,false,false,true,false,false,false,false),
-                    Array[Bool](false,true,false,false,false,true,false,false,false),
-                    Array[Bool](false,true,false,false,false,false,true,false,false),
-                    Array[Bool](false,true,false,false,false,false,false,true,false),
-                    Array[Bool](false,true,false,false,false,false,false,false,true),
-                    Array[Bool](false,false,true,false,false,true,false,false,false),
-                    Array[Bool](false,false,true,false,false,false,true,false,false),
-                    Array[Bool](false,false,true,false,false,false,false,true,false),
-                    Array[Bool](false,false,true,false,false,false,false,false,true),
-                    Array[Bool](false,false,false,true,false,false,true,false,false),
-                    Array[Bool](false,false,false,true,false,false,false,true,false),
-                    Array[Bool](false,false,false,true,false,false,false,false,true),
-                    Array[Bool](false,false,false,false,true,false,false,true,false),
-                    Array[Bool](false,false,false,false,true,false,false,false,true),
-                    Array[Bool](false,false,false,false,false,true,false,false,true),
-                    Array[Bool](true,false,false,true,false,false,true,false,false),
-                    Array[Bool](true,false,false,true,false,false,false,true,false),
-                    Array[Bool](true,false,false,true,false,false,false,false,true),
-                    Array[Bool](true,false,false,false,true,false,false,true,false),
-                    Array[Bool](true,false,false,false,true,false,false,false,true),
-                    Array[Bool](true,false,false,false,false,true,false,false,true),
-                    Array[Bool](false,true,false,false,true,false,false,true,false),
-                    Array[Bool](false,true,false,false,true,false,false,false,true),
-                    Array[Bool](false,true,false,false,false,true,false,false,true),
-                    Array[Bool](false,false,true,false,false,true,false,false,true))
+  val verticals = Array(Array[Boolean](true,false,false,false,false),
+                        Array[Boolean](false,true,false,false,false),
+                        Array[Boolean](false,false,true,false,false),
+                        Array[Boolean](false,false,false,true,false),
+                        Array[Boolean](false,false,false,false,true),
+                        Array[Boolean](true,false,false,true,false),
+                        Array[Boolean](false,true,false,false,true),
+                        Array[Boolean](true,false,false,false,true))
+  val inner = Array(Array[Boolean](true,false,false),Array[Boolean](false,true,false),Array[Boolean](false,false,true))
+  val outer = Array(Array[Boolean](true,false,false,false,false,false,false,false,false),
+                    Array[Boolean](false,true,false,false,false,false,false,false,false),
+                    Array[Boolean](false,false,true,false,false,false,false,false,false),
+                    Array[Boolean](false,false,false,true,false,false,false,false,false),
+                    Array[Boolean](false,false,false,false,true,false,false,false,false),
+                    Array[Boolean](false,false,false,false,false,true,false,false,false),
+                    Array[Boolean](false,false,false,false,false,false,true,false,false),
+                    Array[Boolean](false,false,false,false,false,false,false,true,false),
+                    Array[Boolean](false,false,false,false,false,false,false,false,true),
+                    Array[Boolean](true,false,true,false,false,false,false,false,false),
+                    Array[Boolean](true,false,false,true,false,false,false,false,false),
+                    Array[Boolean](true,false,false,false,true,false,false,false,false),
+                    Array[Boolean](true,false,false,false,false,true,false,false,false),
+                    Array[Boolean](true,false,false,false,false,false,true,false,false),
+                    Array[Boolean](true,false,false,false,false,false,false,true,false),
+                    Array[Boolean](true,false,false,false,false,false,false,false,true),
+                    Array[Boolean](false,true,false,false,true,false,false,false,false),
+                    Array[Boolean](false,true,false,false,false,true,false,false,false),
+                    Array[Boolean](false,true,false,false,false,false,true,false,false),
+                    Array[Boolean](false,true,false,false,false,false,false,true,false),
+                    Array[Boolean](false,true,false,false,false,false,false,false,true),
+                    Array[Boolean](false,false,true,false,false,true,false,false,false),
+                    Array[Boolean](false,false,true,false,false,false,true,false,false),
+                    Array[Boolean](false,false,true,false,false,false,false,true,false),
+                    Array[Boolean](false,false,true,false,false,false,false,false,true),
+                    Array[Boolean](false,false,false,true,false,false,true,false,false),
+                    Array[Boolean](false,false,false,true,false,false,false,true,false),
+                    Array[Boolean](false,false,false,true,false,false,false,false,true),
+                    Array[Boolean](false,false,false,false,true,false,false,true,false),
+                    Array[Boolean](false,false,false,false,true,false,false,false,true),
+                    Array[Boolean](false,false,false,false,false,true,false,false,true),
+                    Array[Boolean](true,false,false,true,false,false,true,false,false),
+                    Array[Boolean](true,false,false,true,false,false,false,true,false),
+                    Array[Boolean](true,false,false,true,false,false,false,false,true),
+                    Array[Boolean](true,false,false,false,true,false,false,true,false),
+                    Array[Boolean](true,false,false,false,true,false,false,false,true),
+                    Array[Boolean](true,false,false,false,false,true,false,false,true),
+                    Array[Boolean](false,true,false,false,true,false,false,true,false),
+                    Array[Boolean](false,true,false,false,true,false,false,false,true),
+                    Array[Boolean](false,true,false,false,false,true,false,false,true),
+                    Array[Boolean](false,false,true,false,false,true,false,false,true))
                     
 
 class Room {
-  var south : Array[Bool]
-  var east : Array[Bool]
-  var west : Array[Bool]
-  var north : Array[Bool]
-  var center : Array[Bool]
+  var south : Array[Boolean]
+  var east : Array[Boolean]
+  var west : Array[Boolean]
+  var north : Array[Boolean]
+  var center : Array[Boolean]
   def init {
     r = new Random()
     south = Possibilities.verticals(r.nextInt(8))
