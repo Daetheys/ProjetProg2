@@ -17,7 +17,6 @@ object Possibilities =
                     Array[Boolean](false,false,false,false,false,false,true,false,false),
                     Array[Boolean](false,false,false,false,false,false,false,true,false),
                     Array[Boolean](false,false,false,false,false,false,false,false,true),
-                    Array[Boolean](true,false,true,false,false,false,false,false,false),
                     Array[Boolean](true,false,false,true,false,false,false,false,false),
                     Array[Boolean](true,false,false,false,true,false,false,false,false),
                     Array[Boolean](true,false,false,false,false,true,false,false,false),
@@ -78,5 +77,9 @@ class Hallway extends Tile {
   val is_empty = true
   }
 
-object Plan_init =
-  TODO
+object Plan =
+  var grid = Array.fill(21,15){new Obstacle}
+  
+  room = new Room
+  room.init()
+  
