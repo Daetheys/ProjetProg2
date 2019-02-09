@@ -1,3 +1,5 @@
+package Schematics
+
 /*
 The main use for this file :
   p = new Plan;
