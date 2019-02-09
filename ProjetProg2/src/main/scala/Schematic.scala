@@ -92,8 +92,8 @@ class Hallway extends Tile {
 
 class Plan =
   var grid = Array.fill(21,15){new Obstacle}
+  var room = new Room
   def random_fill {
-    room = new Room
     room.init()
     for ( i <- 0 to 20 ) {
       grid(i)(0) = new Hallway;
