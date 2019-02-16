@@ -11,7 +11,7 @@ There are 307200 possible rooms with equal probability of getting any of them.
 */
   
 
-object Possibilities{
+object Possibilities{ //Pas de '=' pour les classes c'est un : nom_classe(args){...corps...}
   val verticals = Array(Array[Boolean](true,false,false,false,false),
                         Array[Boolean](false,true,false,false,false),
                         Array[Boolean](false,false,true,false,false),
@@ -64,13 +64,13 @@ object Possibilities{
 }     
 
 class Room {
-  var south : Array[Boolean] = ???
-  var east : Array[Boolean] = ???
+  var south : Array[Boolean] = ??? //Tous les attributs doivent être initialisés dès le début
+  var east : Array[Boolean] = ??? // Sinon la classe doit être abstraite
   var west : Array[Boolean] = ???
   var north : Array[Boolean] = ???
   var center : Array[Boolean] = ???
   def init() {
-  	val r = scala.util.Random
+  	val r = scala.util.Random // C'est ca la bonne syntaxe pour le module random visiblement
     this.south = Possibilities.verticals(r.nextInt(8))
     this.north = Possibilities.verticals(r.nextInt(8))
     this.east = Possibilities.outer(r.nextInt(40))
@@ -92,11 +92,11 @@ class Hallway extends Tile {
   }
 
 class Plan{
-  var grid = Array.fill(21,15){new Hallway}
-  var room = new Room
-  def random_fill {
-    room.init()
-    for ( i <- 0 to 20 ) {
+  var grid = Array.fill(21,15){new Hallway} //Ici il y avait Obstacle a la place de Hallway
+  var room = new Room						//or comme tu ajoutes remplies avec des Hallway
+  def random_fill {							//c'est mal typé donc j'ai mis le type Hallway
+    room.init()								//(il faut que tu verifie si c'est bien ca que
+    for ( i <- 0 to 20 ) {					//tu voulais faire)
       grid(i)(0) = new Hallway;
       grid(i)(14) = new Hallway;
       if (( i > 2 && i < 8 ) || ( i > 12 && i < 18 )) {
