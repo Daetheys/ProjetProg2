@@ -11,7 +11,7 @@ There are 307200 possible rooms with equal probability of getting any of them.
 */
   
 
-object Possibilities =
+object Possibilities{
   val verticals = Array(Array[Boolean](true,false,false,false,false),
                         Array[Boolean](false,true,false,false,false),
                         Array[Boolean](false,false,true,false,false),
@@ -61,28 +61,29 @@ object Possibilities =
                     Array[Boolean](false,true,false,false,true,false,false,false,true),
                     Array[Boolean](false,true,false,false,false,true,false,false,true),
                     Array[Boolean](false,false,true,false,false,true,false,false,true))
-                    
+}     
 
 class Room {
-  var south : Array[Boolean]
-  var east : Array[Boolean]
-  var west : Array[Boolean]
-  var north : Array[Boolean]
-  var center : Array[Boolean]
-  def init {
-    r = new Random()
-    south = Possibilities.verticals(r.nextInt(8))
-    north = Possibilities.verticals(r.nextInt(8))
-    east = Possibilities.outer(r.nextInt(40))
-    west = Possibilities.outer(r.nextInt(40))
-    center = Possibilities.inner(r.nextInt(3))
+  var south : Array[Boolean] = ???
+  var east : Array[Boolean] = ???
+  var west : Array[Boolean] = ???
+  var north : Array[Boolean] = ???
+  var center : Array[Boolean] = ???
+  def init() {
+  	val r = scala.util.Random
+    this.south = Possibilities.verticals(r.nextInt(8))
+    this.north = Possibilities.verticals(r.nextInt(8))
+    this.east = Possibilities.outer(r.nextInt(40))
+    this.west = Possibilities.outer(r.nextInt(40))
+    this.center = Possibilities.inner(r.nextInt(3))
     }
+}
 
 abstract class Tile {
   val is_empty : Boolean
   }
   
-class Obsacle extends Tile {
+class Obstacle extends Tile {
   val is_empty = false
   }
 
@@ -90,15 +91,15 @@ class Hallway extends Tile {
   val is_empty = true
   }
 
-class Plan =
-  var grid = Array.fill(21,15){new Obstacle}
+class Plan{
+  var grid = Array.fill(21,15){new Hallway}
   var room = new Room
   def random_fill {
     room.init()
     for ( i <- 0 to 20 ) {
       grid(i)(0) = new Hallway;
       grid(i)(14) = new Hallway;
-      if (( i > 2 and i < 8 ) or ( i > 12 and i < 18 )) {
+      if (( i > 2 && i < 8 ) || ( i > 12 && i < 18 )) {
         grid(i)(3) = new Hallway;
         grid(i)(11) = new Hallway;
       }
@@ -107,7 +108,7 @@ class Plan =
       grid(0)(j) = new Hallway;
       grid(10)(j) = new Hallway;
       grid(20)(j) = new Hallway;
-      if ( j > 3 and j < 11 ) {
+      if ( j > 3 && j < 11 ) {
         grid(3)(j) = new Hallway;
         grid(7)(j) = new Hallway;
         grid(13)(j) = new Hallway;
@@ -152,4 +153,5 @@ class Plan =
         grid(18)(j+3) = new Hallway;
       }
     }
-  }    
+  }  
+}  

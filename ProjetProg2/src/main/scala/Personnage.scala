@@ -17,7 +17,7 @@ class Personnage {
 	var stuff = Map("head" -> None, "body" -> None, "gloves" -> None, "boots" -> None)
 
 	//Compétences
-	var competences = List()
+	var competences:List[Competence] = List()
 	
 	def add_competence(comp:Competence){
 		this.competences = comp::this.competences

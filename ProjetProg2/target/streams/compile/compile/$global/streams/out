@@ -1,66 +1,10 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/bdd.scala:38:42: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : Unit[0m
-[0m[[0m[31merror[0m] [0m[0m required: Int[0m
-[0m[[0m[31merror[0m] [0m[0m						case Some(s) => dist = Env.distance(s,jeton)[0m
-[0m[[0m[31merror[0m] [0m[0m						                                   ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:8:3: Symbol 'type javafx.event.EventTarget' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'class scalafx.stage.Window'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that type EventTarget is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Window.class' was compiled against an incompatible version of javafx.event.[0m
-[0m[[0m[31merror[0m] [0m[0m  stage = new JFXApp.PrimaryStage {[0m
-[0m[[0m[31merror[0m] [0m[0m  ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:12:17: Symbol 'term javafx.css' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'trait scalafx.css.Styleable'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that term css is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Styleable.class' was compiled against an incompatible version of javafx.[0m
-[0m[[0m[31merror[0m] [0m[0m    scene = new Scene {[0m
-[0m[[0m[31merror[0m] [0m[0m                ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:12:5: Symbol 'type javafx.scene.Scene' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'class scalafx.scene.Scene'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that type Scene is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Scene.class' was compiled against an incompatible version of javafx.scene.[0m
-[0m[[0m[31merror[0m] [0m[0m    scene = new Scene {[0m
-[0m[[0m[31merror[0m] [0m[0m    ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:9:5: Symbol 'term javafx.beans' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'trait scalafx.beans.Observable'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that term beans is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Observable.class' was compiled against an incompatible version of javafx.[0m
-[0m[[0m[31merror[0m] [0m[0m    title.value = "Hello Stage"[0m
-[0m[[0m[31merror[0m] [0m[0m    ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:19:18: Symbol 'term javafx.beans.value' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'value scalafx.beans.binding.Bindings.condition'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that term value is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Bindings.class' was compiled against an incompatible version of javafx.beans.[0m
-[0m[[0m[31merror[0m] [0m[0m        fill <== when(hover) choose Green otherwise Red[0m
-[0m[[0m[31merror[0m] [0m[0m                 ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:19:23: Symbol 'type javafx.beans.value.ObservableObjectValue' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'method scalafx.beans.value.ObservableValue.sfxObservableValue2jfxObjectValue'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that type ObservableObjectValue is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'ObservableValue.class' was compiled against an incompatible version of javafx.beans.value.[0m
-[0m[[0m[31merror[0m] [0m[0m        fill <== when(hover) choose Green otherwise Red[0m
-[0m[[0m[31merror[0m] [0m[0m                      ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:4:8: Symbol 'type javafx.scene.paint.Color' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'class scalafx.scene.paint.Color'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that type Color is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Color.class' was compiled against an incompatible version of javafx.scene.paint.[0m
-[0m[[0m[31merror[0m] [0m[0mimport scalafx.scene.paint.Color._[0m
-[0m[[0m[31merror[0m] [0m[0m       ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:19:37: Symbol 'type javafx.beans.binding.ObjectBinding' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'method scalafx.beans.binding.Bindings.ObjectConditionBuilder.otherwise'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that type ObjectBinding is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Bindings.class' was compiled against an incompatible version of javafx.beans.binding.[0m
-[0m[[0m[31merror[0m] [0m[0m        fill <== when(hover) choose Green otherwise Red[0m
-[0m[[0m[31merror[0m] [0m[0m                                    ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:19:9: Symbol 'type javafx.beans.value.ObservableValue' is missing from the classpath.[0m
-[0m[[0m[31merror[0m] [0m[0mThis symbol is required by 'value scalafx.beans.property.Property.v'.[0m
-[0m[[0m[31merror[0m] [0m[0mMake sure that type ObservableValue is in your classpath and check for conflicting dependencies with `-Ylog-classpath`.[0m
-[0m[[0m[31merror[0m] [0m[0mA full rebuild may help if 'Property.class' was compiled against an incompatible version of javafx.beans.value.[0m
-[0m[[0m[31merror[0m] [0m[0m        fill <== when(hover) choose Green otherwise Red[0m
-[0m[[0m[31merror[0m] [0m[0m        ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjetProg2/src/main/scala/hello.scala:19:14: overloaded method value <== with alternatives:[0m
-[0m[[0m[31merror[0m] [0m[0m  (v: scalafx.beans.value.ObservableValue[_ <: javafx.scene.paint.Paint, _ <: javafx.scene.paint.Paint])Unit <and>[0m
-[0m[[0m[31merror[0m] [0m[0m  (v: javafx.beans.value.ObservableValue[_ <: javafx.scene.paint.Paint])Unit[0m
-[0m[[0m[31merror[0m] [0m[0m cannot be applied to (javafx.beans.binding.ObjectBinding[scalafx.scene.paint.Color])[0m
-[0m[[0m[31merror[0m] [0m[0m        fill <== when(hover) choose Green otherwise Red[0m
-[0m[[0m[31merror[0m] [0m[0m             ^[0m
-[0m[[0m[31merror[0m] [0m[0m11 errors found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:80:26: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case t :: q => 	if (t()==1){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				               	     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/bddCompetences.scala:53:3: a pure expression does nothing in statement position[0m
+[0m[[0m[33mwarn[0m] [0m[0m		move[0m
+[0m[[0m[33mwarn[0m] [0m[0m		^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

@@ -12,7 +12,7 @@ class Active (name:String) extends Competence(name){
 	var autocast = false
 	val autocast_possible = false
 
-	var func:Jeton=>Unit = (j:Jeton) => ()
+	var func:Unit=>Unit = Unit => ()
 
 	def autocast_enable(){
 		this.autocast = true
