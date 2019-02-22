@@ -8,20 +8,37 @@ object bddPersonnages {
 		turtle.name = "Tortue"
 		turtle.pv_max = 100
 		turtle.pv_current = 100
-		turtle.ressource_max = 0
-		turtle.ressource_current = 0
-		turtle.ressource_name = "Mana"
+		turtle.force = 8
+		turtle.vitesse = 2
+		turtle.intelligence = 6
+		turtle.precision = 4
+		turtle.esquive = 3
 		return turtle
 	}
 	
 	def create_bird():Personnage = {
 		var bird = new Personnage
 		bird.name = "Oiseau"
-		bird.pv_max = 75
-		bird.pv_current = 75
-		bird.ressource_max = 20 // Il doit soigner -> Besoin de mana
-		bird.ressource_current = 20
-		bird.ressource_name = "Mana"
+		bird.pv_max = 100
+		bird.pv_current = 100
+		bird.force = 3
+		bird.vitesse = 9
+		bird.intelligence = 1
+		bird.precision = 5
+		bird.esquive = 7
+		return bird
+	}
+	
+	def create_cat():Personnage = {
+		var cat = new Personnage
+		bird.name = "Cat"
+		bird.pv_max = 100
+		bird.pv_current = 100
+		bird.force = 3
+		bird.vitesse = 9
+		bird.intelligence = 1
+		bird.precision = 5
+		bird.esquive = 7
 		return bird
 	}
 	//... -> faire la suite	
