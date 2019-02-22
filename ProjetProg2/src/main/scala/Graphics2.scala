@@ -24,7 +24,7 @@ object app extends JFXApp {
 	var mouseOldX: Double = .0
 	var mouseOldY: Double = .0
 	
-	var canvas:scalafx.scene.canvas.Canvas = new Canvas(1200,1200)
+	var canvas:scalafx.scene.canvas.Canvas = new Canvas(1952,1440)
 	var gc:scalafx.scene.canvas.GraphicsContext = canvas.graphicsContext2D
 	var button = new Button("Start")
 	button.onAction = new EventHandler[ActionEvent] {
@@ -35,7 +35,7 @@ object app extends JFXApp {
 	
 	val pane = new Group
 	pane.children = List(canvas,button)
-	var Env:Environnement = ???
+	var Env:Environnement = new Environnement
 	
 	stage = new JFXApp.PrimaryStage {
 		

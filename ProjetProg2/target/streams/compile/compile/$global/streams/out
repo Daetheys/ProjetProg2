@@ -1,4 +1,7 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:26:19: not found: type Button[0m
-[0m[[0m[31merror[0m] [0m[0m	var button = new Button("Start")[0m
-[0m[[0m[31merror[0m] [0m[0m	                 ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:78:26: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case t :: q => 	if (t()==1){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				               	     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

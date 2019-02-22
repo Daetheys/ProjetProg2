@@ -9,9 +9,12 @@ class Personnage {
 	var name:String = ""
 	var pv_max:Int = 0
 	var pv_current:Int = 0
-	var ressource_max:Int = 0
-	var ressource_current:Int = 0
-	var ressource_name:String = "Mana"
+	
+	var force = 0
+	var vitesse = 0
+	var intelligence = 0
+	var precision = 0
+	var esquive = 0
 	//Stuff
 	var stuff = Map("head" -> None, "body" -> None, "gloves" -> None, "boots" -> None)
 
@@ -31,6 +34,7 @@ class Jeton(model:Personnage,env:Environnement) extends Personnage {
 	//Attributs graphiques
 	var x:Int=0
 	var y:Int=0
+	var orientation:Int=0
 	var Env:Environnement = env
 
 	//Status

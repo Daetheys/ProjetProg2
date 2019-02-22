@@ -4,8 +4,8 @@ import Personnage.{Jeton=>Jeton,Personnage=>Personnage}
 class Environnement {
 	val real_size_x = 21
 	val real_size_y = 15
-	val factor_x = 3
-	val factor_y = 3
+	val factor_x = 1
+	val factor_y = 1
 	val size_x = real_size_x*factor_x
 	val size_y = real_size_y*factor_y
 	var tiles = Array.ofDim[Int](15*factor_x,21*factor_y)

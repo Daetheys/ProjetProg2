@@ -8,8 +8,8 @@ object Game {
 
 	def initialize():Unit = {
 		app.initialize()
-		val map = Array.ofDim[Int](15*3,21*3)
-		var personnages = Array.ofDim[Option[Personnage]](15*3,21*3)
+		val map = Array.ofDim[Int](15,21)
+		var personnages = Array.ofDim[Option[Personnage]](15,21)
 		for (i <- 0 to personnages.length-1){
 			for (j <- 0 to personnages(i).length-1){
 				personnages(i)(j) = None
