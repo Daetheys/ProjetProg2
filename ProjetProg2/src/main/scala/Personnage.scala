@@ -10,11 +10,11 @@ class Personnage {
 	var pv_max:Int = 0
 	var pv_current:Int = 0
 	
-	var force = 0
-	var vitesse = 0
-	var intelligence = 0
-	var precision = 0
-	var esquive = 0
+	var force = 0 //PV + dmg attaque melee
+	var vitesse = 0 //Vitesse depl + augmente un peu la cadence de tir (l'essentiel est sur l'arme)
+	var intelligence = 0 //Dmg de loin
+	var precision = 0 //Chances de toucher
+	var esquive = 0 //Chances d'esquive
 	//Stuff
 	var stuff = Map("head" -> None, "body" -> None, "gloves" -> None, "boots" -> None)
 
