@@ -1,5 +1,4 @@
 package Personnage
-import Graphics.{app=>app}
 import Environnement.{Environnement=>Environnement}
 import Competence.{Competence=>Competence}
 
@@ -30,8 +29,6 @@ class Jeton(model:Personnage,env:Environnement) extends Personnage {
 	var died = false
 
 	//Attributs graphiques
-	var label:Option[scalafx.scene.image.ImageView] = None
-	var life_bar:Option[scalafx.scene.shape.Rectangle] = None
 	var x:Int=0
 	var y:Int=0
 	var Env:Environnement = env
@@ -53,10 +50,5 @@ class Jeton(model:Personnage,env:Environnement) extends Personnage {
 	def position(x:Int,y:Int){
 		this.x = x
 		this.y = y
-	}	
-	def show(){
-		//Aff jeton
-		app.add_jeton(this)
-		app.add_life_bar(this)
 	}
 }

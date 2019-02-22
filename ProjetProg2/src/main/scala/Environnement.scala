@@ -1,6 +1,5 @@
 package Environnement
 import Personnage.{Jeton=>Jeton,Personnage=>Personnage}
-import Graphics.{app=>app,_}
 
 class Environnement {
 	val real_size_x = 21
@@ -10,7 +9,6 @@ class Environnement {
 	val size_x = real_size_x*factor_x
 	val size_y = real_size_y*factor_y
 	var tiles = Array.ofDim[Int](15*factor_x,21*factor_y)
-	var tiles_graphics = Array.ofDim[Option[scalafx.scene.image.ImageView]](15*factor_x,21*factor_y)
 	var units = Array.ofDim[Option[Jeton]](15*factor_x,21*factor_y)
 	val clock = new Clock()
 	var selected_units:List[Jeton] = List()
@@ -34,11 +32,11 @@ class Environnement {
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int){
 		if (this.units(x)(y) == None || this.units(x)(y) == null) {
 			val jeton = new Jeton(personnage,this)
-			this.units(x)(y) = Some(jeton)
 		}else{
 			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
 		}
 	}
+	
 	def distance(j1:Jeton,j2:Jeton):Int = {
 		((j1.x - j2.x)^2 + (j1.y-j2.y)^2)
 	}

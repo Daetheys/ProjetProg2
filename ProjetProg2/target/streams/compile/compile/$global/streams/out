@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics.scala:98:5: Unmatched closing brace '}' ignored here[0m
-[0m[[0m[31merror[0m] [0m[0m				}[0m
-[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:26:19: not found: type Button[0m
+[0m[[0m[31merror[0m] [0m[0m	var button = new Button("Start")[0m
+[0m[[0m[31merror[0m] [0m[0m	                 ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m
