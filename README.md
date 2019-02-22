@@ -60,3 +60,6 @@ pour le sauver pour les autres games (fait parti des loots).
 
 Plus on s'enfonce, plus il y a de stuff et les niveaux sont a theme (les mobs et les 
 loots).
+
+
+Ressources graphiques : https://www.pixilart.com/kisara
