@@ -11,24 +11,26 @@ object bddCompetences {
 		//Speed est le nb de déplacement par seconde; form est la facon dont il se déplace
 		// -> 0:ground 1:fly 2:ghost
 		val Env = jeton.Env
-		val move = new Active("Move")
-		def func(typage:Unit):Unit = {
+		val move_comp = new Active("Move")
+		def initialize(target:Array[Int]):Unit = {
 			//La destination du mouvement est une variable dans la compétence
-			Env.clock.add_macro_event(frequence_deplacement)
+			move_comp.v_int("x_dest") = target(0)
+			move_comp.v_int("y_dest") = target(1)
+			Env.clock.add_macro_event(frequence_move)
 		}
-		def frequence_deplacement(typage:Unit):Int={
+		def frequence_move(typage:Unit):Int={
 			val macro_period = Env.clock.macro_period
-			if (move.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
-				move.v_int("nb_wait") = 0
-				return deplacer()
+			if (move_comp.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
+				move_comp.v_int("nb_wait") = 0
+				return move()
 			} else {
-				move.v_int("nb_wait") += 1
+				move_comp.v_int("nb_wait") += 1
 				return 0 // On garde l'evenement dans la liste 
 			}
 		}
-		def deplacer():Int ={
-			val x_dest = move.v_int("x_dest")
-			val y_dest = move.v_int("y_dest")
+		def move():Int ={ //Ne fonctionne que sur un monde sans obstacles
+			val x_dest = move_comp.v_int("x_dest")
+			val y_dest = move_comp.v_int("y_dest")
 			if (x_dest == jeton.x){
 				if (y_dest == jeton.y){
 					return 1
@@ -45,15 +47,13 @@ object bddCompetences {
 				return 0
 			}
 		}
-		move.func = func
-		move.autocast_disable()
+		move_comp.initialize = initialize
+		move_comp.autocast_disable()
 		//Definition des destinations
-		move.v_int("x_dest") = 0
-		move.v_int("y_dest") = 0
-		move
+		return move_comp
 	}
 
-	def create_autoattack(jeton:Jeton):Active = {
+	/*def create_autoattack(jeton:Jeton):Active = {
 		// Autoattack Function
 		val autoattack = new Active("AutoAttack")
 		def func(typage:Unit):Unit ={
@@ -83,5 +83,5 @@ object bddCompetences {
 		autoattack.func = func
 		autoattack.autocast_enable()
 		return autoattack
-	}
+	}*/
 }

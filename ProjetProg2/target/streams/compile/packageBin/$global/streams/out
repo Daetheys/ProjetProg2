@@ -6,8 +6,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Mechanisms/Tiletype.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Game/Game$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Game/Game$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	bddPersonnages.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/bddPersonnages.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	bddPersonnages/bddPersonnages$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/bddPersonnages/bddPersonnages$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Mechanisms/Pipe$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Mechanisms/Pipe$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	HelloStageDemo$$anon$2$$anon$3.class[0m
@@ -30,6 +30,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/HelloStageDemo$$anon$2.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Mechanisms[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Mechanisms[0m
+[0m[[0m[0mdebug[0m] [0m[0m	bddPersonnages/bddPersonnages.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/bddPersonnages/bddPersonnages.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	HelloStageDemo$delayedInit$body.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/HelloStageDemo$delayedInit$body.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Personnage[0m
@@ -40,8 +42,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Mechanisms/Plain.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Schematics/Possibilities$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Schematics/Possibilities$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	bddPersonnages$.class[0m
-[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/bddPersonnages$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	bddPersonnages[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/bddPersonnages[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Personnage/Personnage.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Personnage/Personnage.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Competence[0m

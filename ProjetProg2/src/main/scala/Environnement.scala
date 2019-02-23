@@ -8,21 +8,41 @@ class Environnement {
 	val factor_y = 1
 	val size_x = real_size_x*factor_x
 	val size_y = real_size_y*factor_y
-	var tiles = Array.ofDim[Int](15*factor_x,21*factor_y)
-	var units = Array.ofDim[Option[Jeton]](15*factor_x,21*factor_y)
+	var tiles = Array.ofDim[Int](21*factor_x,15*factor_y)
+	var units = Array.ofDim[Option[Jeton]](21*factor_x,15*factor_y)
 	val clock = new Clock()
 	var selected_units:List[Jeton] = List()
 	
+	def apply_active(name:String,arg:Array[Int])={
+		this.selected_units.map((j:Jeton) => j.actives(name).initialize(arg))
+	}
 	
-	def select_units(x1:Int,y1:Int,x2:Int,y2:Int){
+	def unselect_all_units()={
 		this.selected_units = List()
-		for (i <- x1 to x2){
-			for (j <- y1 to y2){
-				this.units(x1)(y2) match{
+		for (i <- 0 to this.units.length -1){
+			for (j <- 0 to this.units(i).length -1){
+				this.units(i)(j) match{
 					case None => ()
 					// Pas opti mais on verra plus tard
 					case Some (j) =>{
+						j.selected = false
+					 }
+				}
+			}
+		}
+	}
+	
+	def select_units(x1:Int,y1:Int,x2:Int,y2:Int)={
+		this.unselect_all_units()
+		for (i <- Math.min(x1,x2) to Math.max(x1,x2)){
+			for (j <- Math.min(y1,y2) to Math.max(y1,y2)){
+				this.units(i)(j) match{
+					case None =>
+					// Pas opti mais on verra plus tard
+					case Some (j) =>{
+						print("selected\n")
 						this.selected_units = j::this.selected_units
+						j.selected = true
 					 }
 				}
 			}
@@ -32,6 +52,7 @@ class Environnement {
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int){
 		if (this.units(x)(y) == None || this.units(x)(y) == null) {
 			val jeton = new Jeton(personnage,this)
+			this.units(x)(y) = Some(jeton)
 		}else{
 			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
 		}
