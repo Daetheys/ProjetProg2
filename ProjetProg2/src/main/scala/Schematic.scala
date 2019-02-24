@@ -64,11 +64,11 @@ object Possibilities{ //Pas de '=' pour les classes c'est un : nom_classe(args){
 }     
 
 class Room {
-  var south : Array[Boolean] = ??? //Tous les attributs doivent être initialisés dès le début
-  var east : Array[Boolean] = ??? // Sinon la classe doit être abstraite
-  var west : Array[Boolean] = ???
-  var north : Array[Boolean] = ???
-  var center : Array[Boolean] = ???
+  var south = Array[Boolean](false,false,false,false,false)
+  var east = Array[Boolean](false,false,false,false,false,false,false,false,false)
+  var west = Array[Boolean](false,false,false,false,false,false,false,false,false)
+  var north = Array[Boolean](false,false,false,false,false)
+  var center = Array[Boolean](false,false,false)
   def init() {
   	val r = scala.util.Random // C'est ca la bonne syntaxe pour le module random visiblement
     this.south = Possibilities.verticals(r.nextInt(8))
@@ -155,3 +155,4 @@ class Plan{
     }
   }  
 }  
+
