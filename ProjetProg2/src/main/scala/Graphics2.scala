@@ -21,23 +21,23 @@ import Personnage.{Jeton=>Jeton,_}
 import Game.{Game=>Game}
 
 object app extends JFXApp {
-	var mousePosX: Double = .0
-	var mousePosY: Double = .0
-	var mouseOldX: Double = .0
-	var mouseOldY: Double = .0
+	private var mousePosX: Double = .0
+	private var mousePosY: Double = .0
+	private var mouseOldX: Double = .0
+	private var mouseOldY: Double = .0
 	
-	var canvas:scalafx.scene.canvas.Canvas = new Canvas(800,600)
-	var gc:scalafx.scene.canvas.GraphicsContext = canvas.graphicsContext2D
-	var button = new Button("Start")
+	private var canvas:scalafx.scene.canvas.Canvas = new Canvas(800,600)
+	private var gc:scalafx.scene.canvas.GraphicsContext = canvas.graphicsContext2D
+	private var button = new Button("Start")
 	button.onAction = new EventHandler[ActionEvent] {
             override def handle(event: ActionEvent) {
                 Game.initialize()
             }
         }
 	
-	val pane = new Group
+	private val pane = new Group
 	pane.children = List(canvas,button)
-	var Env:Environnement = new Environnement
+	private var Env:Environnement = new Environnement
 	
 	stage = new JFXApp.PrimaryStage {
 		
@@ -48,8 +48,8 @@ object app extends JFXApp {
 		}
 	}
 	
-	var message_buffer:ListBuffer[String] = ListBuffer()
-	var message_active:Boolean = false
+	private var message_buffer:ListBuffer[String] = ListBuffer()
+	private var message_active:Boolean = false
 	private val timer = 10 //Nb de secondes d'affichage par message
 	private var time = 0 //Compteur pour savoir depuis cb de temps le message est affiché
 	//Game.initialize()

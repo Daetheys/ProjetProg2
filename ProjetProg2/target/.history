@@ -1,9 +1,4 @@
 compile
-exit
-clean
-compile
-run
-compile
 run
 clean
 compile
@@ -498,3 +493,8 @@ compile
 run
 compile
 run
+compile
+ompile
+compile
+ompile
+compile
