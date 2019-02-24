@@ -1,13 +1,10 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:99:26: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:144:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
 [0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
 [0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
 [0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case t :: q => 	if (t()==1){[0m
-[0m[[0m[33mwarn[0m] [0m[0m				               	     ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/bddCompetences.scala:53:10: a pure expression does nothing in statement position[0m
-[0m[[0m[33mwarn[0m] [0m[0m		return move_comp[0m
-[0m[[0m[33mwarn[0m] [0m[0m		       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/bddCompetences.scala:53:3: enclosing method create_move has result type Unit: return value discarded[0m
-[0m[[0m[33mwarn[0m] [0m[0m		return move_comp[0m
-[0m[[0m[33mwarn[0m] [0m[0m		^[0m
-[0m[[0m[33mwarn[0m] [0m[0mthree warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0m						if (t()==1){[0m
+[0m[[0m[33mwarn[0m] [0m[0m						     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:122:21: method stop in class Thread is deprecated: see corresponding Javadoc for more information.[0m
+[0m[[0m[33mwarn[0m] [0m[0m		this.thread_clock.stop[0m
+[0m[[0m[33mwarn[0m] [0m[0m		                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

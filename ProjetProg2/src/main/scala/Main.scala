@@ -19,6 +19,7 @@ object Game {
 			}
 		}
 		personnages(3)(3) = Some(bddp.create_turtle())
+		personnages(15)(7) = Some(bddp.create_turtle())
 		this.launch_fight(map,personnages)
 		//app.main(args)
 		print("end initialization\n")
@@ -36,7 +37,12 @@ object Game {
 			}
 		}
 		app.load_commands()
-		app.aff_all()
+		def aff_event(typage:Unit):Int={
+			app.aff_all()
+			return 1
+		}
+		Env.clock.add_micro_event(aff_event)
+		Env.start_clock()
 		
 	}
 }

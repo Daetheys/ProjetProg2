@@ -7,44 +7,59 @@ import Environnement.{Environnement=>Environnement}
 
 object bddCompetences {
 
-	def create_move(jeton:Jeton,speed:Int,form:Int){
+	def create_move(p:Personnage,speed:Int,form:Int):Active={
 		//Speed est le nb de déplacement par seconde; form est la facon dont il se déplace
 		// -> 0:ground 1:fly 2:ghost
-		val Env = jeton.Env
 		val move_comp = new Active("Move")
+		// Initialisation des variables
+		move_comp.v_int("x_dest") = 1
+		move_comp.v_int("y_dest") = 1
+		move_comp.v_int("nb_wait") = 0
+		move_comp.v_int("active") = 0
+		
 		def initialize(target:Array[Int]):Unit = {
 			//La destination du mouvement est une variable dans la compétence
 			move_comp.v_int("x_dest") = target(0)
 			move_comp.v_int("y_dest") = target(1)
-			Env.clock.add_macro_event(frequence_move)
+			if (move_comp.v_int("active") == 0){
+				move_comp.v_int("active") = 1
+				p.jeton.Env.clock.add_macro_event(frequence_move)
+			}
 		}
 		def frequence_move(typage:Unit):Int={
-			val macro_period = Env.clock.macro_period
+			println("frequence move")
+			println(move_comp.v_int("nb_wait"))
+			val macro_period = p.jeton.Env.clock.macro_period
 			if (move_comp.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
 				move_comp.v_int("nb_wait") = 0
 				return move()
 			} else {
 				move_comp.v_int("nb_wait") += 1
-				return 0 // On garde l'evenement dans la liste 
+				return 1 // On garde l'evenement dans la liste 
 			}
 		}
 		def move():Int ={ //Ne fonctionne que sur un monde sans obstacles
+			println("move")
+			print((move_comp.v_int("x_dest"),move_comp.v_int("y_dest")))
+			print((p.jeton.x,p.jeton.y))
 			val x_dest = move_comp.v_int("x_dest")
 			val y_dest = move_comp.v_int("y_dest")
-			if (x_dest == jeton.x){
-				if (y_dest == jeton.y){
-					return 1
-				}else{
-					jeton.y += (y_dest - jeton.y) / Math.abs(y_dest - jeton.y)
+			val x = p.jeton.x
+			val y = p.jeton.y
+			if (x_dest == p.jeton.x){
+				if (y_dest == p.jeton.y){
+					move_comp.v_int("active") = 0
 					return 0
+				}else{
+					p.jeton.Env.move(x,y,x,y+(y_dest - p.jeton.y) / Math.abs(y_dest - p.jeton.y))
+					return 1
 				}
-			}else if (y_dest == jeton.y){
-				jeton.x += (x_dest - jeton.x) / Math.abs(x_dest - jeton.x)
-				return 0
+			}else if (y_dest == p.jeton.y){
+				p.jeton.Env.move(x,y,x+(x_dest - p.jeton.x) / Math.abs(x_dest - p.jeton.x),y)
+				return 1
 			}else{
-				jeton.x += (x_dest - jeton.x) / Math.abs(x_dest - jeton.x)
-				jeton.y += (y_dest - jeton.y) / Math.abs(y_dest - jeton.y)
-				return 0
+				p.jeton.Env.move(x,y,x+(x_dest - p.jeton.x) / Math.abs(x_dest - p.jeton.x),y+(y_dest - p.jeton.y) / Math.abs(y_dest - p.jeton.y))
+				return 1
 			}
 		}
 		move_comp.initialize = initialize

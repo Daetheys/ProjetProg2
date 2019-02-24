@@ -22,15 +22,18 @@ class Personnage {
 	var actives = scala.collection.mutable.Map[String,Active]()
 	var passives = scala.collection.mutable.Map[String,Passive]()
 	
+	var jeton = new Jeton(this,new Environnement)
+	
 	def add_active(act:Active){
 		this.actives(act.name) = act
 	}
 }
 
-class Jeton(model:Personnage,env:Environnement) extends Personnage {
+class Jeton(modell:Personnage,env:Environnement){
 	// Personnage en mode Baston (avec emplacement sur le terrain et les effets)
 	var player = -1 //Le joueur contrôlant l'unité -> 0 (joueur) // 1 (ia)
 	var died = false
+	var model = modell
 
 	//Attributs graphiques
 	var x:Int=0
@@ -41,15 +44,6 @@ class Jeton(model:Personnage,env:Environnement) extends Personnage {
 	//Status
 	var status = None
 
-	def init() {
-		//Copy Personnage
-		this.name = model.name
-		this.pv_max = model.pv_max
-		this.pv_current = model.pv_current
-		this.stuff = model.stuff
-		this.actives = model.actives
-		this.passives = model.passives
-	}
 	def position(x:Int,y:Int){
 		this.x = x
 		this.y = y

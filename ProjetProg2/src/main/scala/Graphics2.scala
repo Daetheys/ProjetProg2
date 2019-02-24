@@ -95,9 +95,7 @@ object app extends JFXApp {
 		}
 	def aff_all()={
 		//this.gc = this.canvas.graphicsContext2D
-		print("aff_events\n")
 		this.aff_environnement()
-		print("aff units\n")
 		this.aff_units()
 		this.aff_life_bars()
 	}
@@ -108,7 +106,7 @@ object app extends JFXApp {
 					case None => ()
 					case Some(jeton:Jeton) =>
 						if (jeton.selected) {
-							this.gc.fill = Green
+							this.gc.fill = Orange
 						} else { this.gc.fill = LightGreen}
 						this.gc.fillRect(i*32,j*32,32,32)
 				}
@@ -123,8 +121,8 @@ object app extends JFXApp {
 					case None => ()
 					case Some(jeton:Jeton) =>
 						this.gc.fill = Green
-						if (jeton.pv_max != 0){
-							var length = 24*jeton.pv_current/jeton.pv_max
+						if (jeton.model.pv_max != 0){
+							var length = 24*jeton.model.pv_current/jeton.model.pv_max
 							this.gc.fillRect(i*32+4,j*32-2,length,5)
 						}
 				}
