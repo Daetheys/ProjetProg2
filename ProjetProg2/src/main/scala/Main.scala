@@ -18,8 +18,8 @@ object Game {
 				personnages(i)(j) = None
 			}
 		}
-		personnages(3)(3) = Some(bddp.create_turtle())
-		personnages(15)(7) = Some(bddp.create_turtle())
+		personnages(3)(3) = Some(bddp.create_turtle(0))
+		personnages(15)(7) = Some(bddp.create_turtle(1))
 		this.launch_fight(map,personnages)
 		//app.main(args)
 		print("end initialization\n")
@@ -43,6 +43,7 @@ object Game {
 		}
 		Env.clock.add_micro_event(aff_event)
 		Env.start_clock()
+		app.aff_message("Bienvenue dans [Nom du jeu] ! Voici une démonstration du moteur d'affrontements du jeu. Merci de ne pas agrandir la feunetre pour eviter les bugs")
 		
 	}
 }

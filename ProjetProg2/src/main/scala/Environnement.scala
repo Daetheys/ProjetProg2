@@ -4,19 +4,18 @@ import scala.collection.mutable.ListBuffer
 
 
 class Environnement {
-	val real_size_x = 21
-	val real_size_y = 15
+	val real_size_x = 25
+	val real_size_y = 25
 	val factor_x = 1
 	val factor_y = 1
 	val size_x = real_size_x*factor_x
 	val size_y = real_size_y*factor_y
-	var tiles = Array.ofDim[Int](21*factor_x,15*factor_y)
-	var units = Array.ofDim[Option[Jeton]](21*factor_x,15*factor_y)
+	var tiles = Array.ofDim[Int](real_size_x*factor_x,real_size_y*factor_y)
+	var units = Array.ofDim[Option[Jeton]](real_size_x*factor_x,real_size_y*factor_y)
 	val clock = new Clock(this)
 	var selected_units:List[Jeton] = List()
 	
 	def apply_active(name:String,arg:Array[Int])={
-		print("apply active\n")
 		this.selected_units.map((j:Jeton) => j.model.actives(name).initialize(arg))
 	}
 	
@@ -40,13 +39,10 @@ class Environnement {
 	}
 	
 	def move(x1:Int,y1:Int,x2:Int,y2:Int)={
-		println("Env move function")
 		this.units(x2)(y2) match {
 			case None => 	this.units(x1)(y1) match {
 							case None => println("No one is there -> no one to move")
-							case Some(je:Jeton) =>  	println("move")
-														this.units(x2)(y2) = this.units(x1)(y1)
-														print((this.units(x2)(y2),this.units(x1)(y1)))
+							case Some(je:Jeton) =>  	this.units(x2)(y2) = this.units(x1)(y1)
 														this.units(x1)(y1) = None
 														je.x = x2
 														je.y = y2
@@ -63,8 +59,10 @@ class Environnement {
 					case None =>
 					// Pas opti mais on verra plus tard
 					case Some (j) =>{
-						this.selected_units = j::this.selected_units
-						j.selected = true
+						if (j.model.player == 0){
+							this.selected_units = j::this.selected_units
+							j.selected = true
+						}
 					 }
 				}
 			}
@@ -104,7 +102,6 @@ class Clock(env:Environnement) {
 		val clock = this
 		this.thread_clock = new Thread { 
 								override def run { 
-											println("run clock thread")
 											while (true) {
 												clock.iter_clock()
 												Thread.sleep((clock.micro_period*1000).toLong)

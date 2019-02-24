@@ -27,8 +27,6 @@ object bddCompetences {
 			}
 		}
 		def frequence_move(typage:Unit):Int={
-			println("frequence move")
-			println(move_comp.v_int("nb_wait"))
 			val macro_period = p.jeton.Env.clock.macro_period
 			if (move_comp.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
 				move_comp.v_int("nb_wait") = 0
@@ -39,7 +37,6 @@ object bddCompetences {
 			}
 		}
 		def move():Int ={ //Ne fonctionne que sur un monde sans obstacles
-			println("move")
 			print((move_comp.v_int("x_dest"),move_comp.v_int("y_dest")))
 			print((p.jeton.x,p.jeton.y))
 			val x_dest = move_comp.v_int("x_dest")
@@ -67,20 +64,31 @@ object bddCompetences {
 		//Definition des destinations
 		return move_comp
 	}
+	
+	def create_attack(personnage:Personnage):Active = {
+		val attack = new Active("Attack")
+		def initialize(typage:Array[Int]):Unit = {
+			
+		}
+		def is_in_range(jeton:Jeton){
+			
+		}
+		return attack
+	}
 
-	/*def create_autoattack(jeton:Jeton):Active = {
+	def create_autoattack(personnage:Personnage):Active = {
 		// Autoattack Function
 		val autoattack = new Active("AutoAttack")
-		def func(typage:Unit):Unit ={
+		def initialize(typage:Array[Int]):Unit ={
 			var minimum = 10000
 			var jeton_minimum:Option[Jeton] = None
 			var dist = 0
-			val Env = jeton.Env
+			val Env = personnage.jeton.Env
 			for (i<-0 to Env.units.length) {
 				for (j<-0 to Env.units(i).length) {
 					Env.units(i)(j) match {
 						case None => ()
-						case Some(s:Jeton) => dist = (s.x - jeton.x)^2 + (s.y - jeton.y)^2
+						case Some(s:Jeton) => dist = (s.x - personnage.jeton.x)^2 + (s.y - personnage.jeton.y)^2
 										if (dist < minimum && dist != 0){
 											minimum = dist
 											jeton_minimum = Some(s)
@@ -95,8 +103,8 @@ object bddCompetences {
 				}			
 			}
 		}
-		autoattack.func = func
+		autoattack.initialize = initialize
 		autoattack.autocast_enable()
 		return autoattack
-	}*/
+	}
 }
