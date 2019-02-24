@@ -69,7 +69,7 @@ class Room {
   var west = Array[Boolean](false,false,false,false,false,false,false,false,false)
   var north = Array[Boolean](false,false,false,false,false)
   var center = Array[Boolean](false,false,false)
-  def init() {
+  def room_init() {
   	val r = scala.util.Random // C'est ca la bonne syntaxe pour le module random visiblement
     this.south = Possibilities.verticals(r.nextInt(8))
     this.north = Possibilities.verticals(r.nextInt(8))
@@ -79,78 +79,95 @@ class Room {
     }
 }
 
-abstract class Tile {
-  val is_empty : Boolean
+class Tile {
+  var is_an_obstacle = true
+  var is_plain = true
+  def not_an_obstacle() {
+    this.is_an_obstacle = false;
   }
+  def change_type() {
+    this.is_plain = false;
+  }
+}
   
-class Obstacle extends Tile {
-  val is_empty = false
-  }
 
-class Hallway extends Tile {
-  val is_empty = true
+class Plan {
+  val background = new Tile
+  var hallway = new Tile
+  var lab_wall = new Tile
+  def plan_init() {
+    (this.hallway).not_an_obstacle();
+    (this.lab_wall).change_type();
   }
-
-class Plan{
-  var grid = Array.fill(21,15){new Hallway} //Ici il y avait Obstacle a la place de Hallway
-  var room = new Room						//or comme tu ajoutes remplies avec des Hallway
-  def random_fill {							//c'est mal typé donc j'ai mis le type Hallway
-    room.init()								//(il faut que tu verifie si c'est bien ca que
-    for ( i <- 0 to 20 ) {					//tu voulais faire)
-      grid(i)(0) = new Hallway;
-      grid(i)(14) = new Hallway;
-      if (( i > 2 && i < 8 ) || ( i > 12 && i < 18 )) {
-        grid(i)(3) = new Hallway;
-        grid(i)(11) = new Hallway;
+  var grid = Array.fill(25,25){this.background}
+  var room = new Room
+  def random_fill {
+    this.plan_init();
+    (this.room).room_init();
+    for ( i <- 6 to 18 ; j <- 3 to 21 ) {
+      this.grid(i)(j) = this.lab_wall;
+    }
+    for ( i <- 2 to 3 ; j <- 11 to 13 ) {
+      this.grid(i)(j) = this.hallway;
+      this.grid(24-i)(j) = this.hallway;
+    }
+    this.grid(4)(12) = this.hallway;
+    this.grid(20)(12) = this.hallway;
+    for ( i <- 6 to 18 ) {
+      this.grid(i)(2) = this.hallway;
+      this.grid(i)(12) = this.hallway;
+      this.grid(i)(22) = this.hallway;
+      if ( i > 7 && i < 17 ) {
+        this.grid(i)(5) = this.hallway;
+        this.grid(i)(9) = this.hallway;
+        this.grid(i)(15) = this.hallway;
+        this.grid(i)(19) = this.hallway;
       }
     }
-    for ( j <- 1 to 13 ) {
-      grid(0)(j) = new Hallway;
-      grid(10)(j) = new Hallway;
-      grid(20)(j) = new Hallway;
-      if ( j > 3 && j < 11 ) {
-        grid(3)(j) = new Hallway;
-        grid(7)(j) = new Hallway;
-        grid(13)(j) = new Hallway;
-        grid(17)(j) = new Hallway;
+    for ( j <- 2 to 22 ) {
+      this.grid(5)(j) = this.hallway;
+      this.grid(19)(j) = this.hallway;
+      if ( ( j > 5 && j < 9 ) || ( j > 15 && j < 19 ) ) {
+        this.grid(8)(j) = this.hallway;
+        this.grid(16)(j) = this.hallway;
       }
     }
-    for ( i <- 0 to 4 ) {
-      if (room.south(i)) {
-        grid(i+3)(1) = new Hallway;
-        grid(i+3)(2) = new Hallway;
-        grid(17-i)(1) = new Hallway;
-        grid(17-i)(2) = new Hallway;
+    for ( j <- 0 to 4 ) {
+      if (room.south(j)) {
+        this.grid(17)(j+5) = this.hallway;
+        this.grid(18)(j+5) = this.hallway;
+        this.grid(6)(19-j) = this.hallway;
+        this.grid(7)(19-j) = this.hallway;
       }
-      if (room.north(i)) {
-        grid(i+3)(13) = new Hallway;
-        grid(i+3)(12) = new Hallway;
-        grid(17-i)(13) = new Hallway;
-        grid(17-i)(12) = new Hallway;
-      }
-    }
-    for ( j <- 0 to 2 ) {
-      if (room.center(j)) {
-        grid(4)(j+6) = new Hallway;
-        grid(5)(j+6) = new Hallway;
-        grid(6)(j+6) = new Hallway;
-        grid(14)(j+6) = new Hallway;
-        grid(15)(j+6) = new Hallway;
-        grid(16)(j+6) = new Hallway;
+      if (room.north(j)) {
+        this.grid(6)(j+5) = this.hallway;
+        this.grid(7)(j+5) = this.hallway;
+        this.grid(17)(19-j) = this.hallway;
+        this.grid(18)(19-j) = this.hallway;
       }
     }
-    for ( j <- 0 to 8 ) {
-      if (room.east(j)) {
-        grid(8)(j+3) = new Hallway;
-        grid(9)(j+3) = new Hallway;
-        grid(11)(j+3) = new Hallway;
-        grid(12)(j+3) = new Hallway;
+    for ( i <- 0 to 2 ) {
+      if (room.center(i)) {
+        this.grid(i+11)(6) = this.hallway;
+        this.grid(i+11)(7) = this.hallway;
+        this.grid(i+11)(8) = this.hallway;
+        this.grid(13-i)(16) = this.hallway;
+        this.grid(13-i)(17) = this.hallway;
+        this.grid(13-i)(18) = this.hallway;
       }
-      if (room.west(j)) {
-        grid(1)(j+3) = new Hallway;
-        grid(2)(j+3) = new Hallway;
-        grid(19)(j+3) = new Hallway;
-        grid(18)(j+3) = new Hallway;
+    }
+    for ( i <- 0 to 8 ) {
+      if (room.east(i)) {
+        this.grid(i+8)(10) = this.hallway;
+        this.grid(i+8)(11) = this.hallway;
+        this.grid(16-i)(12) = this.hallway;
+        this.grid(16-i)(13) = this.hallway;
+      }
+      if (room.west(i)) {
+        this.grid(i+8)(3) = this.hallway;
+        this.grid(i+8)(4) = this.hallway;
+        this.grid(16-i)(20) = this.hallway;
+        this.grid(16-i)(21) = this.hallway;
       }
     }
   }  
