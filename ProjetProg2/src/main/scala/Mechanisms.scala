@@ -84,24 +84,30 @@ class Sprite_plan(plan : Plan) {
       for ( (i, j) <- circuits(k) ) {
         var (c1, c2) = this.random_couple(r);
         this.sprite_grid(i)(j) = Circuit(c1,c2,k,false);
-        var (n, m) = move(i, j, k);
+        var n = (move(i, j, k))._1;
+        var m = (move(i, j, k))._2;
         while ( (plan.grid(n)(m)).is_an_obstacle ) {
           this.sprite_grid(n)(m) = Pipe(c1,k,false);
-          (n, m) = move(n, m, k);
+          n = (move(n, m, k))._1;
+          m = (move(n, m, k))._2;
         }
-        (n, m) = move(n, m, (k+2)%4);
+        n = (move(n, m, (k+2)%4))._1;
+        m = (move(n, m, (k+2)%4))._2;
         if ( r.nextInt(4) > 0 ) {
           this.sprite_grid(n)(m) = Vault(r.nextInt(this.stuff.length),false);
         } else {
           this.sprite_grid(n)(m) = Jail(r.nextInt(this.animal.length),false);
         }
         var l = (k+1)%4;
-        (n, m) = move(i, j, l);
+        n = (move(i, j, l))._1;
+        m = (move(i, j, l))._2;
         while ( (plan.grid(n)(m)).is_an_obstacle ) {
           this.sprite_grid(n)(m) = Pipe(c2,l,false);
-          (n, m) = move(n, m, l);
+          n = (move(n, m, l))._1;
+          m = (move(n, m, l))._2;
         }
-        (n, m) = move(n, m, (l+2)%4);
+        n = (move(n, m, (l+2)%4))._1;
+        m = (move(n, m, (l+2)%4))._2;
         if ( r.nextInt(4) > 0 ) {
           this.sprite_grid(n)(m) = Vault(r.nextInt(this.stuff.length),false);
         } else {
