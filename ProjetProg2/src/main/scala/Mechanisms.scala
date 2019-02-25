@@ -28,7 +28,7 @@ class Sprite_plan(plan : Plan) {
   val stuff = Array("confusion_gun","electricity_gun","fire_gun","ice_gun",
                     "ink_gun","poison_gun","confusion_vest","electricity_vest",
                     "fire_vest","ice_vest","ink_vest","poison_vest")
-  def sprite_list(s_g) = {
+  def sprite_list(s_g:Sprite_group):List = {
     s_g match {
       case Circuit(c1,c2,di,false) =>
         List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
