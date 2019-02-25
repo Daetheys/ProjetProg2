@@ -67,15 +67,15 @@ class Sprite_plan(plan : Plan) {
     }
     return (c1, c2)
   }
-  def move(i:Int, j:Int, k:Int) {
+  def move(coord:Array[Int], k:Int) {
     if( k == 0 ) {
-         return (i-1,j);
+         coord(0) = coord(0)-1;
       } else if( k == 1 ) {
-         return (i,j+1);
+         coord(1) = coord(1)+1;
       } else if( k == 2 ) {
-         return (i+1,j);
+         coord(0) = coord(0)+1;
       } else {
-         return (i,j-1);
+         coord(1) = coord(1)-1;
       }
   }
   def random_loot() {
@@ -84,39 +84,33 @@ class Sprite_plan(plan : Plan) {
       for ( (i, j) <- circuits(k) ) {
         var (c1, c2) = this.random_couple(r);
         this.sprite_grid(i)(j) = Circuit(c1,c2,k,false);
-        var n = (move(i, j, k))._1;
-        var m = (move(i, j, k))._2;
-        while ( (plan.grid(n)(m)).is_an_obstacle ) {
-          this.sprite_grid(n)(m) = Pipe(c1,k,false);
-          n = (move(n, m, k))._1;
-          m = (move(n, m, k))._2;
+        var coord = move(Array(i,j), k);
+        while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+          this.sprite_grid(coord(0))(coord(1)) = Pipe(c1,k,false);
+          coord = move(coord, k);
         }
-        n = (move(n, m, (k+2)%4))._1;
-        m = (move(n, m, (k+2)%4))._2;
+        coord = move(coord, (k+2)%4);
         if ( r.nextInt(4) > 0 ) {
-          this.sprite_grid(n)(m) = Vault(r.nextInt(this.stuff.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Vault(r.nextInt(this.stuff.length),false);
         } else {
-          this.sprite_grid(n)(m) = Jail(r.nextInt(this.animal.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Jail(r.nextInt(this.animal.length),false);
         }
         var l = (k+1)%4;
-        n = (move(i, j, l))._1;
-        m = (move(i, j, l))._2;
-        while ( (plan.grid(n)(m)).is_an_obstacle ) {
-          this.sprite_grid(n)(m) = Pipe(c2,l,false);
-          n = (move(n, m, l))._1;
-          m = (move(n, m, l))._2;
+        coord = move(Array(i,j), l);
+        while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+          this.sprite_grid(coord(0))(coord(1)) = Pipe(c2,l,false);
+          coord = move(coord, l);
         }
-        n = (move(n, m, (l+2)%4))._1;
-        m = (move(n, m, (l+2)%4))._2;
+        coord = move(coord, (l+2)%4);
         if ( r.nextInt(4) > 0 ) {
-          this.sprite_grid(n)(m) = Vault(r.nextInt(this.stuff.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Vault(r.nextInt(this.stuff.length),false);
         } else {
-          this.sprite_grid(n)(m) = Jail(r.nextInt(this.animal.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Jail(r.nextInt(this.animal.length),false);
         }
       }
     }
   }
-  var all_the_sprites = Array.fill(25,25){List.Nil}
+  var all_the_sprites = Array.fill(25,25){Nil}
   def init_sprites() {
     this.random_loot();
     for ( i <- 0 to 24 ; j <- 0 to 24 ) {
