@@ -101,7 +101,7 @@ class Plan {
   }
   var grid = Array.fill(25,25){this.background}
   var room = new Room
-  def random_fill {
+  def random_fill() {
     this.plan_init();
     (this.room).room_init();
     for ( i <- 6 to 18 ; j <- 3 to 21 ) {
