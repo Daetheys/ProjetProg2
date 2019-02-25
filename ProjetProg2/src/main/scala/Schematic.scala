@@ -160,8 +160,8 @@ class Plan {
       if (room.east(i)) {
         this.grid(i+8)(10) = this.hallway;
         this.grid(i+8)(11) = this.hallway;
-        this.grid(16-i)(12) = this.hallway;
         this.grid(16-i)(13) = this.hallway;
+        this.grid(16-i)(14) = this.hallway;
       }
       if (room.west(i)) {
         this.grid(i+8)(3) = this.hallway;
