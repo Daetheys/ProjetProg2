@@ -1,5 +1,15 @@
 package Mechanisms
 // Pour la phase de loot en fin de niveau (sans exploration)
+/*
+The main use for this file :
+  (p is an initialized Plan from Schematics.scala)
+  background = new Sprite_plan(p);
+  background.random_loot();
+  background.init_sprites();
+  background.all_the_sprites
+returns the 25 * 25 matrix where each cells contains the list of
+("sprite_name.png", orientation) sorted from bottom layer to top
+*/
 import Schematics.{Tile=>Tile,Plan=>Plan,_}
 
 abstract class Sprite_group
