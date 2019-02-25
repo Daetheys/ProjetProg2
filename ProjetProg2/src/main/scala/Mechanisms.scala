@@ -1,8 +1,8 @@
-package Mechanisms
+//package Mechanisms
 // Pour la phase de loot en fin de niveau (sans exploration)
-import Schematics.{Tile=>Tile,Plan=>Plan,_}
+//import Schematics.{Tile=>Tile,Plan=>Plan,_}
 
-abstract class Sprite_group
+/*abstract class Sprite_group
   case class Circuit(comp1 : Int,
                      comp2 : Int,
                      direc : Int,
@@ -133,4 +133,4 @@ class Sprite_plan(plan : Plan) {
     }
   }     
 }
-    
+*/

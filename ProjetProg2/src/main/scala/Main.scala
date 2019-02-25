@@ -40,7 +40,7 @@ object Game {
 		}
 		app.load_commands()
 		//app.load_colored_cursors() // --> Fait planter (je pense que cette fonctionnalité n'est pas encore bien implémentée dans ScalaFx)
-		//app.load_images_environnement() // --> c'est une opti pas encore utile
+		app.load_images_environnement() // --> c'est une opti pas encore utile
 		// Affiche le terrain
 		def aff_event(typage:Unit):Int={
 			app.aff_all()

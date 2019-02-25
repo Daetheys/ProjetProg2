@@ -1,4 +1,10 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:80:44: value HAND in object Cursor is deprecated (since 8.0.60-R10): Use Hand; HAND will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m			this.stage.scene.value.setCursor(Cursor.HAND)//new ImageCursor(image))[0m
-[0m[[0m[33mwarn[0m] [0m[0m			                                        ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:164:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m						if (t()==1){[0m
+[0m[[0m[33mwarn[0m] [0m[0m						     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:141:21: method stop in class Thread is deprecated: see corresponding Javadoc for more information.[0m
+[0m[[0m[33mwarn[0m] [0m[0m		this.thread_clock.stop[0m
+[0m[[0m[33mwarn[0m] [0m[0m		                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m

@@ -74,26 +74,6 @@ class FileP{
 }
 
 object Algo{
-	def main(args:Array[String]){
-		val Env = new Environnement
-		var plan = Array.fill(25,25){new Tile}
-		for (i <- 0 to 24){
-			for (j <-0 to 24){
-				plan(i)(j) = new Tile
-				plan(i)(j).is_an_obstacle = false
-			}
-		}
-		plan(4)(4).is_an_obstacle = true
-		plan(4)(5).is_an_obstacle = true
-		plan(4)(6).is_an_obstacle = true
-		plan(7)(9).is_an_obstacle = true
-		Env.tiles = plan
-		Env.units = Array.fill(25,25){None}
-		val p = bddp.create_turtle(0)
-		Env.spawn_personnage(p,3,3)
-		println("launch astar")
-		astar(Env,p.jeton,Array(7,9))
-	}
 	
 	def astar(Env:Environnement,je:Jeton,target:Array[Int]):Array[Int]={
 		var tuple = this.astar_algo(Env,je,target)

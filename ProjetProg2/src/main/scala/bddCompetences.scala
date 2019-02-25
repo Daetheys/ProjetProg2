@@ -29,6 +29,7 @@ object bddCompetences {
 			}
 		}
 		def frequence_move(typage:Unit):Int={
+			println("moving")
 			if (p.jeton.died == false){
 				val macro_period = p.jeton.Env.clock.macro_period
 				if (move_comp.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
@@ -41,6 +42,7 @@ object bddCompetences {
 			} else { return 0} //On enleve l'event si l'unité est morte
 		}
 		def move():Int ={ //Ne fonctionne que sur un monde sans obstacles
+			print("move")
 			val x_dest = move_comp.v_int("x_dest")
 			val y_dest = move_comp.v_int("y_dest")
 			val x = p.jeton.x

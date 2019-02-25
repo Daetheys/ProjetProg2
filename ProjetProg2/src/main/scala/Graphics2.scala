@@ -93,12 +93,12 @@ object app extends JFXApp {
 			this.mousePosX = e.x
 			this.mousePosY = e.y
 			//Affichage du rectangle de selection -> Crée trop de bugs pour le moment 
-			/*val xrect = Math.min(this.mouseOldX,e.x)
+			val xrect = Math.min(this.mouseOldX,e.x)
 			val yrect = Math.min(this.mouseOldY,e.y)
 			val wrect = Math.abs(this.mouseOldX-e.x)
 			val hrect = Math.abs(this.mouseOldY-e.y)
 			this.gc.fill = Green
-			this.gc.strokeRoundRect(xrect,yrect,wrect,hrect,2,2)*/ 
+			this.gc.strokeRoundRect(xrect,yrect,wrect,hrect,2,2)
 			//Calcul des unités selectionnées
 			val x1 = borne_x((this.mouseOldX/32).toInt)
 			val x2 = borne_x((e.x/32).toInt)
@@ -289,8 +289,7 @@ object app extends JFXApp {
 					this.get_path("background_tile_hallway.png")
 				}
 				//var image = new Image(path)
-				var image = new Image(path)
-				this.gc.drawImage(image,i*32,j*32,32,32)
+				this.gc.drawImage(this.env_images(i)(j),i*32,j*32,32,32)
 			}
 		}
 	}
