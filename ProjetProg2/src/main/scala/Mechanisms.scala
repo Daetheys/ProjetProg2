@@ -14,10 +14,11 @@ abstract class Sprite_group
                   destr : Boolean ) extends Sprite_group
   case class Jail(anim : Int,
                   open : Boolean ) extends Sprite_group
+  case class Plain() extends Sprite_group
 
 
 class Sprite_plan(plan : Plan) {
-  var sprite_grid = Array.fill(25,25){List.Nil}
+  var sprite_grid = Array.fill(25,25){Plain()}
   val circuits = Array(Array( (6,21), (6,11), (9,8) ),
                        Array( (6,3), (6,13), (9,16) ),
                        Array( (18,3), (18,13), (15,6) ),
@@ -54,6 +55,7 @@ class Sprite_plan(plan : Plan) {
     case Jail(a,true) =>
       List( ("sprite_tile_jail.png", 0),
             ("sprite_character_" + this.animal(a) + ".png", 0))
+    case Plain() => List.Nil
   }
   def random_couple(r) {
     var c1 = r.nextInt(6);
@@ -106,5 +108,21 @@ class Sprite_plan(plan : Plan) {
       }
     }
   }
+  var all_the_sprites = Array.fill(25,25){List.Nil}
+  def init_sprites() {
+    this.random_loot();
+    for ( i <- 0 to 24 ; j <- 0 to 24 ) {
+      if ( (plan.grid(i)(j)).is_an_obstacle ) {
+        if ( (plan.grid(i)(j)).is_plain ) {
+          this.all_the_sprites(i)(j) = List(("background_tile_plain.png",0));
+        } else {
+          this.all_the_sprites(i)(j) = ("background_tile_obstacle",0) ::
+                                       (this.sprite_list(this.sprite_grid(i)(j)));
+        }
+      } else {
+        this.all_the_sprites(i)(j) = List(("background_tile_hallway",0));
+      }
+    }
+  }     
 }
     
