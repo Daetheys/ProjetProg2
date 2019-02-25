@@ -41,7 +41,7 @@ class Sprite_plan(plan : Plan) {
       List( ("sprite_tile_vault.png", 0) )
     case Vault(s,true) =>
       List( ("sprite_tile_vault.png", 0),
-            ("sprite_tile_open_vault.png", 0),
+            ("sprite_tile_open-vault.png", 0),
             ("sprite_object_" + this.stuff(s) + ".png", 0) )
     case Pipe(c,d,false) =>
       List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d) )
