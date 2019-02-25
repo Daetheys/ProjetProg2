@@ -1,7 +1,9 @@
 package Environnement
 import Personnage.{Jeton=>Jeton,Personnage=>Personnage}
 import scala.collection.mutable.ListBuffer
+import Schematics.{Tile=>Tile}
 
+import scalafx.application.{Platform}
 
 class Environnement {
 	val real_size_x = 25
@@ -10,7 +12,7 @@ class Environnement {
 	val factor_y = 1
 	val size_x = real_size_x*factor_x
 	val size_y = real_size_y*factor_y
-	var tiles = Array.ofDim[Int](real_size_x*factor_x,real_size_y*factor_y)
+	var tiles = Array.ofDim[Tile](real_size_x*factor_x,real_size_y*factor_y)
 	var units = Array.ofDim[Option[Jeton]](real_size_x*factor_x,real_size_y*factor_y)
 	val clock = new Clock(this)
 	var selected_units:List[Jeton] = List()
@@ -21,6 +23,21 @@ class Environnement {
 	
 	def start_clock()={
 		this.clock.launch()
+	}
+	
+	def remove_unit(j:Jeton)={
+		this.units(j.x)(j.y) = None
+		def remove_elem(elmt:Jeton,l:List[Jeton]):List[Jeton]={
+			l match {
+				case t::q => if (t == elmt){
+								q
+							} else {
+								t::(remove_elem(elmt,q))
+							}
+				case Nil => Nil
+			}
+		}
+		this.selected_units = remove_elem(j,this.selected_units)
 	}
 	
 	def unselect_all_units()={
@@ -76,6 +93,9 @@ class Environnement {
 			jeton.y = y
 			personnage.jeton = jeton
 			this.units(x)(y) = Some(jeton)
+			jeton.image_path = personnage.image_path
+			//Events de automatiques du jeton
+			personnage.actives("AutoAttack").initialize(Array()) //L'argument n'a pas d'importance
 		}else{
 			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
 		}
@@ -103,7 +123,9 @@ class Clock(env:Environnement) {
 		this.thread_clock = new Thread { 
 								override def run { 
 											while (true) {
-												clock.iter_clock()
+												Platform.runLater{ //Instruction magique qui empeche le moteur graphique de planter :D !
+													clock.iter_clock()
+												}
 												Thread.sleep((clock.micro_period*1000).toLong)
 												}
 											}
@@ -122,6 +144,7 @@ class Clock(env:Environnement) {
 		this.compute_micro_events()
 		this.nb_micro_loop += 1
 		if (this.micro_period * this.nb_micro_loop > this.macro_period) {
+			//println(("length events",this.macro_events.length,this.micro_events.length))
 			this.compute_macro_events()
 			this.nb_micro_loop = 0
 		}
@@ -137,7 +160,7 @@ class Clock(env:Environnement) {
 
 	def iter_events(events:ListBuffer[Unit=>Int]):ListBuffer[Unit=>Int] = { //Execute les fonctions de this.events et les enleve quand elles n'existent plus (si elles renvoient un truc != 1)
 		events match {
-				case t +: q => 	
+				case t +: q => 	//On pourra implémenter des threads ici mais il n'y a pas encore assez d'events pour que ce soit rentable pour le moment
 						if (t()==1){
 							t +: (this.iter_events(q))
 						}

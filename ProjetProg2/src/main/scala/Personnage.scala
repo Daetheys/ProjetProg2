@@ -25,10 +25,19 @@ class Personnage {
 	//Player
 	var player = -1 //Le joueur contrôlant l'unité -> 0 (joueur) // 1 (ia)
 	
+	var image_path:String = ""
+	
 	var jeton = new Jeton(this,new Environnement)
 	
 	def add_active(act:Active){
 		this.actives(act.name) = act
+	}
+	def take_damages(amount:Int){
+		this.pv_current -= amount
+		if (this.pv_current <= 0){
+			this.jeton.died = true
+			this.jeton.Env.remove_unit(this.jeton)
+		}
 	}
 }
 
@@ -43,6 +52,7 @@ class Jeton(modell:Personnage,env:Environnement){
 	var orientation:Int=0
 	var Env:Environnement = env
 	var selected:Boolean = false
+	var image_path:String = ""
 	//Status
 	var status = None
 

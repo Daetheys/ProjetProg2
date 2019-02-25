@@ -1,29 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:44:10: missing argument list for method find_place[0m
-[0m[[0m[31merror[0m] [0m[0mUnapplied methods are only converted to functions when a function type is expected.[0m
-[0m[[0m[31merror[0m] [0m[0mYou can make this conversion explicit by writing `find_place _` or `find_place(_,_)` instead of `find_place`.[0m
-[0m[[0m[31merror[0m] [0m[0m								(find_place t e) ++ q[0m
-[0m[[0m[31merror[0m] [0m[0m								 ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:50:17: value find_index is not a member of Algo.FileP[0m
-[0m[[0m[31merror[0m] [0m[0m		this.l = this.find_index(v,this.l)[0m
-[0m[[0m[31merror[0m] [0m[0m		              ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:106:5: enclosing method astar_algo has result type Unit: return value discarded[0m
-[0m[[0m[33mwarn[0m] [0m[0m				return (d,P)[0m
-[0m[[0m[33mwarn[0m] [0m[0m				^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:116:10: value maj is not a member of Algo.FileP[0m
-[0m[[0m[31merror[0m] [0m[0m							F.maj(v,cle(v)) //cle(v) vient d'etre modifiée[0m
-[0m[[0m[31merror[0m] [0m[0m							  ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:119:13: missing argument list for method contains in trait SeqForwarder[0m
-[0m[[0m[31merror[0m] [0m[0mUnapplied methods are only converted to functions when a function type is expected.[0m
-[0m[[0m[31merror[0m] [0m[0mYou can make this conversion explicit by writing `contains _` or `contains(_)` instead of `contains`.[0m
-[0m[[0m[31merror[0m] [0m[0m						if (T.contains v) {[0m
-[0m[[0m[31merror[0m] [0m[0m						      ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:119:22: postfix operator v should be enabled[0m
-[0m[[0m[33mwarn[0m] [0m[0mby making the implicit value scala.language.postfixOps visible.[0m
-[0m[[0m[33mwarn[0m] [0m[0mThis can be achieved by adding the import clause 'import scala.language.postfixOps'[0m
-[0m[[0m[33mwarn[0m] [0m[0mor by setting the compiler option -language:postfixOps.[0m
-[0m[[0m[33mwarn[0m] [0m[0mSee the Scaladoc for value scala.language.postfixOps for a discussion[0m
-[0m[[0m[33mwarn[0m] [0m[0mwhy the feature should be explicitly enabled.[0m
-[0m[[0m[33mwarn[0m] [0m[0m						if (T.contains v) {[0m
-[0m[[0m[33mwarn[0m] [0m[0m						               ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
-[0m[[0m[31merror[0m] [0m[0mfour errors found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:80:44: value HAND in object Cursor is deprecated (since 8.0.60-R10): Use Hand; HAND will be removed in a future release[0m
+[0m[[0m[33mwarn[0m] [0m[0m			this.stage.scene.value.setCursor(Cursor.HAND)//new ImageCursor(image))[0m
+[0m[[0m[33mwarn[0m] [0m[0m			                                        ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
