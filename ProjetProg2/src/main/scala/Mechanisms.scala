@@ -28,34 +28,36 @@ class Sprite_plan(plan : Plan) {
   val stuff = Array("confusion_gun","electricity_gun","fire_gun","ice_gun",
                     "ink_gun","poison_gun","confusion_vest","electricity_vest",
                     "fire_vest","ice_vest","ink_vest","poison_vest")
-  def sprite_list : Sprite_group => List {
-    case Circuit(c1,c2,di,false) =>
-      List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
-            ("sprite_mechanism_split.png", di),
-            ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4) )
-    case Circuit(c1,c2,di,true) =>
-      List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
-            ("sprite_mechanism_split.png", di),
-            ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4),
-            ("sprite_mechanism_switch_used.png", di) )
-    case Vault(s,false) =>
-      List( ("sprite_tile_vault.png", 0) )
-    case Vault(s,true) =>
-      List( ("sprite_tile_vault.png", 0),
-            ("sprite_tile_open-vault.png", 0),
-            ("sprite_object_" + this.stuff(s) + ".png", 0) )
-    case Pipe(c,d,false) =>
-      List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d) )
-    case Pipe(c,d,true) =>
-      List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d),
-            ("sprite_mechanism_pipe_used.png", d) )
-    case Jail(a,false) =>
-      List( ("sprite_character_" + this.animal(a) + ".png", 0),
-            ("sprite_tile_jail.png", 0) )
-    case Jail(a,true) =>
-      List( ("sprite_tile_jail.png", 0),
-            ("sprite_character_" + this.animal(a) + ".png", 0))
-    case Plain() => List.Nil
+  def sprite_list(s_g) = {
+    s_g match {
+      case Circuit(c1,c2,di,false) =>
+        List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
+              ("sprite_mechanism_split.png", di),
+              ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4) )
+      case Circuit(c1,c2,di,true) =>
+        List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
+              ("sprite_mechanism_split.png", di),
+              ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4),
+              ("sprite_mechanism_switch_used.png", di) )
+     case Vault(s,false) =>
+        List( ("sprite_tile_vault.png", 0) )
+      case Vault(s,true) =>
+        List( ("sprite_tile_vault.png", 0),
+              ("sprite_tile_open-vault.png", 0),
+              ("sprite_object_" + this.stuff(s) + ".png", 0) )
+     case Pipe(c,d,false) =>
+        List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d) )
+      case Pipe(c,d,true) =>
+        List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d),
+              ("sprite_mechanism_pipe_used.png", d) )
+     case Jail(a,false) =>
+        List( ("sprite_character_" + this.animal(a) + ".png", 0),
+              ("sprite_tile_jail.png", 0) )
+     case Jail(a,true) =>
+        List( ("sprite_tile_jail.png", 0),
+              ("sprite_character_" + this.animal(a) + ".png", 0))
+      case Plain() => List.Nil
+    }
   }
   def random_couple(r) {
     var c1 = r.nextInt(6);
