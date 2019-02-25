@@ -59,7 +59,7 @@ class Sprite_plan(plan : Plan) {
       case Plain() => List.Nil
     }
   }
-  def random_couple(r) {
+  def random_couple(r:scala.util.Random) {
     var c1 = r.nextInt(6);
     var c2 = r.nextInt(6);
     while ( c2 == c1 ) {
@@ -79,7 +79,7 @@ class Sprite_plan(plan : Plan) {
       }
   }
   def random_loot() {
-    val r = scala.util.Random;
+    val r = new scala.util.Random();
     for ( k <- 0 to 3 ) {
       for ( (i, j) <- circuits(k) ) {
         var (c1, c2) = this.random_couple(r);
