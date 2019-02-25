@@ -18,7 +18,7 @@ abstract class Sprite_group
 
 
 class Sprite_plan(plan : Plan) {
-  var sprite_grid = Array.fill(25,25){Plain()}
+  var sprite_grid:Array[Array[Sprite_group]] = Array.fill(25,25){Mechanisms.Plain()}
   val circuits = Array(Array( (6,21), (6,11), (9,8) ),
                        Array( (6,3), (6,13), (9,16) ),
                        Array( (18,3), (18,13), (15,6) ),
@@ -28,7 +28,7 @@ class Sprite_plan(plan : Plan) {
   val stuff = Array("confusion_gun","electricity_gun","fire_gun","ice_gun",
                     "ink_gun","poison_gun","confusion_vest","electricity_vest",
                     "fire_vest","ice_vest","ink_vest","poison_vest")
-  def sprite_list(s_g:Sprite_group):List = {
+  def sprite_list(s_g:Sprite_group):List[(String, Int)] = {
     s_g match {
       case Circuit(c1,c2,di,false) =>
         List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
@@ -56,10 +56,10 @@ class Sprite_plan(plan : Plan) {
      case Jail(a,true) =>
         List( ("sprite_tile_jail.png", 0),
               ("sprite_character_" + this.animal(a) + ".png", 0))
-      case Plain() => List.Nil
+      case Plain() => Nil
     }
   }
-  def random_couple(r:scala.util.Random) {
+  def random_couple(r:scala.util.Random):(Int, Int) = {
     var c1 = r.nextInt(6);
     var c2 = r.nextInt(6);
     while ( c2 == c1 ) {
@@ -82,35 +82,37 @@ class Sprite_plan(plan : Plan) {
     val r = new scala.util.Random();
     for ( k <- 0 to 3 ) {
       for ( (i, j) <- circuits(k) ) {
-        var (c1, c2) = this.random_couple(r);
-        this.sprite_grid(i)(j) = Circuit(c1,c2,k,false);
-        var coord = move(Array(i,j), k);
+        val (c1, c2) = this.random_couple(r);
+        this.sprite_grid(i)(j) = Mechanisms.Circuit(c1,c2,k,false);
+        var coord = Array(i,j);
+	this.move(coord, k);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
-          this.sprite_grid(coord(0))(coord(1)) = Pipe(c1,k,false);
-          coord = move(coord, k);
+          this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c1,k,false);
+          this.move(coord, k);
         }
-        coord = move(coord, (k+2)%4);
+        this.move(coord, (k+2)%4);
         if ( r.nextInt(4) > 0 ) {
-          this.sprite_grid(coord(0))(coord(1)) = Vault(r.nextInt(this.stuff.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Vault(r.nextInt(this.stuff.length),false);
         } else {
-          this.sprite_grid(coord(0))(coord(1)) = Jail(r.nextInt(this.animal.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Jail(r.nextInt(this.animal.length),false);
         }
         var l = (k+1)%4;
-        coord = move(Array(i,j), l);
+	coord = Array(i,j);
+        this.move(coord, l);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
-          this.sprite_grid(coord(0))(coord(1)) = Pipe(c2,l,false);
-          coord = move(coord, l);
+          this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c2,l,false);
+          this.move(coord, l);
         }
-        coord = move(coord, (l+2)%4);
+        this.move(coord, (l+2)%4);
         if ( r.nextInt(4) > 0 ) {
-          this.sprite_grid(coord(0))(coord(1)) = Vault(r.nextInt(this.stuff.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Vault(r.nextInt(this.stuff.length),false);
         } else {
-          this.sprite_grid(coord(0))(coord(1)) = Jail(r.nextInt(this.animal.length),false);
+          this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Jail(r.nextInt(this.animal.length),false);
         }
       }
     }
   }
-  var all_the_sprites = Array.fill(25,25){Nil}
+  var all_the_sprites:Array[Array[List[(String, Int)]]] = Array.fill(25,25){Nil}
   def init_sprites() {
     this.random_loot();
     for ( i <- 0 to 24 ; j <- 0 to 24 ) {
@@ -127,4 +129,3 @@ class Sprite_plan(plan : Plan) {
     }
   }     
 }
-    
