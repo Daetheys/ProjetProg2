@@ -67,7 +67,7 @@ class Sprite_plan(plan : Plan) {
     }
     return (c1, c2)
   }
-  def mouv(i:Int, j:Int, k:Int) {
+  def move(i:Int, j:Int, k:Int) {
     if( k == 0 ) {
          return (i-1,j);
       } else if( k == 1 ) {
