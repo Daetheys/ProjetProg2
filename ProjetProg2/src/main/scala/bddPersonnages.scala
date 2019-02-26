@@ -97,7 +97,7 @@ object bddPersonnages {
 		robot.player = player
 		robot.actives("Move") = bddComp.create_move(robot,3,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,3,3,3)
-		robot.image_path = "sprite_character_robot.png"
+		robot.image_path = "sprite_character_turret.png"
 		return robot
 	}
 }
