@@ -6,6 +6,7 @@ import Graphics2.{app=>app}
 import bddPersonnages.{bddPersonnages=>bddp}
 import Schematics.{Tile=>Tile,Plan=>Plan}
 import Mechanisms.{Sprite_plan=>Sprite_plan}
+import Display.{All_sprites=>All_sprites}
 
 object Game {
 
@@ -16,28 +17,21 @@ object Game {
 		//Transfert de l'environnement
 		app.Env = this.Env
 		
-		//Chargement de l'environnement (sprites et tiles)
+		//Chargement de l'objet contenant l'initialisation du terrain
 		val plan = new Plan
-		val sprite_plan = new Sprite_plan(plan)
 		plan.random_fill
+		val sprite_plan = new Sprite_plan(plan)
 		sprite_plan.random_loot
 		sprite_plan.init_sprites
-		this.Env.sprites = sprite_plan.all_the_sprites.transpose
+		val all_sprites = new All_sprites(sprite_plan)
+		this.Env.sprites = all_sprites.main_grid.transpose
 		//print(scala.runtime.ScalaRunTime.stringOf(this.Env.sprites))
 		val tiles = plan.grid.transpose //-> Ne sert plus que pour les collisions
 		this.Env.tiles = tiles
 		
 		//Chargement des personnages
-		var personnages = Array.ofDim[Option[Personnage]](this.Env.size_x,this.Env.size_y)
-		for (i <- 0 to personnages.length-1){
-			for (j <- 0 to personnages(i).length-1){
-				personnages(i)(j) = None
-			}
-		}
-		personnages(12)(3) = Some(bddp.create_bird(0))
-		personnages(13)(3) = Some(bddp.create_monkey(0))
-		personnages(12)(7) = Some(bddp.create_robot(1))
-		personnages(12)(10) = Some(bddp.create_robot(1))
+		all_sprites.load_demo_version1
+		var personnages = all_sprites.personnages
 		
 		//Spawn des unités sur l'environnement
 		for (i <- 0 to personnages.length-1){

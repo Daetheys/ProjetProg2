@@ -366,12 +366,12 @@ object app extends JFXApp {
 			def toInt(b:Boolean):Int={
 				if (b) {return 1} else {return 0}
 			}
-			val deg = (t._2)*(90.0) //Math.Pi n'a pas l'air de marcher
+			val deg = (t._2)*(-90.0) //Math.Pi n'a pas l'air de marcher
 			//this.gc.drawImage(t._1,i*32,j*32,32,32)
 			this.gc.save()
 			this.gc.rotate(deg)
-			val x_offset = toInt(List(90,180).contains(Math.abs(deg).toInt%360))
-			val y_offset = toInt(List(180,270).contains(Math.abs(deg).toInt%360)) 
+			val y_offset = toInt(List(90,180).contains(Math.abs(deg).toInt%360))
+			val x_offset = toInt(List(180,270).contains(Math.abs(deg).toInt%360)) 
 			var t2 = rotate((i+x_offset)*32.0,(j+y_offset)*32.0,-deg)
 			this.gc.drawImage(t._1,t2._1,t2._2,32,32)
 			//println(("real",t2._1,t2._2))
