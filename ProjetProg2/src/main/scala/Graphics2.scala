@@ -49,6 +49,7 @@ object app extends JFXApp {
 		}
 	}
 	private var env_images:Array[Array[Image]] = Array.ofDim[Image](Env.size_x,Env.size_y)
+	private var sprites_images:Array[Array[List[Image]]]= Array.ofDim[List[Image]](Env.size_x,Env.size_y)
 	
 	private var message_buffer:ListBuffer[String] = ListBuffer()
 	private var message_active:Boolean = false
@@ -57,12 +58,14 @@ object app extends JFXApp {
 	//Game.initialize()
 	
 	def load_commands()={
+		//charge les commandes du jeu
 		this.load_drag_selection_command()
 		this.right_click_command_load()
 		//this.load_colored_cursors() //-> Les images sont introuvables !!! (même avec un chemin absolu)
 		}
 	
 	def load_colored_cursors()={
+		//Colorie le curseur en fonction de l'unité qu'il y a en dessous
 		//Pour le moment ce programme plante
 		this.canvas.onMouseMoved = (e: MouseEvent) =>
 			{val x = (e.x/32).toInt
@@ -82,6 +85,7 @@ object app extends JFXApp {
 	}
 	
 	def load_drag_selection_command()={
+		//Permet de selectionner des unités
 		def borne_x(nb:Int):Int={
 			return Math.min(Math.max(nb,0),Env.size_x-1)
 			}
@@ -115,6 +119,7 @@ object app extends JFXApp {
 			e.consume()}
 	}
 	def right_click_command_load()={
+		//Permet de déplacer les unités selectionnées
 		this.canvas.onMousePressed = (e: MouseEvent) =>
 			{
 				if (e.isSecondaryButtonDown){
@@ -126,6 +131,7 @@ object app extends JFXApp {
 		}
 		
 	def draw_shoot_line(x1:Int,y1:Int,x2:Int,y2:Int)={
+		//Affiche un projectile pour représenter une attaque
 		val timer_max = 20
 		var timer = timer_max
 		val projectile_length = 10 //10px
@@ -154,15 +160,16 @@ object app extends JFXApp {
 		this.Env.clock.add_micro_event(aff_line)
 	}
 	
-	def draw_dmg_text(x:Int,y:Int,length:Int,nb:Int)={
+	def draw_dmg_text(x:Int,y:Int,length:Int,nb:Int,signe:String,color:scalafx.scene.paint.Color)={
+		//Affiche un texte pour les dégats pris
 		var timer = 20 // On suppose ne pas a voir trop d'attaque ne meme temps
 		def aff_text(typage:Unit):Int={
 			timer -= 1
 			if (timer <= 0){
 				return 0
 			} else {
-				this.gc.fill = Red
-				this.gc.fillText("-"+nb.toString,x*32+18,y*32+2,length)
+				this.gc.fill = color
+				this.gc.fillText(signe+nb.toString,x*32+18,y*32+2,length)
 				return 1
 			}
 		}
@@ -171,6 +178,7 @@ object app extends JFXApp {
 	}
 		
 	def aff_message(text:String)={
+		//Affiche une boîte de dialogue
 		this.message_buffer += text
 		def reset_time():Unit={
 			this.time = timer*(1/this.Env.clock.micro_period).toInt
@@ -179,7 +187,7 @@ object app extends JFXApp {
 			this.message_buffer match{
 				case text +: q => 
 					val x = 0
-					val y = 480
+					val y = 680
 					val w = 800
 					val h = 120
 					val x_offset = 10
@@ -216,10 +224,12 @@ object app extends JFXApp {
 	def aff_all()={
 		// Affiche les tiles et les sprites (pour le moment Scalafx n'arrive pas a trouver les liens
 		this.aff_environnement()
+		this.aff_sprites()
 		this.aff_units()
 		this.aff_life_bars()
 	}
 	def aff_units()={
+		//Affiche les sprites des unités
 		for (i <- 0 to Env.units.length-1){
 			for (j <- 0 to Env.units(i).length-1){
 				Env.units(i)(j) match{
@@ -234,6 +244,7 @@ object app extends JFXApp {
 	}
 	
 	def aff_life_bars() = {
+		//Affiche les barres de pv
 		var color1 = Blue
 		var color2 = Blue
 		for (i <- 0 to Env.units.length-1){
@@ -254,7 +265,9 @@ object app extends JFXApp {
 									}
 							}
 							var length = 24*jeton.model.pv_current.toDouble/jeton.model.pv_max.toDouble
-							this.gc.fill = color1
+							if (jeton.selected){
+								this.gc.fill = color1
+							} else { this.gc.fill = color2 }
 							this.gc.fillRect(i*32+4,j*32-2,length.toInt+1,5) //Le +1 sert a ce que la barre disparaisse exactement quand la cible va disparaitre
 							//C'est illisible de mettre les pv au dessus de la barre de pv (trop petit)
 							//this.gc.fill = color2
@@ -266,7 +279,7 @@ object app extends JFXApp {
 	}
 	
 	def load_images_environnement()={
-		//Cette fonction sert a opti l'affichage
+		//Cette fonction sert a opti l'affichage des tiles
 		for (i <- 0 to Env.tiles.length-1){
 			for (j <- 0 to Env.tiles(i).length-1){
 				var path = if (Env.tiles(i)(j).is_an_obstacle) {
@@ -280,7 +293,24 @@ object app extends JFXApp {
 		}
 	}
 	
+	def load_sprites() ={
+		for (i <- 0 to Env.sprites.length-1){
+			for (j <-0 to Env.sprites.length-1){
+				this.sprites_images(i)(j) = this.Env.sprites(i)(j).map((e:(String,Int)) => new Image(this.get_path(e._1)))
+			}
+		}
+	}
+	
+	def aff_sprites() = {
+		for (i <- 0 to Env.sprites.length-1){
+			for (j <-0 to Env.sprites.length-1){
+				this.sprites_images(i)(j).map((e:Image) => this.gc.drawImage(e,i*32,j*32,32,32))
+			}
+		}
+	}
+	
 	def aff_environnement() ={
+		//Affiche les tiles
 		for (i <- 0 to Env.tiles.length-1){
 			for (j <- 0 to Env.tiles(i).length-1){
 				var path = if (Env.tiles(i)(j).is_an_obstacle) {

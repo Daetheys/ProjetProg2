@@ -5,6 +5,7 @@ import Personnage.{Jeton=>Jeton,_}
 import Environnement.{Environnement=>Environnement}
 import Algo.{Algo=>Algo}
 import Graphics2.{app=>app}
+import scalafx.scene.paint.Color._
 
 
 object bddCompetences {
@@ -29,7 +30,7 @@ object bddCompetences {
 			}
 		}
 		def frequence_move(typage:Unit):Int={
-			println("moving")
+			//Event qui regule la vitesse de déplacement
 			if (p.jeton.died == false){
 				val macro_period = p.jeton.Env.clock.macro_period
 				if (move_comp.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
@@ -41,8 +42,8 @@ object bddCompetences {
 				}
 			} else { return 0} //On enleve l'event si l'unité est morte
 		}
-		def move():Int ={ //Ne fonctionne que sur un monde sans obstacles
-			print("move")
+		def move():Int ={
+			//Deplace le jeton (avec un astar, ...)
 			val x_dest = move_comp.v_int("x_dest")
 			val y_dest = move_comp.v_int("y_dest")
 			val x = p.jeton.x
@@ -62,31 +63,32 @@ object bddCompetences {
 		return move_comp
 	}
 	
-	def create_attack(personnage:Personnage):Active = {
-		val attack = new Active("Attack")
-		def initialize(typage:Array[Int]):Unit = {
-			
-		}
-		def is_in_range(jeton:Jeton){
-			
-		}
-		return attack
-	}
 
 	def create_autoattack(personnage:Personnage,range:Int,dmg:Int,attack_speed:Int):Active = {
-		// Autoattack Function
+		// Renvoie la compétence d'attaque automatique
 		val autoattack = new Active("AutoAttack")
 		def initialize(typage:Array[Int]):Unit ={
 			autoattack.v_int("compt") = 0
 			personnage.jeton.Env.clock.add_macro_event(func)
 		}
-		def verify_los(x1:Int,y1:Int,x2:Int,y2:Int)={
-		
+		def verify_los(x1:Int,y1:Int,x2:Int,y2:Int):Boolean={
+			//Pas encore implémentée : vérifie que la cible est bien en ligne de vue (pour ne pas tirer a travers un mur)
+			def y(x:Int)={
+				((y2-y1).toDouble/(x2-x1).toDouble).toInt*x
+			}
+			var f = false
+			for (i <- 0 to x2-x1){
+				f = personnage.jeton.Env.tiles(i)(y(i)).is_an_obstacle && f
+			}
+			return f
 		}
 		def func(typage:Unit):Int={
+			//Fonction d'attaque
 			if (personnage.jeton.died == false){
+				//Gestion de la vitesse d'attaque
 				if (autoattack.v_int("compt").toDouble*attack_speed > 1/personnage.jeton.Env.clock.macro_period.toDouble){
 					autoattack.v_int("compt") = 0
+					//Recherche de l'ennemi le plus proche
 					var minimum = 10000
 					var jeton_minimum:Option[Jeton] = None
 					var dist = -1
@@ -103,11 +105,12 @@ object bddCompetences {
 							}
 						}
 					}
+					//Verification qu'il est a portée et attaque si c'est le cas (+ affichage graphique)
 					if (minimum <= Math.pow(range,2).toInt){
 						jeton_minimum match {
 							case None => ()
 							case Some(s) => app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
-											app.draw_dmg_text(s.x,s.y,10,dmg)
+											app.draw_dmg_text(s.x,s.y,10,dmg,"-",Red)
 											s.model.take_damages(dmg)
 											
 						}			
