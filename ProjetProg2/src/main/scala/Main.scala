@@ -66,9 +66,7 @@ object Game {
 		val timer = 30*10
 		var time = 0
 		def play_audio(typage:Unit):Int={
-			println("event")
 			if (time <= 0){
-				println("start")
 				val url = new URL(app.get_path("dash_runner.wav"))
 				val audioIn = AudioSystem.getAudioInputStream(url)
 				val clip = AudioSystem.getClip
