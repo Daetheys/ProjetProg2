@@ -53,7 +53,7 @@ object app extends JFXApp {
 	
 	private var message_buffer:ListBuffer[String] = ListBuffer()
 	private var message_active:Boolean = false
-	private val timer = 10 //Nb de secondes d'affichage par message
+	private val timer = 2 //Nb de secondes d'affichage par message
 	private var time = 0 //Compteur pour savoir depuis cb de temps le message est affiché
 	//Game.initialize()
 	
@@ -111,7 +111,7 @@ object app extends JFXApp {
 			Env.select_units(x1,y1,x2,y2)
 			e.consume()}
 		this.canvas.onDragDetected = (e: MouseEvent) => 
-			{print("in\n")
+			{
 			this.mousePosX = e.x
 			this.mousePosY = e.y
 			this.mouseOldX = e.x
@@ -123,9 +123,20 @@ object app extends JFXApp {
 		this.canvas.onMousePressed = (e: MouseEvent) =>
 			{
 				if (e.isSecondaryButtonDown){
-					println(scala.runtime.ScalaRunTime.stringOf(this.Env.sprites((e.x/32).toInt)((e.y/32).toInt)))
 					var target = Array((e.x/32).toInt,(e.y/32).toInt)
-					Env.apply_active("Move",target)
+					this.Env.apply_active("Move",target)
+				}
+				if (e.isPrimaryButtonDown){
+					//Casse les mécanismes (se ferra avec des compétences précises plus tard)
+					val x = (e.x/32).toInt
+					val y = (e.y/32).toInt
+					for (comp <- 0 to this.Env.sprite_plan.compet.length - 1){
+						this.Env.sprite_plan.activation(y,x,comp)
+						this.Env.sprite_plan.init_sprites
+						this.Env.sprites = this.Env.sprite_plan.all_the_sprites.transpose
+						this.load_sprites()
+					}
+					
 				}
 			}
 		}

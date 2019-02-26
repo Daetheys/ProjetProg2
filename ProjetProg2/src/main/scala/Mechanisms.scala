@@ -162,24 +162,26 @@ class Sprite_plan(plan : Plan) {
   def activation(x:Int, y:Int, c:Int) {
     (this.sprite_grid(x)(y)) match {
       case Circuit(c1,c2,d,false) =>
+      	print("ok")
         if ( c1 == c ) {
-	  this.destruct(x,y);
-	  var coord = Array(x, y);
-	  this.move(coord, d);
-	  while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
-	    this.destruct(coord(0),coord(1));
-	    this.move(coord, d);
-	  }
-	} else if ( c2 == c ) {
-	  this.destruct(x,y);
-	  var coord = Array(x, y);
-	  val e = (d+1)%4;
-	  this.move(coord, e);
-	  while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
-	    this.destruct(coord(0),coord(1));
-	    this.move(coord, e);
-	  }
-	}
+		  this.destruct(x,y);
+		  var coord = Array(x, y);
+		  this.move(coord, d);
+		  while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+			this.destruct(coord(0),coord(1));
+			this.move(coord, d);
+	  		}
+		} else if ( c2 == c ) {
+		  this.destruct(x,y);
+		  var coord = Array(x, y);
+		  val e = (d+1)%4;
+		  this.move(coord, e);
+		  while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+			this.destruct(coord(0),coord(1));
+			this.move(coord, e);
+		  }
+		}
+    case x => println(x)
     }
   }
 }

@@ -2,6 +2,7 @@ package Environnement
 import Personnage.{Jeton=>Jeton,Personnage=>Personnage}
 import scala.collection.mutable.ListBuffer
 import Schematics.{Tile=>Tile}
+import Mechanisms.{Sprite_plan => Sprite_plan}
 
 import scalafx.application.{Platform}
 
@@ -17,6 +18,8 @@ class Environnement {
 	var units = Array.ofDim[Option[Jeton]](real_size_x*factor_x,real_size_y*factor_y)
 	val clock = new Clock(this)
 	var selected_units:List[Jeton] = List()
+	
+	var sprite_plan:Sprite_plan = null
 	
 	var sprites:Array[Array[List[(String,Int)]]] = Array(Array(List()))
 	

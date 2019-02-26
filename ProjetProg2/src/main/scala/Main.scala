@@ -28,6 +28,7 @@ object Game {
 		//print(scala.runtime.ScalaRunTime.stringOf(this.Env.sprites))
 		val tiles = plan.grid.transpose //-> Ne sert plus que pour les collisions
 		this.Env.tiles = tiles
+		this.Env.sprite_plan = sprite_plan
 		
 		//Chargement des personnages
 		all_sprites.load_demo_version1
@@ -46,7 +47,6 @@ object Game {
 		
 		//Affichage de l'environnement
 		app.load_commands()
-		app.key_press_load()
 		//app.load_colored_cursors() // --> Fait planter (je pense que cette fonctionnalité n'est pas encore bien implémentée dans ScalaFx)
 		//app.load_images_environnement() // --> c'est une opti pas encore utile
 		app.load_sprites() //-> Opti necessaire sinon java crash car trop de trucs a afficher
