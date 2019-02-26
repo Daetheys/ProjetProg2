@@ -89,10 +89,15 @@ class Sprite_plan(plan : Plan) {
       }
   }
   def random_loot() {
-    val r = new scala.util.Random();
+    val r = scala.util.Random;
+    var i = 0;
+    var j = 0;
+    var c1 = 0;
+    var c2 = 0;
     for ( k <- 0 to 3 ) {
-      for ( (i, j) <- circuits(k) ) {
-        val (c1, c2) = this.random_couple(r);
+      for ( a <- this.circuits(k) ) {
+	i = a._1; j =a._2;
+        (c1, c2) = this.random_couple(r);
         this.sprite_grid(i)(j) = Mechanisms.Circuit(c1,c2,k,false);
         var coord = Array(i,j);
 	this.move(coord, k);
