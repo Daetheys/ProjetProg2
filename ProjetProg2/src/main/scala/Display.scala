@@ -28,7 +28,7 @@ class All_sprites(plan:Sprite_plan) {
     p(12)(20) = Some(bddP.create_bird(0))
     p(11)(21) = Some(bddP.create_cat(0))
     p(12)(21) = Some(bddP.create_monkey(0))
-    p(13)(21) = Some(bddP.create_bird(0))
+    p(13)(21) = Some(bddP.create_snake(0))
     for ( (x,y) <- this.robots_pos ) {
       p(x)(y) = (Some(bddP.create_robot(1)));
     }
