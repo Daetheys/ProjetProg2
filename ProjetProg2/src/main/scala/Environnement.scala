@@ -103,7 +103,6 @@ class Environnement {
 			jeton.y = y
 			personnage.jeton = jeton
 			this.units(x)(y) = Some(jeton)
-			jeton.image_path = personnage.image_path
 			//Events de automatiques du jeton
 			personnage.actives("AutoAttack").initialize(Array()) //L'argument n'a pas d'importance
 		}else{

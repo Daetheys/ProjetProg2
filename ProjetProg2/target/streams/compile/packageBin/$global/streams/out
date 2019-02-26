@@ -2,6 +2,8 @@
 [0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Schematics/Possibilities.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Schematics/Possibilities.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Display/All_sprites.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Display/All_sprites.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Game/Game$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Game/Game$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	bddPersonnages/bddPersonnages$.class[0m
@@ -46,6 +48,8 @@
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Mechanisms/Vault$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Competence/Competence.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Competence/Competence.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	Display[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Display[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Mechanisms/Circuit$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	  /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes/Mechanisms/Circuit$.class[0m
 [0m[[0m[0mdebug[0m] [0m[0m	Mechanisms/Vault.class[0m

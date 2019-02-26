@@ -129,11 +129,11 @@ class Sprite_plan(plan : Plan) {
         if ( (plan.grid(i)(j)).is_plain ) {
           this.all_the_sprites(i)(j) = List(("background_tile_plain.png",0));
         } else {
-          this.all_the_sprites(i)(j) = ("background_tile_obstacle",0) ::
+          this.all_the_sprites(i)(j) = ("background_tile_obstacle.png",0) ::
                                        (this.sprite_list(this.sprite_grid(i)(j)));
         }
       } else {
-        this.all_the_sprites(i)(j) = List(("background_tile_hallway",0));
+        this.all_the_sprites(i)(j) = List(("background_tile_hallway.png",0));
       }
     }
   }

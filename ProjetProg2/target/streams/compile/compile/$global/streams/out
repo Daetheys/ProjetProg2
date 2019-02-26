@@ -1,7 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:299:10: value sprites is not a member of object Graphics2.app[0m
-[0m[[0m[31merror[0m] [0m[0m				this.sprites(i)(j) = this.sprites(i)(j).reverse[0m
-[0m[[0m[31merror[0m] [0m[0m				     ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:299:31: value sprites is not a member of object Graphics2.app[0m
-[0m[[0m[31merror[0m] [0m[0m				this.sprites(i)(j) = this.sprites(i)(j).reverse[0m
-[0m[[0m[31merror[0m] [0m[0m				                          ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:238:22: forward reference extends over definition of value x[0m
+[0m[[0m[31merror[0m] [0m[0m			var t2 = rotate(x,y,-deg)[0m
+[0m[[0m[31merror[0m] [0m[0m			                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

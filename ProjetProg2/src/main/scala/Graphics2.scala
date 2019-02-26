@@ -49,7 +49,7 @@ object app extends JFXApp {
 		}
 	}
 	private var env_images:Array[Array[Image]] = Array.ofDim[Image](Env.size_x,Env.size_y)
-	private var sprites_images:Array[Array[List[Image]]]= Array.ofDim[List[Image]](Env.size_x,Env.size_y)
+	private var sprites_images:Array[Array[List[(Image,Int)]]]= Array.ofDim[List[(Image,Int)]](Env.size_x,Env.size_y)
 	
 	private var message_buffer:ListBuffer[String] = ListBuffer()
 	private var message_active:Boolean = false
@@ -223,7 +223,7 @@ object app extends JFXApp {
 	
 	def aff_all()={
 		// Affiche les tiles et les sprites (pour le moment Scalafx n'arrive pas a trouver les liens
-		this.aff_environnement()
+		//this.aff_environnement()
 		this.aff_sprites()
 		this.aff_units()
 		this.aff_life_bars()
@@ -296,15 +296,30 @@ object app extends JFXApp {
 	def load_sprites() ={
 		for (i <- 0 to Env.sprites.length-1){
 			for (j <-0 to Env.sprites.length-1){
-				this.sprites_images(i)(j) = this.Env.sprites(i)(j).map((e:(String,Int)) => new Image(this.get_path(e._1)))
+				this.sprites_images(i)(j) = this.Env.sprites(i)(j).map((e:(String,Int)) => (new Image(this.get_path(e._1)),e._2))
 			}
 		}
 	}
 	
 	def aff_sprites() = {
+		def aux(i:Int,j:Int,t:(Image,Int))={
+			def rotate(x:Int,y:Int,d2:Double):(Int,Int)={
+				//d est donné en degrés donc il faut le convertir
+				val d = d2/180*3.141592654 //Math.Pi ne marchait pas
+				val x2 = (x*Math.cos(d) - y*Math.sin(d))
+				val y2 = x*Math.sin(d) + y*Math.cos(d)
+				return ((x2+0.5).toInt,(y2+0.5).toInt)
+			}
+			val deg = t._2*(-90.0) //Math.Pi n'a pas l'air de marcher
+			this.gc.save()
+			this.gc.rotate(-deg)
+			var t2 = rotate(i*32,j*32,deg)
+			this.gc.drawImage(t._1,t2._1,t2._2,32,32)
+			this.gc.restore()
+		}
 		for (i <- 0 to Env.sprites.length-1){
 			for (j <-0 to Env.sprites.length-1){
-				this.sprites_images(i)(j).map((e:Image) => this.gc.drawImage(e,i*32,j*32,32,32))
+				this.sprites_images(i)(j).map((aux _).curried(i)(j))
 			}
 		}
 	}

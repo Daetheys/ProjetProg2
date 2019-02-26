@@ -52,7 +52,7 @@ class Jeton(modell:Personnage,env:Environnement){
 	var orientation:Int=0
 	var Env:Environnement = env
 	var selected:Boolean = false
-	var image_path:String = ""
+	var image_path:String = modell.image_path
 	//Status
 	var status = None
 
