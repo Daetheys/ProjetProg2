@@ -5,13 +5,13 @@ The main use for this file :
   p = new Plan;
   p.random_fill();
   p.grid
-returns a random array 21 * 15 where each cell is either an Obstacle or a Hallway tile
+returns a random array 25 * 25 where each cell is either an Obstacle or a Hallway tile
 and where the hallways are placed in a coherent manner so that you can navigate in the room.
 There are 307200 possible rooms with equal probability of getting any of them.
 */
   
 
-object Possibilities{ //Pas de '=' pour les classes c'est un : nom_classe(args){...corps...}
+object Possibilities {
   val verticals = Array(Array[Boolean](true,false,false,false,false),
                         Array[Boolean](false,true,false,false,false),
                         Array[Boolean](false,false,true,false,false),
@@ -70,7 +70,7 @@ class Room {
   var north = Array[Boolean](false,false,false,false,false)
   var center = Array[Boolean](false,false,false)
   def room_init() {
-  	val r = scala.util.Random // C'est ca la bonne syntaxe pour le module random visiblement
+  	val r = scala.util.Random
     this.south = Possibilities.verticals(r.nextInt(8))
     this.north = Possibilities.verticals(r.nextInt(8))
     this.east = Possibilities.outer(r.nextInt(40))
