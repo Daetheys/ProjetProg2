@@ -78,11 +78,11 @@ class Sprite_plan(plan : Plan) {
     return (c1, c2)
   }
   def move(coord:Array[Int], k:Int) {
-    if( k == 0 ) {
+    if ( k == 0 ) {
          coord(1) = coord(1)-1;
-      } else if( k == 1 ) {
+      } else if ( k == 1 ) {
          coord(0) = coord(0)+1;
-      } else if( k == 2 ) {
+      } else if ( k == 2 ) {
          coord(1) = coord(1)+1;
       } else {
          coord(0) = coord(0)-1;
@@ -96,6 +96,7 @@ class Sprite_plan(plan : Plan) {
     var c2 = 0;
     var couple = (0,0);
     val coord = Array(0,0);
+    var l = 0;
     for ( k <- 0 to 3 ) {
       for ( a <- this.circuits(k) ) {
 	i = a._1; j =a._2;
@@ -114,7 +115,7 @@ class Sprite_plan(plan : Plan) {
         } else {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Jail(r.nextInt(this.animal.length),false);
         }
-        var l = (k+1)%4;
+        l = (k+1)%4;
 	coord(0) = i; coord(1) = j;
         this.move(coord, l);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
