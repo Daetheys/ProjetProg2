@@ -1,0 +1,17 @@
+Notre démo du jeu comporte les possibilités suivantes :
+- Vous pouvez déplacer vos personnages (les animaux car les robots sont des ennemis) -> Pour se faire effectuer un clique
+gauche quelque part sur la carte et gardez le bouton enfoncé puis déplacer la souris (un rectangle devrait apparaître).
+Quand vous relacherez le bouton gauche de la souris, les animaux inclus dans le rectangle seront séléctionnés (leur barre
+de vie s'eclaircira). Vous pouvez alors faire un clique droit n'importe où sur la carte (endroit accessible ou non) et le
+jeton se deplacera (plus ou moins vite en fonction de l'animal choisi) le plus pres possible du carré cible. Pour les
+connaisseurs c'est le système de déplacement dans les RTS classiques comme StarCraft, ... .
+- Vous pouvez attaquer les ennemis en vous rapprochant d'eux (chaque animal a sa propre portée d'attaque)
+- Vous pouvez détruire les mécanismes (ce qui pour le moment n'a que un effet graphique mais vous pourrez apercevoir
+les récompenses qui seront obtensibles dans la partie 2 !) -> effectuez un clique gauche sur les orbes de couleur et une
+des 2 récompenses serra disponible
+
+Nous vous conseillons d'un peu diminuer votre son si vous jouez dans un environnement avec du monde ainsi que d'avoir
+votre version de Java à jour et d'utiliser ce programme sur une bonne configuration si vous voulez les 100fps 
+(ca diminue très vite car scalafx utilise beaucoup de ressources et nous avons eu de nombreux problèmes à cause de ça).
+
+Si le jeu plante car il y a une surcharge de la mémoire, c'est surement du a un des points précédents.
