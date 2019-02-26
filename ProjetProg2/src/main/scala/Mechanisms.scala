@@ -49,7 +49,7 @@ class Sprite_plan(plan : Plan) {
               ("sprite_mechanism_split.png", di),
               ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4),
               ("sprite_mechanism_switch_used.png", di) )
-     case Vault(s,false) =>
+      case Vault(s,false) =>
         List( ("sprite_tile_vault.png", 0) )
       case Vault(s,true) =>
         List( ("sprite_tile_vault.png", 0),
@@ -124,7 +124,6 @@ class Sprite_plan(plan : Plan) {
   }
   var all_the_sprites:Array[Array[List[(String, Int)]]] = Array.fill(25,25){Nil}
   def init_sprites() {
-    this.random_loot();
     for ( i <- 0 to 24 ; j <- 0 to 24 ) {
       if ( (plan.grid(i)(j)).is_an_obstacle ) {
         if ( (plan.grid(i)(j)).is_plain ) {
@@ -137,5 +136,42 @@ class Sprite_plan(plan : Plan) {
         this.all_the_sprites(i)(j) = List(("background_tile_hallway",0));
       }
     }
-  }     
+  }
+  def destruct(x:Int,y:Int) {
+    (this.sprite_grid(x)(y)) match {
+      case Circuit(c1,c2,di,false) =>
+        this.sprite_grid(x)(y) = Circuit(c1,c2,di,true)
+      case Vault(s,false) =>
+        this.sprite_grid(x)(y) = Vault(s,true)
+      case Pipe(c,d,false) =>
+        this.sprite_grid(x)(y) = Pipe(c,d,true)
+      case Jail(a,false) =>
+        this.sprite_grid(x)(y) = Jail(a,true)
+      case x => x
+    }
+  }   
+  def activation(x:Int, y:Int, c:Int) {
+    (this.sprite_grid(x)(y)) match {
+      case Circuit(c1,c2,d,false) =>
+        if ( c1 == c ) {
+	  this.destruct(x,y);
+	  var coord = Array(x, y);
+	  this.move(coord, d);
+	  while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+	    this.destruct(coord(0),coord(1));
+	    this.move(coord, d);
+	  }
+	} else if ( c2 == c ) {
+	  this.destruct(x,y);
+	  var coord = Array(x, y);
+	  val e = (d+1)%4;
+	  this.move(coord, e);
+	  while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+	    this.destruct(coord(0),coord(1));
+	    this.move(coord, e);
+	  }
+	}
+      case _ => val u:Unit; return u;
+    }
+  }
 }
