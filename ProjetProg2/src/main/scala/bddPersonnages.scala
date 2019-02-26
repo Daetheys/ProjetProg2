@@ -92,11 +92,11 @@ object bddPersonnages {
 	def create_robot(player:Int):Personnage = {
 		var robot = new Personnage
 		robot.name = "Unité de Défense"
-		robot.pv_max = 70
-		robot.pv_current = 70
+		robot.pv_max = 50
+		robot.pv_current = 50
 		robot.player = player
 		robot.actives("Move") = bddComp.create_move(robot,3,1)
-		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,2,2)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,1,3)
 		robot.image_path = "sprite_character_turret.png"
 		return robot
 	}
