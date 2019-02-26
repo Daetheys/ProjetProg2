@@ -20,6 +20,16 @@ Idées de départ :
 		et decsendre dans les niveaux ultra-protégés du labo.
 
 
+Technologie des armes trouvées dans le labo :
+
+	1) Poison (Vert) fait perdre continuellement des pv pendant une periode de temps donnée
+	2) Aveuglement (Noir) empêche l'ennemi de détectecter les autres personnages et l'immobilise (ou il se met a tirer au hasard)
+	3) Confusion/Hypnose (Jaune) rend l'ennemi incapable de se battre ou le foit attaquer ses partenaires
+	4) Glace/Neige (Blanc) gèle l'ennemi et le ralenti en plus de faire des dégâts résiduels (moins que le poison)
+	5) Electricité (Bleu) paralyse l'ennemi momentanément et fait des dégâts
+	6) Feu (Orange) inflige de lourd dégâts
+
+
 À faire éventuellement pour la version 2 :
 
 	1) Gérer la lumière
