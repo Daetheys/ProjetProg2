@@ -128,7 +128,6 @@ object app extends JFXApp {
 					Env.apply_active("Move",target)
 				}
 			}
-			
 		}
 		
 	def draw_shoot_line(x1:Int,y1:Int,x2:Int,y2:Int)={
@@ -228,58 +227,6 @@ object app extends JFXApp {
 		this.aff_sprites()
 		this.aff_units()
 		this.aff_life_bars()
-		/*var i = 10
-		var j = 10
-		def rotate(x:Double,y:Double,d:Double):(Int,Int)={
-			//d est donné en degrés donc il faut le convertir
-			val x2 = x*Math.cos(d) - y*Math.sin(d)
-			val y2 = x*Math.sin(d) + y*Math.cos(d)
-			return ((x2+0.5).toInt,(y2+0.5).toInt)
-		}
-		def aff_rotate(d2:Double)={
-			def toInt(b:Boolean):Int={
-				if (b) return 1 else return 0
-			}
-			val d = d2/180*3.141592654 //Math.Pi ne marchait pas
-			this.gc.save()
-			this.gc.rotate(d2) // Ici il faut des degrés
-			val y_offset = toInt(List(90,180).contains(Math.abs(d2).toInt%360))
-			val x_offset = toInt(List(180,270).contains(Math.abs(d2).toInt%360)) 
-			var t2 = rotate((i+x_offset)*32.0,(j+y_offset)*32.0,-d)
-			this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
-			/*val x2 = (i*32).toDouble
-			val y2 = (j*32).toDouble
-			this.gc.fillPolygon(Seq((x2,y2),(x2+32,y2+32),(x2+32,y2)))*/
-			print(("test",t2._1,t2._2))
-			this.gc.restore()
-		}
-		//val deg = t._2*(-90.0) 
-		var t2 = (i*32,j*32)
-		gc.fill = Black
-		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
-		gc.fill = Red
-		aff_rotate(-90.0)
-		i = 20
-		j = 3
-		t2 = (i*32,j*32)
-		gc.fill = Black
-		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
-		gc.fill = Red
-		aff_rotate(-180.0)
-		i = 24
-		j = 7
-		t2 = (i*32,j*32)
-		gc.fill = Black
-		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
-		gc.fill = Red
-		aff_rotate(-270.0)
-		i = 8
-		j = 14
-		t2 = (i*32,j*32)
-		gc.fill = Black
-		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
-		gc.fill = Red
-		aff_rotate(-360.0)*/
 	}
 	def aff_units()={
 		//Affiche les sprites des unités

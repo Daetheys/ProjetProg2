@@ -134,7 +134,7 @@ object Algo{
 		var T:ListBuffer[Array[Int]] = ListBuffer()
 		var u:Array[Int] = Array()
 		var best_case:Array[Int] = Array(je.x,je.y)
-		var best_approx:Int = 10000
+		var best_approx:Int = h(Array(je.x,je.y))
 		while (F.not_empty) {
 			u = cut(F.pop())
 			T += u

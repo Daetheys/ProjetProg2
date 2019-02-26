@@ -76,10 +76,12 @@ object bddCompetences {
 			def y(x:Int)={
 				((y2-y1).toDouble/(x2-x1).toDouble).toInt*x
 			}
-			var f = false
+			var f = true
 			for (i <- 0 to x2-x1){
-				f = personnage.jeton.Env.tiles(i)(y(i)).is_an_obstacle && f
+				println(("dist",i+x1,y(i)+y1,personnage.jeton.Env.tiles(i+x1)(y(i)+y1).is_an_obstacle))
+				f = personnage.jeton.Env.tiles(i+x1)(y(i)+y1).is_an_obstacle && f
 			}
+			println(("f",f,x1,x2,y1,y2))
 			return f
 		}
 		def func(typage:Unit):Int={
@@ -109,11 +111,13 @@ object bddCompetences {
 					if (minimum <= Math.pow(range,2).toInt){
 						jeton_minimum match {
 							case None => ()
-							case Some(s) => app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
-											app.draw_dmg_text(s.x,s.y,10,dmg,"-",Red)
-											s.model.take_damages(dmg)
+							case Some(s) => 
+												app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
+												app.draw_dmg_text(s.x,s.y,10,dmg,"-",Red)
+												s.model.take_damages(dmg)
 											
-						}			
+											
+						}
 					}
 				} else {
 					autoattack.v_int("compt") += 1
