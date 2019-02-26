@@ -59,7 +59,19 @@ Stratégie à terme :
 	récupérer qu'un nombre limité d'animaux et d'équipements à cause de la
 	limite de temps et des moyens de détruire les dispositifs de sécurité qui
 	dépendent des équipements déjà en possession. 
-	
+
+
+Données à implémenter :
+
+	1) Boss (avec les mécaniques bien expliquées) : 3 boss
+  		- Groupes d'humains
+  		- Machine de guerre (drones, ...)
+  		- Un animal qui contrôle son armée
+	2) Objets (one use - hors combat)
+  		- Recharge spécifique à la technologie
+  		- Soin des PV
+  		- Amélioration spécifique d'une arme
+
 
 Ressources graphiques :
 
