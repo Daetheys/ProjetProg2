@@ -7,6 +7,8 @@ import bddPersonnages.{bddPersonnages=>bddp}
 import Schematics.{Tile=>Tile,Plan=>Plan}
 import Mechanisms.{Sprite_plan=>Sprite_plan}
 import Display.{All_sprites=>All_sprites}
+import java.net.URL
+import javax.sound.sampled._
 
 object Game {
 
@@ -59,6 +61,28 @@ object Game {
 		
 		//Chargement de l'event de raffraichissement de l'environnement
 		Env.clock.add_micro_event(aff_event)
+		
+		//Préparation de l'event pour la loop -> les events ca sert a tout
+		val timer = 30*10
+		var time = 0
+		def play_audio(typage:Unit):Int={
+			println("event")
+			if (time <= 0){
+				println("start")
+				val url = new URL(app.get_path("dash_runner.wav"))
+				val audioIn = AudioSystem.getAudioInputStream(url)
+				val clip = AudioSystem.getClip
+				clip.open(audioIn)
+				clip.start
+				time = timer
+				return 1
+			} else { time -= 1
+					return 1}
+		}
+		Env.clock.add_macro_event(play_audio)
+			
+
+
 		
 		//Lance la clock et le jeu
 		Env.start_clock()

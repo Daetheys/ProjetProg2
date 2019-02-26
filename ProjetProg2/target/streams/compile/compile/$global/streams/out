@@ -1,4 +1,9 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Mechanisms.scala:159:17: a pure expression does nothing in statement position[0m
-[0m[[0m[33mwarn[0m] [0m[0m      case x => x[0m
-[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Main.scala:83:12: value add_macro_event is not a member of Environnement.Environnement[0m
+[0m[[0m[31merror[0m] [0m[0m		this.Env.add_macro_event(play_audio)[0m
+[0m[[0m[31merror[0m] [0m[0m		         ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Main.scala:83:28: missing argument list for method play_audio[0m
+[0m[[0m[31merror[0m] [0m[0mUnapplied methods are only converted to functions when a function type is expected.[0m
+[0m[[0m[31merror[0m] [0m[0mYou can make this conversion explicit by writing `play_audio _` or `play_audio(_)` instead of `play_audio`.[0m
+[0m[[0m[31merror[0m] [0m[0m		this.Env.add_macro_event(play_audio)[0m
+[0m[[0m[31merror[0m] [0m[0m		                         ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
