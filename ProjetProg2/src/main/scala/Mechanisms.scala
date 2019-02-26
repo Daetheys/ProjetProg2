@@ -171,7 +171,6 @@ class Sprite_plan(plan : Plan) {
 	    this.move(coord, e);
 	  }
 	}
-      case _ => val u:Unit; return u;
     }
   }
 }
