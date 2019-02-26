@@ -32,8 +32,8 @@ object bddPersonnages {
 	def create_bees(player:Int):Personnage = {
 		var bees = new Personnage
 		bees.name = "Abeilles"
-		bees.pv_max = 50
-		bees.pv_current = 50
+		bees.pv_max = 60
+		bees.pv_current = 60
 		bees.player = player
 		bees.actives("Move") = bddComp.create_move(bees,2,1)
 		bees.actives("AutoAttack") = bddComp.create_autoattack(bees,2,2,5)
