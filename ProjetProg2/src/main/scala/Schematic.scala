@@ -5,7 +5,7 @@ The main use for this file :
   p = new Plan;
   p.random_fill();
   p.grid
-returns a random array 21 * 15 where each cell is either an Obstacle or a Hallway tile
+returns a random array 25 * 25 where each cell is either an Obstacle or a Hallway tile
 and where the hallways are placed in a coherent manner so that you can navigate in the room.
 There are 307200 possible rooms with equal probability of getting any of them.
 */
