@@ -7,7 +7,14 @@ Idées de départ :
 		- Manipulation de l'espace : obtenu dès le début, utilisable une seule fois par combat, débloque les équipements de base
 		- Manipulation du temps : obtenu vers la fin, une sorte de "new game +" pour retourner au début avec une bonne équipe, débloque les meilleurs équipements
 	2) Scénario :
-		Au niveau -1 d'un labo souterrain expérimentant un sérum d'intelligence sur des animaux, une tortue acquiert par hasard le pouvoir de manipuler localement l'espace. À l'aide de ce pouvoir elle tente de s'échapper mais le labo se ferme automatiquement. Son seul espoir est de rejoindre le prototype de téléporteur au niveau -15. Elle commence à rassembler d'autres animaux doués d'intelligence et des armes pour détruire les systèmes de sécurité et decsendre dans les niveaux ultra-protégés du labo.
+		Au niveau -1 d'un labo souterrain expérimentant un sérum
+		d'intelligence sur des animaux, une tortue acquiert par hasard le
+		pouvoir de manipuler localement l'espace. À l'aide de ce pouvoir
+		elle tente de s'échapper mais le labo se ferme automatiquement. Son
+		seul espoir est de rejoindre le prototype de téléporteur au niveau
+		-15. Elle commence à rassembler d'autres animaux doués
+		d'intelligence et des armes pour détruire les systèmes de sécurité
+		et decsendre dans les niveaux ultra-protégés du labo.
 
 
 À faire éventuellement pour la version 2 :
