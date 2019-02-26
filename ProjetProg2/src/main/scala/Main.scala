@@ -23,6 +23,7 @@ object Game {
 		sprite_plan.random_loot
 		sprite_plan.init_sprites
 		this.Env.sprites = sprite_plan.all_the_sprites.transpose
+		//print(scala.runtime.ScalaRunTime.stringOf(this.Env.sprites))
 		val tiles = plan.grid.transpose //-> Ne sert plus que pour les collisions
 		this.Env.tiles = tiles
 		

@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:238:22: forward reference extends over definition of value x[0m
-[0m[[0m[31merror[0m] [0m[0m			var t2 = rotate(x,y,-deg)[0m
-[0m[[0m[31merror[0m] [0m[0m			                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics2.scala:127:6: ')' expected but 'var' found.[0m
+[0m[[0m[31merror[0m] [0m[0m					var target = Array((e.x/32).toInt,(e.y/32).toInt)[0m
+[0m[[0m[31merror[0m] [0m[0m					^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

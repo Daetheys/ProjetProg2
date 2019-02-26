@@ -123,6 +123,7 @@ object app extends JFXApp {
 		this.canvas.onMousePressed = (e: MouseEvent) =>
 			{
 				if (e.isSecondaryButtonDown){
+					println(scala.runtime.ScalaRunTime.stringOf(this.Env.sprites((e.x/32).toInt)((e.y/32).toInt)))
 					var target = Array((e.x/32).toInt,(e.y/32).toInt)
 					Env.apply_active("Move",target)
 				}
@@ -227,6 +228,58 @@ object app extends JFXApp {
 		this.aff_sprites()
 		this.aff_units()
 		this.aff_life_bars()
+		/*var i = 10
+		var j = 10
+		def rotate(x:Double,y:Double,d:Double):(Int,Int)={
+			//d est donné en degrés donc il faut le convertir
+			val x2 = x*Math.cos(d) - y*Math.sin(d)
+			val y2 = x*Math.sin(d) + y*Math.cos(d)
+			return ((x2+0.5).toInt,(y2+0.5).toInt)
+		}
+		def aff_rotate(d2:Double)={
+			def toInt(b:Boolean):Int={
+				if (b) return 1 else return 0
+			}
+			val d = d2/180*3.141592654 //Math.Pi ne marchait pas
+			this.gc.save()
+			this.gc.rotate(d2) // Ici il faut des degrés
+			val y_offset = toInt(List(90,180).contains(Math.abs(d2).toInt%360))
+			val x_offset = toInt(List(180,270).contains(Math.abs(d2).toInt%360)) 
+			var t2 = rotate((i+x_offset)*32.0,(j+y_offset)*32.0,-d)
+			this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
+			/*val x2 = (i*32).toDouble
+			val y2 = (j*32).toDouble
+			this.gc.fillPolygon(Seq((x2,y2),(x2+32,y2+32),(x2+32,y2)))*/
+			print(("test",t2._1,t2._2))
+			this.gc.restore()
+		}
+		//val deg = t._2*(-90.0) 
+		var t2 = (i*32,j*32)
+		gc.fill = Black
+		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
+		gc.fill = Red
+		aff_rotate(-90.0)
+		i = 20
+		j = 3
+		t2 = (i*32,j*32)
+		gc.fill = Black
+		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
+		gc.fill = Red
+		aff_rotate(-180.0)
+		i = 24
+		j = 7
+		t2 = (i*32,j*32)
+		gc.fill = Black
+		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
+		gc.fill = Red
+		aff_rotate(-270.0)
+		i = 8
+		j = 14
+		t2 = (i*32,j*32)
+		gc.fill = Black
+		this.gc.fillPolygon(Seq((t2._1,t2._2),(t2._1+32,t2._2+32),(t2._1+32,t2._2)))
+		gc.fill = Red
+		aff_rotate(-360.0)*/
 	}
 	def aff_units()={
 		//Affiche les sprites des unités
@@ -303,18 +356,25 @@ object app extends JFXApp {
 	
 	def aff_sprites() = {
 		def aux(i:Int,j:Int,t:(Image,Int))={
-			def rotate(x:Int,y:Int,d2:Double):(Int,Int)={
+			def rotate(x:Double,y:Double,d2:Double):(Int,Int)={
 				//d est donné en degrés donc il faut le convertir
-				val d = d2/180*3.141592654 //Math.Pi ne marchait pas
+				val d = d2/180*3.141592654 //Math.Pi ne marchait pas			
 				val x2 = (x*Math.cos(d) - y*Math.sin(d))
 				val y2 = x*Math.sin(d) + y*Math.cos(d)
 				return ((x2+0.5).toInt,(y2+0.5).toInt)
 			}
-			val deg = t._2*(-90.0) //Math.Pi n'a pas l'air de marcher
+			def toInt(b:Boolean):Int={
+				if (b) {return 1} else {return 0}
+			}
+			val deg = (t._2)*(90.0) //Math.Pi n'a pas l'air de marcher
+			//this.gc.drawImage(t._1,i*32,j*32,32,32)
 			this.gc.save()
-			this.gc.rotate(-deg)
-			var t2 = rotate(i*32,j*32,deg)
+			this.gc.rotate(deg)
+			val x_offset = toInt(List(90,180).contains(Math.abs(deg).toInt%360))
+			val y_offset = toInt(List(180,270).contains(Math.abs(deg).toInt%360)) 
+			var t2 = rotate((i+x_offset)*32.0,(j+y_offset)*32.0,-deg)
 			this.gc.drawImage(t._1,t2._1,t2._2,32,32)
+			//println(("real",t2._1,t2._2))
 			this.gc.restore()
 		}
 		for (i <- 0 to Env.sprites.length-1){

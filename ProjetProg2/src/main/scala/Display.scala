@@ -16,7 +16,7 @@ class All_sprites(plan:Sprite_plan) {
   }
   val robots_pos = Array((2,5),(9,5),(15,5),(22,5),(5,8),(19,8),(5,13),(19,13),(9,16),(15,16),(2,19),(22,19))
   def demo_version1() {
-    var j_list = Nil;
+    var j_list:List[Jeton] = Nil;
     var j = (bddP.create_turtle(0)).jeton;
     j.position(12,22); j_list = j :: j_list;
     j = (bddP.create_bird(0)).jeton;
