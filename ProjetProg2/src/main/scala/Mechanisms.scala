@@ -1,5 +1,5 @@
 package Mechanisms
-// Pour la phase de loot en fin de niveau (sans exploration)
+// Pour créer le background et la phase de loot en fin de niveau (sans exploration)
 /*
 The main use for this file :
   (p is an initialized Plan from Schematics.scala)
@@ -79,13 +79,13 @@ class Sprite_plan(plan : Plan) {
   }
   def move(coord:Array[Int], k:Int) {
     if( k == 0 ) {
-         coord(0) = coord(0)-1;
-      } else if( k == 1 ) {
-         coord(1) = coord(1)+1;
-      } else if( k == 2 ) {
-         coord(0) = coord(0)+1;
-      } else {
          coord(1) = coord(1)-1;
+      } else if( k == 1 ) {
+         coord(0) = coord(0)+1;
+      } else if( k == 2 ) {
+         coord(1) = coord(1)+1;
+      } else {
+         coord(0) = coord(0)-1;
       }
   }
   def random_loot() {
@@ -94,12 +94,15 @@ class Sprite_plan(plan : Plan) {
     var j = 0;
     var c1 = 0;
     var c2 = 0;
+    var couple = (0,0);
+    val coord = Array(0,0);
     for ( k <- 0 to 3 ) {
       for ( a <- this.circuits(k) ) {
 	i = a._1; j =a._2;
-        (c1, c2) = this.random_couple(r);
+        couple = this.random_couple(r);
+	c1 = couple._1; c2 = couple._2;
         this.sprite_grid(i)(j) = Mechanisms.Circuit(c1,c2,k,false);
-        var coord = Array(i,j);
+        coord(0) = i; coord(1) = j;
 	this.move(coord, k);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c1,k,false);
@@ -112,7 +115,7 @@ class Sprite_plan(plan : Plan) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Jail(r.nextInt(this.animal.length),false);
         }
         var l = (k+1)%4;
-	coord = Array(i,j);
+	coord(0) = i; coord(1) = j;
         this.move(coord, l);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c2,l,false);
