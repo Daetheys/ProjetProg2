@@ -11,6 +11,7 @@ Idées de départ :
 
 
 À faire éventuellement pour la version 2 :
+
 	1) Gérer la lumière
 	2) Fiches des personnages
 	3) Timer et musique
@@ -30,8 +31,10 @@ Idées de départ :
 
 
 Stratégie à terme :
+
 	À chaque nouvel étage, un combat se déclanche immédiatemment. On doit bien déployer ses unités en fonction des faiblesses des différents ennemis et du terrain d'affrontement. Une fois le combat remporté, se déclanche un compte à rebours avant que l'étage soit automatiquement scéllé. On ne peut récupérer qu'un nombre limité d'animaux et d'équipements à cause de la limite de temps et des moyens de détruire les dispositifs de sécurité qui dépendent des équipements déjà en possession. 
 	
 
 Ressources graphiques :
+
 	https://www.pixilart.com/kisara
