@@ -12,8 +12,6 @@ run
 compile
 run
 compile
-run
-compile
 sbt
 compile
 run
@@ -392,6 +390,8 @@ compile
 run
 compile
 cmpile
+compile
+run
 compile
 run
 compile

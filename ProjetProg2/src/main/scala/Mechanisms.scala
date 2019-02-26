@@ -162,7 +162,6 @@ class Sprite_plan(plan : Plan) {
   def activation(x:Int, y:Int, c:Int) {
     (this.sprite_grid(x)(y)) match {
       case Circuit(c1,c2,d,false) =>
-      	print("ok")
         if ( c1 == c ) {
 		  this.destruct(x,y);
 		  var coord = Array(x, y);
@@ -181,7 +180,7 @@ class Sprite_plan(plan : Plan) {
 			this.move(coord, e);
 		  }
 		}
-    case x => println(x)
+    case x => ()
     }
   }
 }
