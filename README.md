@@ -2,6 +2,7 @@
 
 
 Idées de départ :
+
 	1) Animaux avec des pouvoirs psychiques :
 		- Manipulation de l'espace : obtenu dès le début, utilisable une seule fois par combat, débloque les équipements de base
 		- Manipulation du temps : obtenu vers la fin, une sorte de "new game +" pour retourner au début avec une bonne équipe, débloque les meilleurs équipements
