@@ -14,4 +14,6 @@ Nous vous conseillons d'un peu diminuer votre son si vous jouez dans un environn
 votre version de Java à jour et d'utiliser ce programme sur une bonne configuration si vous voulez les 100fps 
 (ca diminue très vite car scalafx utilise beaucoup de ressources et nous avons eu de nombreux problèmes à cause de ça).
 
-Si le jeu plante car il y a une surcharge de la mémoire, c'est surement du a un des points précédents.
+Si le jeu plante car il y a une surcharge de la mémoire, c'est surement du a un des points précédents. Vous pouvez dans ce
+cas passer la variable de Environnement.scala dans la classe Clock -> micro_period et la mettre à 0.05 au lieu de 0.01 (ce
+qui vous donnera 20fps mais ferra mieux tourner le jeu sur les petites machines).
