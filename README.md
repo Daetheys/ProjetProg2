@@ -1,5 +1,16 @@
 # A Turtle's Holistic Adventures
+-----------------------
+Partie 2 :
+Inventaire (graphique + gestion des objets) (GESTION DES OBJETS) SACHA
+Sauvegardes (GESTION DES SAUVEGARDES) SACHA
+Liste de sprites (plein de sprites quelconques)
 
+Mini IA (ennemis et strat) (DIVERSIFICATION DES PERSONAGES) NICOLAS
+Boss (NIVEAUX OBJECTIF DU JOUEUR) NICOLAS
+Compétences + eau (DIVERSIFICATION DES ACTIONS)NICOLAS
+Menu 
+
+-----------------------
 
 Idées de départ :
 
