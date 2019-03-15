@@ -82,6 +82,7 @@ Données à implémenter :
   		- Recharge spécifique à la technologie
   		- Soin des PV
   		- Amélioration spécifique d'une arme
+	3) Proposer au joueur de coder l'IA de ses personnages
 
 
 Ressources graphiques :
