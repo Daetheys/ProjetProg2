@@ -18,7 +18,10 @@ object Game {
 		//Initialise la démo de combat
 		//Transfert de l'environnement
 		app.Env = this.Env
-		
+		gen_level()
+	}
+	
+	def gen_level()={
 		//Chargement de l'objet contenant l'initialisation du terrain
 		val plan = new Plan
 		plan.random_fill
