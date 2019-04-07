@@ -7,7 +7,7 @@
 		revision="11-R16"
 		conf="compile-internal"
 		confs="compile, runtime, test, provided, optional, compile-internal, runtime-internal, test-internal, plugin, pom, scala-tool"
-		date="20190329001414"/>
+		date="20190406180552"/>
 	<dependencies>
 		<module organisation="org.openjfx" name="javafx-web">
 			<revision name="11" status="release" pubdate="20180913213042" resolver="sbt-chain" artresolver="sbt-chain" homepage="" downloaded="false" searched="false" default="false" conf="default, compile, runtime, default(compile), master" position="9">

@@ -3,7 +3,7 @@ import Personnage.{Jeton=>Jeton,Personnage=>Personnage}
 import scala.collection.mutable.ListBuffer
 import Schematics.{Tile=>Tile}
 import Mechanisms.{Sprite_plan => Sprite_plan}
-
+import Layer._
 import scalafx.application.{Platform}
 
 class Environnement {
@@ -15,13 +15,14 @@ class Environnement {
 	val size_x = real_size_x*factor_x
 	val size_y = real_size_y*factor_y
 	var layerset = new LayerSet(size_x,size_y) //Sert à l'affichage graphique
-	var units = Array.ofDim[Option[Jeton]](real_size_x*factor_x,real_size_y*factor_y)
+	var tiles = Array.ofDim[Int](size_x,size_y)
+	var units = Array.ofDim[Option[Jeton]](size_x,size_y)
 	val clock = new Clock(this)
 	var selected_units:List[Jeton] = List()
 	
 	def apply_active(name:String,arg:Array[Int])={
 		//Chaque unité séléctionnée lance la compétence dont le nom est spécifié avec les arguments donnés
-		this.selected_units.map((j:Jeton) => j.model.actives(name).initialize(arg))
+		this.selected_units.map((j:Jeton) => j.model.actives(name).refresh(arg))
 	}
 	
 	def start_clock()={
@@ -43,6 +44,31 @@ class Environnement {
 			}
 		}
 		this.selected_units = remove_elem(j,this.selected_units)
+	}
+	
+	def dist(j1:Jeton,j2:Jeton):Double = {
+		return Math.pow(Math.pow(j1.x-j2.x,2)+Math.pow(j1.y-j2.y,2),0.5)
+	}
+	
+	def get_nearest_opposite_unit(jeton:Jeton):(Option[Jeton],Double)={
+		// Renvoie le jeton ennemi le plus proche du jeton donné
+		var minimum = 10000.0
+		var jeton_minimum:Option[Jeton] = None
+		var dist = -1.0
+		for (i<-0 to this.units.length-1) {
+			for (j<-0 to this.units(i).length-1) {
+				this.units(i)(j) match {
+					case None => ()
+					case Some(s:Jeton) => 
+						dist = this.dist(jeton,s)
+						if (dist < minimum && dist != 0 && s.model.player != jeton.model.player){
+							minimum = dist
+							jeton_minimum = Some(s)
+						}
+				}
+			}
+		}
+		return (jeton_minimum,minimum)
 	}
 	
 	def unselect_all_units()={
@@ -94,7 +120,7 @@ class Environnement {
 		}
 	}
 
-	def spawn_personnage(personnage:Personnage,x:Int,y:Int){
+	def spawn_personnage(personnage:Personnage,x:Int,y:Int):Unit={
 		//Instancie un jeton à partir d'un personnage et le place sur le terrain
 		if (this.units(x)(y) == None || this.units(x)(y) == null) {
 			val jeton = new Jeton(personnage,this)
@@ -103,7 +129,7 @@ class Environnement {
 			personnage.jeton = jeton
 			this.units(x)(y) = Some(jeton)
 			//Events de automatiques du jeton
-			personnage.actives("AutoAttack").initialize(Array()) //L'argument n'a pas d'importance
+			personnage.call_when_spawn() //L'argument n'a pas d'importance
 		}else{
 			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
 		}

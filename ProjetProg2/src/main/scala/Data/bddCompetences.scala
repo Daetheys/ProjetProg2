@@ -6,180 +6,158 @@ import Environnement.{Environnement=>Environnement}
 import Algo.{Algo=>Algo}
 import Graphics2.{app=>app}
 import scalafx.scene.paint.Color._
-import Movable.{Movable,Left,Right,Top,Bottom}
+import Movable._
+import Utilities.utils.{cooldowned}
 
 object bddCompetences {
-
-	def create_move(p:Personnage,speed:Int,form:Int):Active={
-		//Speed est le nb de déplacement par seconde; form est la facon dont il se déplace
+	//Spells
+	def create_move(p:Personnage,cd:Double,form:Int):Active={
+		//Cooldown est le tps pour se déplacer d'une case; form est la facon dont il se déplace
 		// -> 0:ground 1:fly 2:ghost
 		val move_comp = new Active("Move")
 		// Initialisation des variables
 		move_comp.v_int("x_dest") = 1
 		move_comp.v_int("y_dest") = 1
-		move_comp.v_int("nb_wait") = 0
 		move_comp.v_int("active") = 0
 		
-		def initialize(target:Array[Int]):Unit = {
+		def refresh(target:Array[Int]):Unit = {
 			//La destination du mouvement est une variable dans la compétence
 			move_comp.v_int("x_dest") = target(0)
 			move_comp.v_int("y_dest") = target(1)
 			if (move_comp.v_int("active") == 0){
 				move_comp.v_int("active") = 1
-				p.jeton.Env.clock.add_macro_event(frequence_move)
+				p.jeton.Env.clock.add_macro_event(cooldowned(event(_),cd))
 			}
 		}
-		def frequence_move(typage:Unit):Int={
-			//Event qui regule la vitesse de déplacement
-			if (p.jeton.died == false){
-				val macro_period = p.jeton.Env.clock.macro_period
-				if (move_comp.v_int("nb_wait").toDouble*macro_period > 1.0/speed.toDouble){
-					move_comp.v_int("nb_wait") = 0
-					return move()
-				} else {
-					move_comp.v_int("nb_wait") += 1
-					return 1 // On garde l'evenement dans la liste 
-				}
-			} else { return 0} //On enleve l'event si l'unité est morte
-		}
-		def move():Int ={
+		def event(typage:Unit):Int ={
 			//Deplace le jeton (avec un astar, ...)
-			val x_dest = move_comp.v_int("x_dest")
-			val y_dest = move_comp.v_int("y_dest")
-			val x = p.jeton.x
-			val y = p.jeton.y
-			var mvt = Algo.astar(p.jeton.Env,p.jeton,Array(x_dest,y_dest))
-			if (mvt(0) == x && mvt(1) == y){
-				move_comp.v_int("active") = 0
-				return 0 //On est arrivé
-			} else {
-				p.jeton.Env.move(x,y,mvt(0),mvt(1))
-				return 1
-			}
+			if (p.jeton.died == false){
+				val x_dest = move_comp.v_int("x_dest")
+				val y_dest = move_comp.v_int("y_dest")
+				val x = p.jeton.x
+				val y = p.jeton.y
+				var mvt = Algo.astar(p.jeton.Env,p.jeton,(x_dest,y_dest))
+				if (mvt._1 == x && mvt._2 == y){
+					move_comp.v_int("active") = 0
+					return 0 //On est arrivé
+				} else {
+					p.jeton.move(p.jeton.corresponding_orient(x,y,mvt._1,mvt._2),cd)
+					return 1
+				}
+			} else { return 0 }
 		}
-		move_comp.initialize = initialize
+		move_comp.refresh = refresh
 		move_comp.autocast_disable()
 		//Definition des destinations
 		return move_comp
 	}
 	
 
-	def create_autoattack(personnage:Personnage,range:Int,dmg:Int,attack_speed:Int):Active = {
+	def create_autoattack(personnage:Personnage,range:Int,dmg:Int,attack_speed:Double):Active = {
 		// Renvoie la compétence d'attaque automatique
 		val autoattack = new Active("AutoAttack")
-		def initialize(typage:Array[Int]):Unit ={
-			autoattack.v_int("compt") = 0
-			personnage.jeton.Env.clock.add_macro_event(func)
+		val Env = personnage.jeton.Env
+		
+		def refresh(typage:Array[Int]):Unit ={
+			get_new_target()
+			personnage.jeton.Env.clock.add_macro_event(cooldowned(event(_),attack_speed))
 		}
-		def verify_los(x1:Int,y1:Int,x2:Int,y2:Int):Boolean={
-			//Pas encore implémentée : vérifie que la cible est bien en ligne de vue (pour ne pas tirer a travers un mur)
-			def y(x:Int)={
-				((y2-y1).toDouble/(x2-x1).toDouble).toInt*x
-			}
-			var f = true
-			for (i <- 0 to x2-x1){
-				println(("dist",i+x1,y(i)+y1,personnage.jeton.Env.tiles(i+x1)(y(i)+y1).is_an_obstacle))
-				f = personnage.jeton.Env.tiles(i+x1)(y(i)+y1).is_an_obstacle && f
-			}
-			println(("f",f,x1,x2,y1,y2))
-			return f
+		
+		def target_alive():Boolean={
+			return !(autoattack.v_jeton("target").died)
 		}
-		def func(typage:Unit):Int={
-			//Fonction d'attaque
-			if (personnage.jeton.died == false){
-				//Gestion de la vitesse d'attaque
-				if (autoattack.v_int("compt").toDouble*attack_speed > 1/personnage.jeton.Env.clock.macro_period.toDouble){
-					autoattack.v_int("compt") = 0
-					//Recherche de l'ennemi le plus proche
-					var minimum = 10000
-					var jeton_minimum:Option[Jeton] = None
-					var dist = -1
-					val Env = personnage.jeton.Env
-					for (i<-0 to Env.units.length-1) {
-						for (j<-0 to Env.units(i).length-1) {
-							Env.units(i)(j) match {
-								case None => ()
-								case Some(s:Jeton) => dist = Math.pow(s.x - personnage.jeton.x,2).toInt + Math.pow(s.y - personnage.jeton.y,2).toInt
-												if (dist < minimum && dist != 0 && s.model.player != personnage.player){
-													minimum = dist
-													jeton_minimum = Some(s)
-												}
-							}
-						}
-					}
-					//Verification qu'il est a portée et attaque si c'est le cas (+ affichage graphique)
-					if (minimum <= Math.pow(range,2).toInt){
-						jeton_minimum match {
-							case None => ()
-							case Some(s) => 
-												app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
-												app.draw_dmg_text(s.x,s.y,10,dmg,"-",Red)
-												s.model.take_damages(dmg)
-											
-											
-						}
-					}
-				} else {
-					autoattack.v_int("compt") += 1
+		
+		def target_in_range():Boolean={
+			return Env.dist(personnage.jeton,autoattack.v_jeton("target")) < range
+		}
+		
+		def get_new_target()={
+			//Recherche de l'ennemi le plus proche
+			val result = Env.get_nearest_opposite_unit(personnage.jeton)
+			val jeton_minimum = result._1
+			val minimum = result._2
+			//Verification qu'il est a portée et selection de la cible si c'est le cas
+			if (minimum <= range){
+				jeton_minimum match {
+					case Some(s:Jeton) => autoattack.v_jeton("target") = s
+					case None => ()
 				}
-				return 1 //Avec cette implémentation on garde tout le temps l'event
-			} else { return 0 } //Si le personnage est mort -> on ne fait pas l'event
+			}
 		}
-		autoattack.initialize = initialize
+		
+		def event(typage:Unit):Int={
+			//Fonction d'attaque
+			if (personnage.jeton.died){
+				return 0
+			}
+			if (target_alive() && target_in_range()){
+				val s = autoattack.v_jeton("target")
+				app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
+				app.draw_dmg_text(s.x,s.y,10,dmg,"-",Red) //Il faudrait attendre 20 micro_period avant de l'afficher pour etre coherent
+				s.model.take_damages(dmg)
+				return 1
+			} else {
+				get_new_target()
+				return 1
+			}	
+		}
+		
+		autoattack.refresh = refresh
 		autoattack.autocast_enable()
 		return autoattack
 	}
 	
-	def fire_spell(personnage:Personnage,power:Int){
-		val orb = Movable(this.Env)
+	def fire_spell(personnage:Personnage,power:Int,step_speed:Double){
+		val orb = new Movable(personnage.jeton.Env)
 		val orient = personnage.jeton.orientation
 		def explose() = {
 			for (i <- -1 to 1){
 				for (j <- -1 to 1){
-					if (0 <= orb.x + i && orb.x + i <= orb.Env.size_x -1 && 0 <= orb.y + j && orb.y + j <= orb.Env.size_y -1 
-					&& orb.Env.units(orb.x+i)(orb.y+j){
-						orb.Env.units(orb.x+i)(orb.y+j).take_damages(power)
+					if (0 <= orb.x + i && orb.x + i <= orb.Env.size_x -1 && 0 <= orb.y + j && orb.y + j <= orb.Env.size_y -1){
+						orb.Env.units(orb.x+i)(orb.y+j) match {
+							case Some(j:Jeton) => j.model.take_damages(power)
+							case None => ()
+						}
 					}
 				}
 			}
 		}
 		def func(typage:Unit):Int = {
 			orient match {
-				case Left =>
-					if (1 <= orb.x && orb.Env.tiles(orb.x-1,orb.y) && orb.Env.units(orb.x-1,orb.y {
-						orb.move(Left())
+				case Left() =>
+					if (1 <= orb.x && orb.Env.tiles(orb.x-1)(orb.y) != 1 && orb.Env.units(orb.x-1)(orb.y) != None) {
+						orb.move(Left(),step_speed)
 						return 1
-					else {
+					} else {
 						explose()
 						return 0
 					}
-				case Right =>
-					if (orb.x <= orb.Env.size_x - 2 && orb.Env.tiles(orb.x+1,orb.y) && orb.Env.units(orb.x+1,orb.y) {
-						orb.move(Right())
+				case Right() =>
+					if (orb.x <= orb.Env.size_x - 2 && orb.Env.tiles(orb.x+1)(orb.y) != 1 && orb.Env.units(orb.x+1)(orb.y) != None) {
+						orb.move(Right(),step_speed)
 						return 1
-					else {
+					} else {
 						explose()
 						return 0
 					}
-				case Top =>
-					if (1 <= orb.y && orb.Env.tiles(orb.x,orb.y-1) && orb.Env.units(orb.x,orb.y-1) {
-						orb.move(Top())
+				case Top() =>
+					if (1 <= orb.y && orb.Env.tiles(orb.x)(orb.y-1) != 1 && orb.Env.units(orb.x)(orb.y-1) != None) {
+						orb.move(Top(),step_speed)
 						return 1
-					else {
+					} else {
 						explose()
 						return 0
 					}
-				case Bottom =>
-					if (orb.y <= orb.Env.size_y - 2 && orb.Env.tiles(orb.x,orb.y+1) && orb.Env.units(orb.x,orb.y+1) {
-						orb.move(Bottom())
+				case Bottom() =>
+					if (orb.y <= orb.Env.size_y - 2 && orb.Env.tiles(orb.x)(orb.y+1) != 1 && orb.Env.units(orb.x)(orb.y+1) != None) {
+						orb.move(Bottom(),step_speed)
 						return 1
-					else {
+					} else {
 						explose()
 						return 0
 					}
-				}
 			}
 		}
-		this.Env.clock.add_macro_event(func)
+		personnage.jeton.Env.clock.add_macro_event(cooldowned(func(_),0.5))
 	}
 }

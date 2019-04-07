@@ -2,8 +2,9 @@ package Algo
 import Environnement.{Environnement=>Environnement}
 import Personnage.{Jeton=>Jeton}
 import bddPersonnages.{bddPersonnages=>bddp}
-import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.{ListBuffer,PriorityQueue}
 import Schematics.{Tile=>Tile}
+import mylib.misc.{FibonacciHeap,FNode}
 
 class FileP{
 	var l:List[Array[Int]] = List()
@@ -75,103 +76,105 @@ class FileP{
 
 object Algo{
 	
-	def astar(Env:Environnement,je:Jeton,target:Array[Int]):Array[Int]={
+	def astar(Env:Environnement,je:Jeton,target:(Int,Int)):(Int,Int)={
 		var tuple = this.astar_algo(Env,je,target)
 		var P = tuple._1
 		var best_case = tuple._2
-		var path:List[Array[Int]] = List()
-		def get_move(P:Array[Array[Array[Int]]],pos:Array[Int]):Unit={
-			if (pos(0) == je.x && pos(1) == je.y){
+		var path:List[(Int,Int)] = List()
+		def get_move(P:Array[Array[(Int,Int)]],pos:(Int,Int)):Unit={
+			if (pos._1 == je.x && pos._2 == je.y){
 				()
 			} else {
 				path = pos :: path
-				P(pos(0))(pos(1)) match {
+				P(pos._1)(pos._2) match {
 					case a => get_move(P,a)
 					case null => ()
 				}
 			}
 		}
-		get_move(P,Array(best_case(0),best_case(1)))
+		get_move(P,(best_case._1,best_case._2))
 		//println(scala.runtime.ScalaRunTime.stringOf(path))
 		path match {
 			case t::q => return t //Prochaine destination
-			case Nil => return Array(je.x,je.y) //Ne bouge pas
+			case Nil => return (je.x,je.y) //Ne bouge pas
 		}
 	}
-	private def astar_algo(Env:Environnement,je:Jeton,target:Array[Int]):(Array[Array[Array[Int]]],Array[Int])={
-		var P:Array[Array[Array[Int]]] = Array.ofDim[Int](Env.size_x,Env.size_y,3)
+	private def astar_algo(Env:Environnement,je:Jeton,target:(Int,Int)):(Array[Array[(Int,Int)]],(Int,Int))={
+		var P:Array[Array[(Int,Int)]] = Array.ofDim[(Int,Int)](Env.size_x,Env.size_y)
 		var d:Array[Array[Int]] = Array.ofDim[Int](Env.size_x,Env.size_y)
-		var F:FileP = new FileP
-		def h(e:Array[Int]):Int={
-			return Math.pow(target(0)-e(0),2).toInt + Math.pow(target(1)-e(1),2).toInt
+		var F:FibonacciHeap[(Int,Int)] = new FibonacciHeap[(Int,Int)]
+		var nodesF:scala.collection.mutable.Map[(Int,Int),FNode[(Int,Int)]] = scala.collection.mutable.Map()
+		def h(e:(Int,Int)):Int={
+			return Math.pow(target._1-e._1,2).toInt + Math.pow(target._1-e._2,2).toInt
 		}
-		def cle(e:Array[Int]):Int={
-			return d(e(0))(e(1)) + h(e)
+		def cle(e:(Int,Int)):Int={
+			return -(d(e._1)(e._2) + h(e)) //Les files de prio fonctionnent dans l'autre sens ! -> on a un -
 		}
-		def movement(e:Array[Int]):Array[Array[Int]]={
-			return Array(Array(e(0)+1,e(1)),Array(e(0),e(1)+1),Array(e(0)-1,e(1)),Array(e(0),e(1)-1))
+		def movement(e:(Int,Int)):Array[(Int,Int)]={
+			return Array((e._1+1,e._2),(e._1,e._2+1),(e._1-1,e._2),(e._1,e._2-1))
 		}
-		def correct(e:Array[Int]):Boolean={
-			val x_correct = e(0) < Env.size_x && 0 <= e(0)
-			val y_correct = e(1) < Env.size_y && 0 <= e(1)
-			return x_correct && y_correct && (Env.tiles(e(0))(e(1)).is_an_obstacle == false) && Env.units(e(0))(e(1)) == None
+		def correct(e:(Int,Int)):Boolean={
+			val x_correct = e._1 < Env.size_x && 0 <= e._1
+			val y_correct = e._2 < Env.size_y && 0 <= e._2
+			return x_correct && y_correct && (Env.tiles(e._1)(e._2) == 0) && Env.units(e._1)(e._2) == None
 		}
-		def w(u:Array[Int],v:Array[Int]):Int={
+		def w(u:(Int,Int),v:(Int,Int)):Int={
 			return 1
 		}
-		def cut(e:Array[Int]):Array[Int]={
-			return Array(e(0),e(1))
+		def cut(e:(Int,Int,Int)):(Int,Int)={
+			return (e._1,e._2)
 		}
-		def contain(v:Array[Int],T:ListBuffer[Array[Int]]):Boolean={
+		def contain(v:(Int,Int),T:ListBuffer[(Int,Int)]):Boolean={
 			T match {
-				case t +: q => if (t(0) == v(0) && t(1) == v(1)){
+				case t +: q => if (t._1 == v._1 && t._2 == v._2){
 									true
 								} else { contain(v,q) }
 				case ListBuffer() => false
 			}
 		}
-		F.add(Array(je.x,je.y,cle(Array(je.x,je.y))))
-		var T:ListBuffer[Array[Int]] = ListBuffer()
-		var u:Array[Int] = Array()
-		var best_case:Array[Int] = Array(je.x,je.y)
-		var best_approx:Int = h(Array(je.x,je.y))
-		while (F.not_empty) {
-			u = cut(F.pop())
+		nodesF((je.x,je.y)) = F.insert( (je.x,je.y),cle((je.x,je.y)) )
+		var T:ListBuffer[(Int,Int)] = ListBuffer()
+		var u:(Int,Int) = (-1,-1)
+		var best_case:(Int,Int) = (je.x,je.y)
+		var best_approx:Int = h((je.x,je.y))
+		var mov:Array[(Int,Int)] = Array()
+		var v:(Int,Int) = (-1,-1)
+		while (!(F.isEmpty)) {
+			u = F.removeMin()
 			T += u
-			if (u(0) == target(0) && u(1) == target(1)){
+			if (u._1 == target._1 && u._2 == target._2){
 				return (P,best_case)
 			}
-			var mov = movement(u)
+			mov = movement(u)
 			for (i <- 0 to 3){
-				var v = mov(i)
+				v = mov(i)
 				if (correct(v)){
 					if (h(v) < best_approx){
 						best_approx = h(v)
 						best_case = v
 					}
-					if (F.contains(v)){
-						if (d(v(0))(v(1)) > d(u(0))(u(1)) + w(u,v)){
-							d(v(0))(v(1)) = d(u(0))(u(1)) + w(u,v)
-							P(v(0))(v(1)) = u
-							F.maj(v,cle(v)) //cle(v) vient d'etre modifiée
+					if (nodesF.contains(v)){
+						if (d(v._1)(v._2) > d(u._1)(u._2) + w(u,v)){
+							d(v._1)(v._2) = d(u._1)(u._2) + w(u,v)
+							P(v._1)(v._2) = u
+							F.decreaseKey(nodesF(v),cle(v)) //cle(v) vient d'etre modifiée
 						}
 					} else {
 						if (contain(v,T)) {
-							if (d(v(0))(v(1)) > d(u(0))(u(1)) + w(u,v)){
-								d(v(0))(v(1)) = d(u(0))(u(1)) + w(u,v)
-								P(v(0))(v(1)) = u
-								F.add(Array(v(0),v(1),cle(v)))
+							if (d(v._1)(v._2) > d(u._1)(u._2) + w(u,v)){
+								d(v._1)(v._2) = d(u._1)(u._2) + w(u,v)
+								P(v._1)(v._2) = u
+								F.insert((v._1,v._2),cle(v))
 							}
 						} else {
-							d(v(0))(v(1)) = d(u(0))(u(1)) + w(u,v)
-							P(v(0))(v(1)) = u
-							F.add(Array(v(0),v(1),cle(v)))
+							d(v._1)(v._2) = d(u._1)(u._2) + w(u,v)
+							P(v._1)(v._2) = u
+							F.insert((v._1,v._2),cle(v))
 						}
 					}
 				}
 			}
 		}
-		//print("Error : Astar no solution")
 		return (P,best_case)
 	}
 }

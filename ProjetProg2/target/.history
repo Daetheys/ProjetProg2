@@ -60,14 +60,6 @@ run
 compile
 run
 compile
-run
-compile
-run
-compile
-run
-compile
-run
-compile
 cmpile
 compile
 run
@@ -498,3 +490,11 @@ run
 clean
 compile
 run
+clean
+compile
+clear
+cls
+clean
+compile
+clean
+compile

@@ -1,8 +1,22 @@
 package Sprite
+import scalafx.scene.image.Image
+import Graphics2._
+import Movable._
+
 class Sprite(file:String) {
-	orientation:Int = 0
+	var orientation:Orientation = Top()
+	var image:Image = new Image(app.unknown_path())
 	
-	def orient(orientation:Int):
+	def orient(orientation:Orientation)={
 		this.orientation = orientation
 	}
+	
+	def load_image():Unit={
+		this.image = new Image(app.get_path(this.file))
+	}
+}
+
+class LocatedSprite(file:String) extends Sprite(file) {
+	var x:Int = -1
+	var y:Int = -1
 }

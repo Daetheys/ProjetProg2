@@ -13,7 +13,7 @@ class Active (name:String) extends Competence(name){
 	var autocast = false
 	val autocast_possible = false
 
-	var initialize:Array[Int]=>Unit = (n:Array[Int])=> Unit
+	var refresh:Array[Int]=>Unit = (n:Array[Int])=> Unit //Quand le joueur appelle la compétence
 
 	def autocast_enable(){
 		this.autocast = true

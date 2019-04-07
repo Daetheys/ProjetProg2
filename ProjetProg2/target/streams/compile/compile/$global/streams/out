@@ -1,16 +1,24 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Environnement.scala:171:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala:193:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
 [0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
 [0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
 [0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
 [0m[[0m[33mwarn[0m] [0m[0m						if (t()==1){[0m
 [0m[[0m[33mwarn[0m] [0m[0m						     ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Mechanisms.scala:159:17: a pure expression does nothing in statement position[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Mechanisms.scala:159:17: a pure expression does nothing in statement position[0m
 [0m[[0m[33mwarn[0m] [0m[0m      case x => x[0m
 [0m[[0m[33mwarn[0m] [0m[0m                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:89:11: patterns after a variable pattern cannot match (SLS 8.1.1)[0m
-[0m[[0m[33mwarn[0m] [0m[0m					case a => get_move(P,a)[0m
-[0m[[0m[33mwarn[0m] [0m[0m					     ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Algo.scala:90:19: unreachable code due to variable pattern 'a' on line 89[0m
-[0m[[0m[33mwarn[0m] [0m[0m					case null => ()[0m
-[0m[[0m[33mwarn[0m] [0m[0m					             ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Main.scala:32:45: polymorphic expression cannot be instantiated to expected type;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : [U]Array[Array[U]][0m
+[0m[[0m[31merror[0m] [0m[0m required: Layer.LayerSet[0m
+[0m[[0m[31merror[0m] [0m[0m		this.Env.layerset = all_sprites.main_grid.transpose[0m
+[0m[[0m[31merror[0m] [0m[0m		                                          ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Main.scala:35:20: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Array[Array[Schematics.Tile]][0m
+[0m[[0m[31merror[0m] [0m[0m required: Array[Array[Int]][0m
+[0m[[0m[31merror[0m] [0m[0m		this.Env.tiles = tiles[0m
+[0m[[0m[31merror[0m] [0m[0m		                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Main.scala:36:12: value sprite_plan is not a member of Environnement.Environnement[0m
+[0m[[0m[31merror[0m] [0m[0m		this.Env.sprite_plan = sprite_plan[0m
+[0m[[0m[31merror[0m] [0m[0m		         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mtwo warnings found[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m

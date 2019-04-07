@@ -20,6 +20,8 @@ import scalafx.scene.input.{KeyCode, KeyEvent, MouseEvent,MouseDragEvent,DragEve
 import Environnement.{Environnement=>Environnement,_}
 import Personnage.{Jeton=>Jeton,_}
 import Game.{Game=>Game}
+import Movable._
+import Sprite._
 
 object app extends JFXApp {
 	private var mousePosX: Double = .0
@@ -56,6 +58,10 @@ object app extends JFXApp {
 	private val timer = 2 //Nb de secondes d'affichage par message
 	private var time = 0 //Compteur pour savoir depuis cb de temps le message est affiché
 	//Game.initialize()
+	
+	def unknown_path()={
+		this.get_path("unknown.png")
+	}
 	
 	def load_commands()={
 		//charge les commandes du jeu
@@ -126,7 +132,7 @@ object app extends JFXApp {
 					var target = Array((e.x/32).toInt,(e.y/32).toInt)
 					this.Env.apply_active("Move",target)
 				}
-				if (e.isPrimaryButtonDown){
+				/*if (e.isPrimaryButtonDown){ //Casse les mécanismes
 					//Casse les mécanismes (se ferra avec des compétences précises plus tard)
 					val x = (e.x/32).toInt
 					val y = (e.y/32).toInt
@@ -137,7 +143,7 @@ object app extends JFXApp {
 						this.load_sprites()
 					}
 					
-				}
+				}*/
 			}
 		}
 		
@@ -291,24 +297,20 @@ object app extends JFXApp {
 	
 	def load_static_layers()={
 		val static_layers = Env.layerset.get_static_layers()
-		static_layers.map( (e:Int) => this.load_layer(e) )
+		static_layers.map( (e:Int) => Env.layerset.layers(e).load_layer() )
 	}
 	
 	def load_refresh_layers()={
-		val static_layers = Env.layerset.get_refresh_layers()
+		val refresh_layers = Env.layerset.get_refresh_layers()
 		refresh_layers.map( (e:Int) => this.load_layer(e) )
 	}
 	
-	def load_layer(k:Int) ={
-		for (i <- 0 to Env.sprites.length-1){
-			for (j <-0 to Env.sprites.length-1){
-				Env.layerset.layers(k).content.map((e:(Sprite,Int,Int)) => (Env.layerset.layers(k).images(i)(j) = new Image(this.get_path(e._1.file)),e._1.orientation))
-			}
-		}
+	def load_layer(k:Int)={
+		this.Env.layerset.layers(k).load_layer()
 	}
 	
 	def aff_sprites() = {
-		def aff_image(i:Int,j:Int,t:(Image,Int))={
+		def aff_image(x:Int,y:Int,image:Image,o:Orientation)={
 			def rotate(x:Double,y:Double,d2:Double):(Int,Int)={
 				//d est donné en degrés donc il faut le convertir
 				val d = d2/180*3.141592654 //Math.Pi ne marchait pas			
@@ -319,21 +321,22 @@ object app extends JFXApp {
 			def toInt(b:Boolean):Int={
 				if (b) {return 1} else {return 0}
 			}
-			val deg = (t._2)*(-90.0)
+			val deg = (o match {
+							case Left() => 90.0
+							case Right() => 270.0
+							case Top() => 0.0
+							case Bottom() => 180.0
+						})*(-90.0)
 			this.gc.save()
 			this.gc.rotate(deg)
 			val y_offset = toInt(List(90,180).contains(Math.abs(deg).toInt%360))
 			val x_offset = toInt(List(180,270).contains(Math.abs(deg).toInt%360)) 
-			var t2 = rotate((i+x_offset)*32.0,(j+y_offset)*32.0,-deg)
-			this.gc.drawImage(t._1,t2._1,t2._2,32,32)
+			var t2 = rotate(x+(x_offset)*32.0,y+(y_offset)*32.0,-deg)
+			this.gc.drawImage(image,t2._1,t2._2,32,32)
 			this.gc.restore()
 		}
 		for (k <- 0 to Env.layerset.layers.length-1){ //Respect de l'empilement des layers
-			for (i <- 0 to Env.layerset.layers(k).images.length-1){
-				for (j <-0 to Env.layerset.layers(k).images(i).length-1){
-					Env.layerset.layers(k).images(i)(j).map((aff_image _).curried(i)(j))
-				}
-			}
+			Env.layerset.layers(k).content.map( (e:LocatedSprite) => aff_image(e.x,e.y,e.image,e.orientation) )
 		}
 	}
 }

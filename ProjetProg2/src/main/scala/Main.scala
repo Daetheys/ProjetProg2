@@ -29,7 +29,7 @@ object Game {
 		sprite_plan.random_loot
 		sprite_plan.init_sprites
 		val all_sprites = new All_sprites(sprite_plan)
-		this.Env.sprites = all_sprites.main_grid.transpose
+		this.Env.layerset = all_sprites.main_grid.transpose
 		//print(scala.runtime.ScalaRunTime.stringOf(this.Env.sprites))
 		val tiles = plan.grid.transpose //-> Ne sert plus que pour les collisions
 		this.Env.tiles = tiles
@@ -54,11 +54,11 @@ object Game {
 		app.load_commands()
 		//app.load_colored_cursors() // --> Fait planter (je pense que cette fonctionnalité n'est pas encore bien implémentée dans ScalaFx)
 		//app.load_images_environnement() // --> c'est une opti pas encore utile
-		app.load_sprites() //-> Opti necessaire sinon java crash car trop de trucs a afficher
+		app.load_static_layers() //-> Opti necessaire sinon java crash car trop de trucs a afficher
 		
 		// Affiche le terrain
 		def aff_event(typage:Unit):Int={
-			app.aff_all()
+			app.load_refresh_layers()
 			return 1
 		}
 		

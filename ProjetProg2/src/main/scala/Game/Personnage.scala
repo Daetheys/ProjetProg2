@@ -22,11 +22,13 @@ class Personnage {
 	//Compétences
 	var actives = scala.collection.mutable.Map[String,Active]()
 	var passives = scala.collection.mutable.Map[String,Passive]()
-	
+	var call_when_spawn_list:List[String] = List()
 	//Player
 	var player = -1 //Le joueur contrôlant l'unité -> 0 (joueur) // 1 (ia) // 2 : neutre
 	
 	var image_path:String = ""
+	
+	var ia:Unit=>Unit = (e:Unit) => ()
 	
 	var jeton = new Jeton(this,new Environnement)
 	
@@ -40,17 +42,24 @@ class Personnage {
 			this.jeton.Env.remove_unit(this.jeton)
 		}
 	}
+	
+	def add_spawn_call(e:String)={
+		this.call_when_spawn_list = e::this.call_when_spawn_list
+	}
+	
+	def call_when_spawn():Unit={
+		this.call_when_spawn_list.map( (e:String) => this.actives(e).refresh(Array()) )
+	}
 }
 
 class Jeton(modell:Personnage,env:Environnement) extends Movable(env){
 	// Personnage en mode Baston (avec emplacement sur le terrain et les effets)
+	var Env = env
 	var died = false
 	var model = modell
-
+	var image_path= modell.image_path
 	//Attributs graphiques
 	var selected:Boolean = false
-	var image_path:String = modell.image_path
-	var ia:Unit=>Unit = (e:Unit) => ()
 	//Status
 	var status = None
 
