@@ -2,10 +2,11 @@ package bddPersonnages
 
 import Personnage.{Personnage=>Personnage}
 import bddCompetences.{bddCompetences=>bddComp}
+import Player._
 
 object bddPersonnages {
 
-	def create_turtle(player:Int):Personnage = {
+	def create_turtle(player:Player):Personnage = {
 		var turtle = new Personnage
 		turtle.name = "Tortue"
 		turtle.pv_max = 100
@@ -14,12 +15,11 @@ object bddPersonnages {
 		turtle.actives("Move") = bddComp.create_move(turtle,1.0,0) //speed,type(0:ground,1:air)
 		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle,1,6,1.2) //range,dmg,speed
 		turtle.image_path = "sprite_character_turtle.png"
-		turtle.add_spawn_call("Move")
 		turtle.add_spawn_call("AutoAttack")
 		return turtle
 	}
 
-	def create_bird(player:Int):Personnage = {
+	def create_bird(player:Player):Personnage = {
 		var bird = new Personnage
 		bird.name = "Oiseau"
 		bird.pv_max = 75
@@ -31,7 +31,7 @@ object bddPersonnages {
 		return bird
 	}
 	
-	def create_bees(player:Int):Personnage = {
+	def create_bees(player:Player):Personnage = {
 		var bees = new Personnage
 		bees.name = "Abeilles"
 		bees.pv_max = 60
@@ -43,7 +43,7 @@ object bddPersonnages {
 		return bees
 	}
 
-	def create_cat(player:Int):Personnage = {
+	def create_cat(player:Player):Personnage = {
 		var cat = new Personnage
 		cat.name = "Chat"
 		cat.pv_max = 90
@@ -55,7 +55,7 @@ object bddPersonnages {
 		return cat
 	}
 
-	def create_monkey(player:Int):Personnage = {
+	def create_monkey(player:Player):Personnage = {
 		var monkey = new Personnage
 		monkey.name = "Singe"
 		monkey.pv_max = 110
@@ -67,7 +67,7 @@ object bddPersonnages {
 		return monkey
 	}
 
-	def create_rabbit(player:Int):Personnage = {
+	def create_rabbit(player:Player):Personnage = {
 		var rabbit = new Personnage
 		rabbit.name = "Lapin"
 		rabbit.pv_max = 65
@@ -79,7 +79,7 @@ object bddPersonnages {
 		return rabbit
 	}
 
-	def create_snake(player:Int):Personnage = {
+	def create_snake(player:Player):Personnage = {
 		var snake = new Personnage
 		snake.name = "Serpent"
 		snake.pv_max = 80
@@ -91,7 +91,7 @@ object bddPersonnages {
 		return snake
 	}
 
-	def create_robot(player:Int):Personnage = {
+	def create_robot(player:Player):Personnage = {
 		var robot = new Personnage
 		robot.name = "Unité de Défense"
 		robot.pv_max = 50
@@ -104,7 +104,7 @@ object bddPersonnages {
 	}
 	
 	//Boss
-	def create_sentinel(player:Int):Personnage = {
+	def create_sentinel(player:Player):Personnage = {
 		// 1er Boss
 		var sentinel = new Personnage
 		sentinel.name = "Sentinelle"
@@ -117,7 +117,7 @@ object bddPersonnages {
 		return sentinel
 	}
 	
-	def create_healbot(player:Int):Personnage = {
+	def create_healbot(player:Player):Personnage = {
 		//Add du 1er boss -> Soignent le boss quand ils arrivent au contact
 		var robot = new Personnage
 		robot.name = "Robot de Soin"
@@ -130,7 +130,7 @@ object bddPersonnages {
 		return robot
 	}
 	
-	def create_attackbot(player:Int):Personnage = {
+	def create_attackbot(player:Player):Personnage = {
 		//Add du 1er boss -> Attaquent les joueurs et tapent très fort
 		var robot = new Personnage
 		robot.name = "Robot d'Assaut"
@@ -143,7 +143,7 @@ object bddPersonnages {
 		return robot
 	}
 	
-	def create_explosionbot(player:Int):Personnage = {
+	def create_explosionbot(player:Player):Personnage = {
 		//Add du 1er boss -> Explosent au contact
 		var robot = new Personnage
 		robot.name = "Robot explosifs"

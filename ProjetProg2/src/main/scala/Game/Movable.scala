@@ -4,8 +4,8 @@ import Utilities._
 import Sprite._
 
 class Movable(env:Environnement){
-	var x:Int=0
-	var y:Int=0
+	var x:Int= -1000 //Pour etre sur qu'il ne puisse pas etre attaqué quand on fait pop un jeton quelconque pour fill quand on n'a personne a attaquer
+	var y:Int= -1000
 	var orientation:Orientation = Top()
 	var image_path:String = ""
 	var located_sprite= new LocatedSprite(image_path)
@@ -44,14 +44,16 @@ class Movable(env:Environnement){
 	def animation_move(x1:Int,y1:Int,x2:Int,y2:Int,time:Double):Unit={
 		val nb_iter_max = 10
 		var no_iter = 0
-		val dx = (x2-x1)/nb_iter_max
-		val dy = (y2-y1)/nb_iter_max
+		val dx = (x2-x1)*32/nb_iter_max
+		val dy = (y2-y1)*32/nb_iter_max
 		def event(typage:Unit):Int={
-			this.located_sprite.x = x1+dx*no_iter
-			this.located_sprite.y = y1+dy*no_iter
+			this.located_sprite.x = x1*32+dx*no_iter
+			this.located_sprite.y = y1*32+dy*no_iter
+			//printf("animation "+this.located_sprite.x.toString+" "+this.located_sprite.y.toString)
 			if (no_iter == nb_iter_max){
 				return 0
 			} else {
+				no_iter += 1
 				return 1
 			}
 		}
@@ -59,26 +61,27 @@ class Movable(env:Environnement){
 	}
 	
 	def move(o:Orientation,time:Double):Unit = {
+		printf("Move "+o.toString+"\n")
 		//Deplace le movable en time secondes
 		o match {
 			case Left() => 
-				if (1 <= this.x && this.Env.tiles(this.x-1)(this.y) != 0) {
+				if (1 <= this.x && this.Env.tiles(this.x-1)(this.y) != 1) {
 					this.set_position(this.x-1,this.y,time)
 				}
 			case Right() =>
-				if (this.x <= this.Env.size_x - 2 && this.Env.tiles(this.x+1)(this.y) != 0) {
+				if (this.x <= this.Env.size_x - 2 && this.Env.tiles(this.x+1)(this.y) != 1) {
 					this.set_position(this.x+1,this.y,time)
 				}
 			case Top() =>
-				if (1 <= this.y && this.Env.tiles(this.x)(this.y-1) != 0) {
+				if (1 <= this.y && this.Env.tiles(this.x)(this.y-1) != 1) {
 					this.set_position(this.x,this.y-1,time)
 				}
 			case Bottom() =>
-				if (this.y <= this.Env.size_y - 2 && this.Env.tiles(this.x)(this.y+1) != 0) {
+				if (this.y <= this.Env.size_y - 2 && this.Env.tiles(this.x)(this.y+1) != 1) {
 					this.set_position(this.x,this.y+1,time)
 				}
-		this.orient(o)
 		}
+		this.orient(o)
 	}
 }
 

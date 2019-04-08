@@ -2,6 +2,7 @@ package Personnage
 import Environnement.{Environnement=>Environnement}
 import Competence.{Competence=>Competence,Active=>Active,Passive=>Passive}
 import Movable.{Movable}
+import Player._
 
 class Personnage {
 	// Représente un personnage de manière générale
@@ -24,7 +25,7 @@ class Personnage {
 	var passives = scala.collection.mutable.Map[String,Passive]()
 	var call_when_spawn_list:List[String] = List()
 	//Player
-	var player = -1 //Le joueur contrôlant l'unité -> 0 (joueur) // 1 (ia) // 2 : neutre
+	var player:Player = new Player //Le joueur contrôlant l'unité
 	
 	var image_path:String = ""
 	
@@ -54,10 +55,8 @@ class Personnage {
 
 class Jeton(modell:Personnage,env:Environnement) extends Movable(env){
 	// Personnage en mode Baston (avec emplacement sur le terrain et les effets)
-	var Env = env
 	var died = false
 	var model = modell
-	var image_path= modell.image_path
 	//Attributs graphiques
 	var selected:Boolean = false
 	//Status

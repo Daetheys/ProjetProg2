@@ -5,11 +5,15 @@ import Schematics.{Tile=>Tile}
 import Mechanisms.{Sprite_plan => Sprite_plan}
 import Layer._
 import scalafx.application.{Platform}
+import Sound._
+import Graphics2._
+import Sprite._
+import Game._
 
 class Environnement {
 	//Représente une carte
-	val real_size_x = 25
-	val real_size_y = 25
+	val real_size_x = 21
+	val real_size_y = 15
 	val factor_x = 1
 	val factor_y = 1
 	val size_x = real_size_x*factor_x
@@ -17,8 +21,42 @@ class Environnement {
 	var layerset = new LayerSet(size_x,size_y) //Sert à l'affichage graphique
 	var tiles = Array.ofDim[Int](size_x,size_y)
 	var units = Array.ofDim[Option[Jeton]](size_x,size_y)
+	for (i<-0 to size_x-1){
+		for (j<-0 to size_y-1){
+			tiles(i)(j) = 0
+			units(i)(j) = None
+		}
+	}
 	val clock = new Clock(this)
 	var selected_units:List[Jeton] = List()
+	
+	def load()={
+		//Chargement de cet environnement comme environnement principal
+	}
+	
+	def start()={
+		//Lancement du jeu dans l'environnement
+		app.Env = this
+		app.load_static_layers()
+		app.load_commands()
+		// Affiche le terrain
+		def aff_event(typage:Unit):Int={
+			app.load_refresh_layers() 
+			app.aff_layers()
+			app.aff_life_bars()
+			return 1
+		}
+		
+		//Chargement de l'event de raffraichissement de l'environnement
+		this.clock.add_micro_event(aff_event)
+		
+		//Préparation de l'event pour la loop -> les events ca sert a tout
+		val music = new Sound("dash_runner.wav")
+		music.loop_on()
+		music.play()
+		
+		this.start_clock()
+	}
 	
 	def apply_active(name:String,arg:Array[Int])={
 		//Chaque unité séléctionnée lance la compétence dont le nom est spécifié avec les arguments donnés
@@ -110,7 +148,7 @@ class Environnement {
 					case None =>
 					// Pas opti mais on verra plus tard
 					case Some (j) =>{
-						if (j.model.player == 0){
+						if (j.model.player == Game.Human){
 							this.selected_units = j::this.selected_units
 							j.selected = true
 						}
@@ -128,8 +166,13 @@ class Environnement {
 			jeton.y = y
 			personnage.jeton = jeton
 			this.units(x)(y) = Some(jeton)
+			val ls = new LocatedSprite(personnage.image_path)
+			ls.x = x*32
+			ls.y = y*32
+			this.layerset.layers(4).content = ls::this.layerset.layers(4).content
+			personnage.jeton.located_sprite = ls
 			//Events de automatiques du jeton
-			personnage.call_when_spawn() //L'argument n'a pas d'importance
+			personnage.call_when_spawn()
 		}else{
 			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
 		}
@@ -139,7 +182,7 @@ class Environnement {
 class Clock(env:Environnement) {
 	//Représente une horloge pour les phases de baston (permet de coordonner les events)
 	val macro_period = 0.1 //Timer entre 2 actions majeures
-	val micro_period = 0.03 //Timer entre 2 actions mineures
+	val micro_period = 0.05 //Timer entre 2 actions mineures
 	var macro_events = ListBuffer[Unit=>Int]()
 	var micro_events = ListBuffer[Unit=>Int]()
 	var active = true

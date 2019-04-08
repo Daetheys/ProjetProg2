@@ -4,6 +4,9 @@ import Sprite._
 class LayerSet(width:Int,height:Int) {
 	val nb_layers = 8
 	var layers = Array.ofDim[Layer](nb_layers)
+	for (i<-0 to layers.length-1){
+		layers(i) = new Layer(width,height)
+	}
 	
 	def get_index(name:String):Int={
 		return name match {
@@ -17,7 +20,13 @@ class LayerSet(width:Int,height:Int) {
 			case "Spells" => 7
 		}
 	}
-		
+	
+	def transpose()={
+		for (i<-0 to this.layers.length-1){
+			this.layers(i).transpose()
+		}
+	}
+	
 	def get_layer(name:String):Layer={
 		return this.layers(this.get_index(name))
 	}
@@ -38,4 +47,9 @@ class Layer(width:Int,height:Int) {
 		//Charge les images du layer
 		this.content.map( (e:LocatedSprite) => e.load_image() )
 	}
+	
+	def transpose()={
+		this.content.map( (e:LocatedSprite) => {val z = e.x; e.x = e.y; e.y = z} )
+	}
+	
 }

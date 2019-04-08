@@ -57,6 +57,7 @@ object bddCompetences {
 		// Renvoie la compétence d'attaque automatique
 		val autoattack = new Active("AutoAttack")
 		val Env = personnage.jeton.Env
+		autoattack.v_jeton("target") = new Jeton(new Personnage,Env) //Un jeton quelconque qui ne pourra jamais etre attaqué
 		
 		def refresh(typage:Array[Int]):Unit ={
 			get_new_target()

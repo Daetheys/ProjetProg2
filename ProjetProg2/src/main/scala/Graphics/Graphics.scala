@@ -50,8 +50,8 @@ object app extends JFXApp {
 			content = pane
 		}
 	}
-	private var env_images:Array[Array[Image]] = Array.ofDim[Image](Env.size_x,Env.size_y)
-	private var sprites_images:Array[Array[List[(Image,Int)]]]= Array.ofDim[List[(Image,Int)]](Env.size_x,Env.size_y)
+	//private var env_images:Array[Array[Image]] = Array.ofDim[Image](Env.size_x,Env.size_y)
+	//private var sprites_images:Array[Array[List[(Image,Int)]]]= Array.ofDim[List[(Image,Int)]](Env.size_x,Env.size_y)
 	
 	private var message_buffer:ListBuffer[String] = ListBuffer()
 	private var message_active:Boolean = false
@@ -238,28 +238,6 @@ object app extends JFXApp {
 		return "file://"+abs_path+"/src/main/ressources/"+path
 	}
 	
-	def aff_all()={
-		// Affiche les tiles et les sprites (pour le moment Scalafx n'arrive pas a trouver les liens
-		//this.aff_environnement()
-		this.aff_sprites()
-		this.aff_units()
-		this.aff_life_bars()
-	}
-	def aff_units()={
-		//Affiche les sprites des unités
-		for (i <- 0 to Env.units.length-1){
-			for (j <- 0 to Env.units(i).length-1){
-				Env.units(i)(j) match{
-					case None => ()
-					case Some(jeton:Jeton) =>
-						val path = System.getProperty("user.dir")
-						var image = new Image(this.get_path(jeton.image_path))
-						this.gc.drawImage(image,i*32,j*32,32,32)
-				}
-			}
-		}
-	}
-	
 	def aff_life_bars() = {
 		//Affiche les barres de pv
 		var color1 = Blue
@@ -297,11 +275,11 @@ object app extends JFXApp {
 	
 	def load_static_layers()={
 		val static_layers = Env.layerset.get_static_layers()
-		static_layers.map( (e:Int) => Env.layerset.layers(e).load_layer() )
+		static_layers.map( (e:Int) => this.load_layer(e) )//this.Env.layerset.layers(e).load_layer() )
 	}
 	
 	def load_refresh_layers()={
-		val refresh_layers = Env.layerset.get_refresh_layers()
+		val refresh_layers = this.Env.layerset.get_refresh_layers()
 		refresh_layers.map( (e:Int) => this.load_layer(e) )
 	}
 	
@@ -309,21 +287,21 @@ object app extends JFXApp {
 		this.Env.layerset.layers(k).load_layer()
 	}
 	
-	def aff_sprites() = {
+	def aff_layers() = {
 		def aff_image(x:Int,y:Int,image:Image,o:Orientation)={
 			def rotate(x:Double,y:Double,d2:Double):(Int,Int)={
 				//d est donné en degrés donc il faut le convertir
 				val d = d2/180*3.141592654 //Math.Pi ne marchait pas			
 				val x2 = (x*Math.cos(d) - y*Math.sin(d))
 				val y2 = x*Math.sin(d) + y*Math.cos(d)
-				return ((x2+0.5).toInt,(y2+0.5).toInt)
+				return ((x2+0.5).toInt,(y2+0.5).toInt) //Arrondis
 			}
 			def toInt(b:Boolean):Int={
 				if (b) {return 1} else {return 0}
 			}
 			val deg = (o match {
-							case Left() => 90.0
-							case Right() => 270.0
+							case Left() => 270.0
+							case Right() => 90.0
 							case Top() => 0.0
 							case Bottom() => 180.0
 						})*(-90.0)
@@ -335,8 +313,8 @@ object app extends JFXApp {
 			this.gc.drawImage(image,t2._1,t2._2,32,32)
 			this.gc.restore()
 		}
-		for (k <- 0 to Env.layerset.layers.length-1){ //Respect de l'empilement des layers
-			Env.layerset.layers(k).content.map( (e:LocatedSprite) => aff_image(e.x,e.y,e.image,e.orientation) )
+		for (k <- 0 to this.Env.layerset.layers.length-1){ //Respect de l'empilement des layers
+			this.Env.layerset.layers(k).content.map( (e:LocatedSprite) => aff_image(e.x,e.y,e.image,e.orientation) )
 		}
 	}
 }
