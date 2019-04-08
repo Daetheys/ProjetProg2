@@ -5,12 +5,13 @@ The main use for this file :
   (p is an initialized Plan from Schematics.scala)
   background = new Sprite_plan(p);
   background.random_loot();
-  background.init_sprites();
-  background.all_the_sprites
-returns the 25 * 25 matrix where each cells contains the list of
-("sprite_name.png", orientation) sorted from bottom layer to top
+  background.fill_layer0135();
+  background.everything
+returns the layerset for one level
 */
-import Schematics.{Tile=>Tile,Plan=>Plan,_}
+import Schematics._
+import Layer._
+import Sprite._
 
 abstract class Sprite_group
   case class Circuit(comp1 : Int,
@@ -38,37 +39,7 @@ class Sprite_plan(plan : Plan) {
   val stuff = Array("confusion_gun","electricity_gun","fire_gun","ice_gun",
                     "ink_gun","poison_gun","confusion_vest","electricity_vest",
                     "fire_vest","ice_vest","ink_vest","poison_vest")
-  def sprite_list(s_g:Sprite_group):List[(String, Int)] = {
-    s_g match {
-      case Circuit(c1,c2,di,false) =>
-        List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
-              ("sprite_mechanism_split.png", di),
-              ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4) )
-      case Circuit(c1,c2,di,true) =>
-        List( ("sprite_mechanism_switch_" + this.compet(c1) + ".png", di),
-              ("sprite_mechanism_split.png", di),
-              ("sprite_mechanism_switch_" + this.compet(c2) + ".png", (di+2)%4),
-              ("sprite_mechanism_switch_used.png", di) )
-      case Vault(s,false) =>
-        List( ("sprite_tile_vault.png", 0) )
-      case Vault(s,true) =>
-        List( ("sprite_tile_vault.png", 0),
-              ("sprite_tile_open-vault.png", 0),
-              ("sprite_object_" + this.stuff(s) + ".png", 0) )
-     case Pipe(c,d,false) =>
-        List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d) )
-      case Pipe(c,d,true) =>
-        List( ("sprite_mechanism_pipe_" + this.compet(c) + ".png", d),
-              ("sprite_mechanism_pipe_used.png", d) )
-     case Jail(a,false) =>
-        List( ("sprite_character_" + this.animal(a) + ".png", 0),
-              ("sprite_tile_jail.png", 0) )
-     case Jail(a,true) =>
-        List( ("sprite_tile_jail.png", 0),
-              ("sprite_character_" + this.animal(a) + ".png", 0))
-      case Plain() => Nil
-    }
-  }
+
   def random_couple(r:scala.util.Random):(Int, Int) = {
     var c1 = r.nextInt(6);
     var c2 = r.nextInt(6);
@@ -131,21 +102,101 @@ class Sprite_plan(plan : Plan) {
       }
     }
   }
-  var all_the_sprites:Array[Array[List[(String, Int)]]] = Array.fill(25,25){Nil}
-  def init_sprites() {
+
+  var everything = new LayerSet
+  var tile_type = Array.ofDim[Int](25,25)
+  var token = new LocatedSprite("")
+  def fill_layer_0135() {
     for ( i <- 0 to 24 ; j <- 0 to 24 ) {
       if ( (plan.grid(i)(j)).is_an_obstacle ) {
+        this.tile_type(i)(j) = 0;
         if ( (plan.grid(i)(j)).is_plain ) {
-          this.all_the_sprites(i)(j) = List(("background_tile_plain.png",0));
+          token = new LocatedSprite("background_tile_plain.png");
+          token.x = 32*i; token.y = 32*j;
+          this.everything.layers(0).add_sprite(token);
         } else {
-          this.all_the_sprites(i)(j) = ("background_tile_obstacle.png",0) ::
-                                       (this.sprite_list(this.sprite_grid(i)(j)));
+          token = new LocatedSprite("background_tile_obstacle.png");
+          token.x = 32*i; token.y = 32*j;
+          this.everything.layers(0).add_sprite(token);
+          this.sprite_list(this.sprite_grid(i)(j),i,j);
         }
       } else {
-        this.all_the_sprites(i)(j) = List(("background_tile_hallway.png",0));
+        token = new LocatedSprite("background_tile_hallway.png");
+        token.x = 32*i; token.y = 32*j;
+        this.everything.layers(0).add_sprite(token);
+        if ( (plan.grid(i)(j)).is_plain ) {
+          this.tile_type(i)(j) = 1;
+        } else {
+          this.tile_type(i)(j) = 2;
+          if ( (plan.grid(i)(j)).type_of_water == 1 ) {
+            token = new LocatedSprite("sprite_tile_water.png");
+          } else {
+            token = new LocatedSprite("sprite_tile_end-of-water.png");
+          }
+          token.x = 32*i; token.y = 32*j;
+          token.int_to_orient((plan.grid(i)(j)).orientation);
+          this.everything.layers(1).add_sprite(token);
+        }
       }
     }
   }
+  def sprite_list(s_g:Sprite_group,i:Int,j:Int) = {
+    s_g match {
+      case Circuit(c1,c2,di,b) =>
+        token = new LocatedSprite("sprite_mechanism_switch_" + this.compet(c1) + ".png");
+        token.x = 32*i; token.y = 32*j;
+        token.int_to_orient(di);
+        this.everything.layers(5).add_sprite(token);
+        token = new LocatedSprite("sprite_mechanism_split.png");
+        token.x = 32*i; token.y = 32*j;
+        token.int_to_orient(di);
+        this.everything.layers(5).add_sprite(token);
+        token = new LocatedSprite("sprite_mechanism_switch_" + this.compet(c2) + ".png");
+        token.x = 32*i; token.y = 32*j;
+        token.int_to_orient((di+2)%4);
+        this.everything.layers(5).add_sprite(token);
+        if b {
+          token = new LocatedSprite("sprite_mechanism_switch_used.png");
+          token.x = 32*i; token.y = 32*j;
+          token.int_to_orient(di);
+          this.everything.layers(5).add_sprite(token);
+        }
+      case Vault(s,b) =>
+        token = new LocatedSprite("sprite_tile_vault.png");
+        token.x = 32*i; token.y = 32*j;
+        this.everything.layers(3).add_sprite(token);
+        if b {
+          token = new LocatedSprite("sprite_tile_open-vault.png");
+          token.x = 32*i; token.y = 32*j;
+          this.everything.layers(5).add_sprite(token);
+          token = new LocatedSprite("sprite_object_" + this.stuff(s) + ".png");
+          token.x = 32*i; token.y = 32*j;
+          this.everything.layers(5).add_sprite(token);
+        }
+     case Pipe(c,d,b) =>
+        token = new LocatedSprite("sprite_mechanism_pipe_" + this.compet(c) + ".png");
+        token.x = 32*i; token.y = 32*j;
+        token.int_to_orient(d);
+        this.everything.layers(5).add_sprite(token);
+        if b {
+          token = new LocatedSprite("sprite_mechanism_pipe_used.png");
+          token.x = 32*i; token.y = 32*j;
+          token.int_to_orient(d);
+          this.everything.layers(5).add_sprite(token);
+        }
+     case Jail(a,b) =>
+        if (not b) {
+          token = new LocatedSprite("sprite_tile_jail.png");
+          token.x = 32*i; token.y = 32*j;
+          this.everything.layers(5).add_sprite(token);
+        }
+        token = new LocatedSprite("sprite_character_" + this.animal(a) + ".png");
+        token.x = 32*i; token.y = 32*j;
+        this.everything.layers(3).add_sprite(token);
+      case Plain() => ()
+    }
+  }
+
   def destruct(x:Int,y:Int) {
     (this.sprite_grid(x)(y)) match {
       case Circuit(c1,c2,di,false) =>

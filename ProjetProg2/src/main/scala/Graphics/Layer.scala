@@ -43,6 +43,10 @@ class LayerSet(width:Int,height:Int) {
 class Layer(width:Int,height:Int) {
 	var content:List[LocatedSprite] = List() //Les coordonees sont souvent des multiples de 32 mais pas forcement
 	
+	def add_sprite(ls:LocatedSprite):Unit={
+		this.content = ls :: this.content
+	}	
+
 	def load_layer():Unit={
 		//Charge les images du layer
 		this.content.map( (e:LocatedSprite) => e.load_image() )
