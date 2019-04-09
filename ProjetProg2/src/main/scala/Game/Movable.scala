@@ -18,7 +18,7 @@ class Movable(env:Environnement){
 		this.y = y
 	}
 	
-	def corresponding_orient(x1:Int,x2:Int,y1:Int,y2:Int):Orientation={
+	def corresponding_orient(x1:Int,y1:Int,x2:Int,y2:Int):Orientation={
 		val dx = x2-x1
 		val dy = y2-y1
 		if (Math.abs(dx) > Math.abs(dy)){
@@ -42,26 +42,28 @@ class Movable(env:Environnement){
 	}
 	
 	def animation_move(x1:Int,y1:Int,x2:Int,y2:Int,time:Double):Unit={
-		val nb_iter_max = 10
+		val nb_iter_max = (time/this.Env.clock.micro_period).toInt
 		var no_iter = 0
-		val dx = (x2-x1)*32/nb_iter_max
-		val dy = (y2-y1)*32/nb_iter_max
+		val dx = (x2-x1)*32
+		val dy = (y2-y1)*32
 		def event(typage:Unit):Int={
-			this.located_sprite.x = x1*32+dx*no_iter
-			this.located_sprite.y = y1*32+dy*no_iter
-			//printf("animation "+this.located_sprite.x.toString+" "+this.located_sprite.y.toString)
+			this.located_sprite.x = x1*32+(dx*no_iter)/nb_iter_max
+			this.located_sprite.y = y1*32+(dy*no_iter)/nb_iter_max
+			//printf("animation "+this.located_sprite.x.toString+" "+this.located_sprite.y.toString+"-"+no_iter.toString+" "+nb_iter_max.toString+"\n")
 			if (no_iter == nb_iter_max){
+				//Evite les bugs de perte de virgule
+				this.located_sprite.x = x2*32
+				this.located_sprite.y = y2*32
 				return 0
 			} else {
 				no_iter += 1
 				return 1
 			}
 		}
-		this.Env.clock.add_micro_event(utils.cooldowned(event(_),time/10.0))
+		this.Env.clock.add_micro_event(event(_))
 	}
 	
 	def move(o:Orientation,time:Double):Unit = {
-		printf("Move "+o.toString+"\n")
 		//Deplace le movable en time secondes
 		o match {
 			case Left() => 

@@ -6,7 +6,7 @@ import Graphics2.{app=>app}
 import bddPersonnages.{bddPersonnages=>bddp}
 import Schematics.{Tile=>Tile,Plan=>Plan}
 import Mechanisms.{Sprite_plan=>Sprite_plan}
-import Display.{All_sprites=>All_sprites}
+//import Display.{All_sprites=>All_sprites}
 import Player._
 import Donjon._
 

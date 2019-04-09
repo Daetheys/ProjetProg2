@@ -3,6 +3,7 @@ package bddPersonnages
 import Personnage.{Personnage=>Personnage}
 import bddCompetences.{bddCompetences=>bddComp}
 import Player._
+import bddBehaviour._
 
 object bddPersonnages {
 
@@ -12,7 +13,7 @@ object bddPersonnages {
 		turtle.pv_max = 100
 		turtle.pv_current = 100
 		turtle.player = player
-		turtle.actives("Move") = bddComp.create_move(turtle,1.0,0) //speed,type(0:ground,1:air)
+		turtle.actives("Move") = bddComp.create_move(turtle,2.0,0) //speed,type(0:ground,1:air)
 		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle,1,6,1.2) //range,dmg,speed
 		turtle.image_path = "sprite_character_turtle.png"
 		turtle.add_spawn_call("AutoAttack")
@@ -28,6 +29,7 @@ object bddPersonnages {
 		bird.actives("Move") = bddComp.create_move(bird,0.3,1)
 		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,3,3,0.8)
 		bird.image_path = "sprite_character_bird.png"
+		bird.add_spawn_call("AutoAttack")
 		return bird
 	}
 	
@@ -108,8 +110,8 @@ object bddPersonnages {
 		// 1er Boss
 		var sentinel = new Personnage
 		sentinel.name = "Sentinelle"
-		sentinel.pv_max = 2300
-		sentinel.pv_current = 2300
+		sentinel.pv_max = 23
+		sentinel.pv_current = 23
 		sentinel.player = player
 		sentinel.actives("AutoAttack1") = bddComp.create_autoattack(sentinel,5,1,0.3) //Attaque vite mais fait peu de dmg
 		sentinel.actives("AutoAttack2") = bddComp.create_autoattack(sentinel,5,1,0.3) //2e attaque de base similaire a la 1ere
@@ -127,6 +129,7 @@ object bddPersonnages {
 		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,2,1,2.0)
 		robot.image_path = "sprite_character_turret.png"
+		robot.ia = bddBehaviour.create_support(robot)
 		return robot
 	}
 	
@@ -140,6 +143,7 @@ object bddPersonnages {
 		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,7,3,2.0) //Ils font très mal
 		robot.image_path = "sprite_character_turret.png"
+		robot.ia = bddBehaviour.create_shooter(robot)
 		return robot
 	}
 	
@@ -152,6 +156,7 @@ object bddPersonnages {
 		robot.player = player
 		robot.actives("Move") = bddComp.create_move(robot,0.7,1) //Se déplace très vite
 		robot.image_path = "sprite_character_turret.png"
+		robot.ia = bddBehaviour.create_rage(robot)
 		return robot
 	}
 }

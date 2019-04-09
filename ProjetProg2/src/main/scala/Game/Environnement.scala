@@ -12,8 +12,8 @@ import Game._
 
 class Environnement {
 	//Représente une carte
-	val real_size_x = 21
-	val real_size_y = 15
+	val real_size_x = 25
+	val real_size_y = 25
 	val factor_x = 1
 	val factor_y = 1
 	val size_x = real_size_x*factor_x
@@ -41,7 +41,7 @@ class Environnement {
 		app.load_commands()
 		// Affiche le terrain
 		def aff_event(typage:Unit):Int={
-			app.load_refresh_layers() 
+			app.load_refresh_layers()
 			app.aff_layers()
 			app.aff_life_bars()
 			return 1
@@ -52,8 +52,8 @@ class Environnement {
 		
 		//Préparation de l'event pour la loop -> les events ca sert a tout
 		val music = new Sound("dash_runner.wav")
-		music.loop_on()
-		music.play()
+		//music.loop_on()
+		//music.play()
 		
 		this.start_clock()
 	}
@@ -81,6 +81,7 @@ class Environnement {
 				case Nil => Nil
 			}
 		}
+		this.layerset.get_layer("Units").remove(j.located_sprite)
 		this.selected_units = remove_elem(j,this.selected_units)
 	}
 	
@@ -169,7 +170,7 @@ class Environnement {
 			val ls = new LocatedSprite(personnage.image_path)
 			ls.x = x*32
 			ls.y = y*32
-			this.layerset.layers(4).content = ls::this.layerset.layers(4).content
+			this.layerset.layers(4).add_sprite(ls)
 			personnage.jeton.located_sprite = ls
 			//Events de automatiques du jeton
 			personnage.call_when_spawn()
@@ -182,7 +183,7 @@ class Environnement {
 class Clock(env:Environnement) {
 	//Représente une horloge pour les phases de baston (permet de coordonner les events)
 	val macro_period = 0.1 //Timer entre 2 actions majeures
-	val micro_period = 0.05 //Timer entre 2 actions mineures
+	val micro_period = 0.01 //Timer entre 2 actions mineures
 	var macro_events = ListBuffer[Unit=>Int]()
 	var micro_events = ListBuffer[Unit=>Int]()
 	var active = true

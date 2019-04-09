@@ -9,6 +9,8 @@ The main use for this file :
 returns the 25 * 25 matrix where each cells contains the list of
 all the sprites that must be displayed on the screen (sorted by layers)
 */
+
+/*
 import Mechanisms.{Sprite_group=>Sprite_groupe,Sprite_plan=>Sprite_plan,_}
 import Personnage.{Personnage=>Personnage,Jeton=>Jeton,_}
 import bddPersonnages.{bddPersonnages=>bddP,_}
@@ -35,4 +37,4 @@ class All_sprites(plan:Sprite_plan) {
     }
     this.personnages = p
   }
-}
+} */

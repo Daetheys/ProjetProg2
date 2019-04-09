@@ -11,6 +11,22 @@ class Sprite(file:String) {
 		this.orientation = orientation
 	}
 	
+	def int_to_orient(d:Int)={
+          if (d==0) {
+            this.orientation = Top()
+          } else {
+            if (d==1) {
+              this.orientation = Left()
+            } else {
+              if (d==2) {
+                this.orientation = Bottom()
+              } else {
+                this.orientation = Right()
+              }
+            }
+          }
+	}
+	
 	def load_image():Unit={
 		this.image = new Image(app.get_path(this.file))
 	}

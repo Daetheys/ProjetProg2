@@ -2,75 +2,67 @@ package Algo
 import Environnement.{Environnement=>Environnement}
 import Personnage.{Jeton=>Jeton}
 import bddPersonnages.{bddPersonnages=>bddp}
-import scala.collection.mutable.{ListBuffer,PriorityQueue}
+import scala.collection.mutable.{ListBuffer,PriorityQueue,ArrayBuffer}
 import Schematics.{Tile=>Tile}
 import mylib.misc.{FibonacciHeap,FNode}
 
 class FileP{
-	var l:List[Array[Int]] = List()
+	var array:ArrayBuffer[((Int,Int),Double)] = ArrayBuffer()
+	var dict = scala.collection.mutable.Map[(Int,Int),Double]() //Position -> priority
 	
-	def add(elmt:Array[Int]):Unit={
-		def find_place(e:Array[Int],l:List[Array[Int]]):List[Array[Int]]={
-			l match {
-				case t::q => if (t(2) >= e(2)){
-								e::t::q
-							} else { t::find_place(e,q) }
-				case Nil => e::Nil
+	private def find_place(a:Int,b:Int,key:Double):Int={
+		val c = (b+a)/2
+		//print(this.array.toString+" "+a.toString+" "+b.toString+" "+key.toString+"\n")
+		if (b-a <= 1){
+			if (this.array(a)._2 >= key){
+				return a
+			}else if (this.array(b)._2 >= key) {
+				return b
+			} else {
+				return b+1
 			}
 		}
-		this.l = find_place(elmt,this.l)
-	}
-	
-	def pop():Array[Int]={
-		this.l match {
-			case t::q => 	this.l = q
-							return t
-			case Nil => print("Error : no one in file")
-						Array()
+		if (this.array(c)._2 <= key){
+			return find_place(c,b,key)
+		} else {
+			return find_place(a,c,key)
 		}
 	}
 	
-	def maj(v:Array[Int],value:Int){
-		def find_place(e:Array[Int],l:List[Array[Int]]):List[Array[Int]]={
-			l match {
-				case t::q => if (t(2) >= e(2)){
-								e::t::q
-							} else { t::find_place(e,q) }
-				case Nil => e::Nil
-			}
+	def insert(elmt:(Int,Int),key:Double):Unit={
+		this.dict(elmt) = key
+		if (this.array.length == 0){
+			this.array += ((elmt,key))
+		} else {
+			this.array.insert(this.find_place(0,this.array.length-1,key),(elmt,key))
 		}
-		def remove(e:Array[Int],l:List[Array[Int]]):List[Array[Int]]={
-			l match {
-				case t::q => if (t(0) == e(0) && t(1) == e(1)){
-								t(2) = value
-								q
-							} else { t::remove(e,q) }
-				case Nil => print("Warning : File.maj -> remove -> not in list")
-							Nil
-			}
-		}
-		this.l = find_place(Array(v(0),v(1),value),remove(v,this.l))
 	}
 	
-	def contains(e:Array[Int]):Boolean={
-		def aux(e:Array[Int],l:List[Array[Int]]):Boolean={
-			l match {
-				case t::q => if (t(0) == e(0) && t(1) == e(1)){
-								return true
-							} else {
-								aux(e,q)
-							}
-				case Nil => return false
-			}
-		}
-		aux(e,this.l)
+	def removeMin():(Int,Int)={
+		//print(this.array.toString+"\n")
+		val r = this.array(0)
+		this.array.remove(0)
+		this.dict = this.dict - r._1
+		return r._1
 	}
 	
-	def not_empty():Boolean={
-		this.l match {
-			case t::q => true
-			case Nil => false
-		}
+	def removeKey(e:(Int,Int))={
+		val key = this.dict(e)
+		this.dict = this.dict - e
+		this.array.remove(this.find_place(0,this.array.length-1,key))
+	}
+	
+	def decreaseKey(v:(Int,Int),value:Double){
+		this.removeKey(v)
+		this.insert(v,value)
+	}
+	
+	def contains(e:(Int,Int)):Boolean={
+		this.dict.contains(e)
+	}
+	
+	def isEmpty():Boolean={
+		return (this.array.length == 0)
 	}
 }
 
@@ -94,21 +86,24 @@ object Algo{
 		}
 		get_move(P,(best_case._1,best_case._2))
 		//println(scala.runtime.ScalaRunTime.stringOf(path))
+		//print(path.toString+"\n")
 		path match {
-			case t::q => return t //Prochaine destination
+			case t::q => 
+				//print(t.toString+"\n")
+				return t //Prochaine destination
 			case Nil => return (je.x,je.y) //Ne bouge pas
 		}
 	}
 	private def astar_algo(Env:Environnement,je:Jeton,target:(Int,Int)):(Array[Array[(Int,Int)]],(Int,Int))={
 		var P:Array[Array[(Int,Int)]] = Array.ofDim[(Int,Int)](Env.size_x,Env.size_y)
-		var d:Array[Array[Int]] = Array.ofDim[Int](Env.size_x,Env.size_y)
-		var F:FibonacciHeap[(Int,Int)] = new FibonacciHeap[(Int,Int)]
-		var nodesF:scala.collection.mutable.Map[(Int,Int),FNode[(Int,Int)]] = scala.collection.mutable.Map()
-		def h(e:(Int,Int)):Int={
-			return Math.pow(target._1-e._1,2).toInt + Math.pow(target._1-e._2,2).toInt
+		var d:Array[Array[Double]] = Array.ofDim[Double](Env.size_x,Env.size_y)
+		//var F:FibonacciHeap[(Int,Int)] = new FibonacciHeap[(Int,Int)]
+		var F:FileP = new FileP
+		def h(e:(Int,Int)):Double={
+			return Math.pow(Math.pow(target._1-e._1,2).toInt + Math.pow(target._2-e._2,2).toInt,0.5)
 		}
-		def cle(e:(Int,Int)):Int={
-			return -(d(e._1)(e._2) + h(e)) //Les files de prio fonctionnent dans l'autre sens ! -> on a un -
+		def cle(e:(Int,Int)):Double={
+			return d(e._1)(e._2) + h(e)
 		}
 		def movement(e:(Int,Int)):Array[(Int,Int)]={
 			return Array((e._1+1,e._2),(e._1,e._2+1),(e._1-1,e._2),(e._1,e._2-1))
@@ -116,12 +111,12 @@ object Algo{
 		def correct(e:(Int,Int)):Boolean={
 			val x_correct = e._1 < Env.size_x && 0 <= e._1
 			val y_correct = e._2 < Env.size_y && 0 <= e._2
-			return x_correct && y_correct && (Env.tiles(e._1)(e._2) == 0) && Env.units(e._1)(e._2) == None
+			return x_correct && y_correct && (Env.tiles(e._1)(e._2) != 1) && Env.units(e._1)(e._2) == None
 		}
-		def w(u:(Int,Int),v:(Int,Int)):Int={
+		def w(u:(Int,Int),v:(Int,Int)):Double={
 			return 1
 		}
-		def cut(e:(Int,Int,Int)):(Int,Int)={
+		def cut(e:(Int,Int,Double)):(Int,Int)={
 			return (e._1,e._2)
 		}
 		def contain(v:(Int,Int),T:ListBuffer[(Int,Int)]):Boolean={
@@ -132,11 +127,11 @@ object Algo{
 				case ListBuffer() => false
 			}
 		}
-		nodesF((je.x,je.y)) = F.insert( (je.x,je.y),cle((je.x,je.y)) )
+		F.insert( (je.x,je.y),cle((je.x,je.y)) )
 		var T:ListBuffer[(Int,Int)] = ListBuffer()
 		var u:(Int,Int) = (-1,-1)
 		var best_case:(Int,Int) = (je.x,je.y)
-		var best_approx:Int = h((je.x,je.y))
+		var best_approx:Double = h((je.x,je.y))
 		var mov:Array[(Int,Int)] = Array()
 		var v:(Int,Int) = (-1,-1)
 		while (!(F.isEmpty)) {
@@ -148,16 +143,20 @@ object Algo{
 			mov = movement(u)
 			for (i <- 0 to 3){
 				v = mov(i)
+				//print(u.toString+" "+v.toString+" "+cle(v).toString+"/"+correct(v).toString+"->"+target.toString+"\n")
 				if (correct(v)){
 					if (h(v) < best_approx){
 						best_approx = h(v)
 						best_case = v
 					}
-					if (nodesF.contains(v)){
+					if (F.contains(v)){
 						if (d(v._1)(v._2) > d(u._1)(u._2) + w(u,v)){
 							d(v._1)(v._2) = d(u._1)(u._2) + w(u,v)
 							P(v._1)(v._2) = u
-							F.decreaseKey(nodesF(v),cle(v)) //cle(v) vient d'etre modifiée
+							//F.delete(nodesF(v))
+							//nodesF((v._1,v._2)) = F.insert((v._1,v._2),cle(v))
+							F.decreaseKey(v,cle(v)) //cle(v) vient d'etre modifiée
+							//F.insert((v._1,v._2),cle(v))
 						}
 					} else {
 						if (contain(v,T)) {
@@ -178,11 +177,6 @@ object Algo{
 		return (P,best_case)
 	}
 }
-			
-			
-			
-			
-			
 			
 			
 			

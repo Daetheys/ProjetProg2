@@ -3,6 +3,7 @@ import Environnement.{Environnement=>Environnement}
 import Competence.{Competence=>Competence,Active=>Active,Passive=>Passive}
 import Movable.{Movable}
 import Player._
+import Graphics2._
 
 class Personnage {
 	// Représente un personnage de manière générale
@@ -38,6 +39,7 @@ class Personnage {
 	}
 	def take_damages(amount:Int){
 		this.pv_current -= amount
+		app.draw_damages(amount,this.jeton)
 		if (this.pv_current <= 0){
 			this.jeton.died = true
 			this.jeton.Env.remove_unit(this.jeton)
@@ -61,5 +63,10 @@ class Jeton(modell:Personnage,env:Environnement) extends Movable(env){
 	var selected:Boolean = false
 	//Status
 	var status = None
-
+	
+	override def set_position(x:Int,y:Int,t:Double){ //Permet de mettre a jour le tableau des jetons de Env en plus de modifier les attributs necessaires
+		this.Env.units(this.x)(this.y) = None
+		this.Env.units(x)(y) = Some(this)
+		super.set_position(x,y,t)
+	}
 }

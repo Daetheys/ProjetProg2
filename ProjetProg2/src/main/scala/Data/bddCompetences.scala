@@ -7,7 +7,7 @@ import Algo.{Algo=>Algo}
 import Graphics2.{app=>app}
 import scalafx.scene.paint.Color._
 import Movable._
-import Utilities.utils.{cooldowned}
+import Utilities.utils._
 
 object bddCompetences {
 	//Spells
@@ -74,7 +74,7 @@ object bddCompetences {
 		
 		def get_new_target()={
 			//Recherche de l'ennemi le plus proche
-			val result = Env.get_nearest_opposite_unit(personnage.jeton)
+			val result = personnage.jeton.Env.get_nearest_opposite_unit(personnage.jeton)
 			val jeton_minimum = result._1
 			val minimum = result._2
 			//Verification qu'il est a portée et selection de la cible si c'est le cas
@@ -93,9 +93,12 @@ object bddCompetences {
 			}
 			if (target_alive() && target_in_range()){
 				val s = autoattack.v_jeton("target")
+				def delayed(typage:Unit):Int={
+					s.model.take_damages(dmg)
+					return 0
+				}
 				app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
-				app.draw_dmg_text(s.x,s.y,10,dmg,"-",Red) //Il faudrait attendre 20 micro_period avant de l'afficher pour etre coherent
-				s.model.take_damages(dmg)
+				app.Env.clock.add_micro_event(delay_micro(delayed(_),20*personnage.jeton.Env.clock.micro_period))
 				return 1
 			} else {
 				get_new_target()

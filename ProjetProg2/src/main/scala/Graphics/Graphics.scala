@@ -22,6 +22,7 @@ import Personnage.{Jeton=>Jeton,_}
 import Game.{Game=>Game}
 import Movable._
 import Sprite._
+import Utilities.utils._
 
 object app extends JFXApp {
 	private var mousePosX: Double = .0
@@ -147,6 +148,22 @@ object app extends JFXApp {
 			}
 		}
 		
+	def draw_damages(dmg:Int,target:Jeton)={
+		var timer = 20
+		def aff_damage(typage:Unit):Int={
+			print("aff_damage "+timer.toString+"\n")
+			timer-= 1
+			if (timer == 0){
+				return 0
+			}
+			print("draw dmg text\n")
+			this.draw_dmg_text(target.x,target.y,10,dmg,"-",Red)
+			return 1
+		}
+		//print("add event+"+aff_damage(_).toString+"\n")
+		this.Env.clock.add_micro_event(cooldowned_micro(aff_damage(_),0.5)) //reste 0.5 sec
+	}
+		
 	def draw_shoot_line(x1:Int,y1:Int,x2:Int,y2:Int)={
 		//Affiche un projectile pour représenter une attaque
 		val timer_max = 20
@@ -174,7 +191,7 @@ object app extends JFXApp {
 				return 1
 			}
 		}
-		this.Env.clock.add_micro_event(aff_line)
+		this.Env.clock.add_micro_event(cooldowned_micro(aff_line(_),this.Env.clock.micro_period))
 	}
 	
 	def draw_dmg_text(x:Int,y:Int,length:Int,nb:Int,signe:String,color:scalafx.scene.paint.Color)={
@@ -304,13 +321,14 @@ object app extends JFXApp {
 							case Right() => 90.0
 							case Top() => 0.0
 							case Bottom() => 180.0
-						})*(-90.0)
+						})
 			this.gc.save()
+			this.gc.translate(x+16,y+16)
 			this.gc.rotate(deg)
-			val y_offset = toInt(List(90,180).contains(Math.abs(deg).toInt%360))
-			val x_offset = toInt(List(180,270).contains(Math.abs(deg).toInt%360)) 
-			var t2 = rotate(x+(x_offset)*32.0,y+(y_offset)*32.0,-deg)
-			this.gc.drawImage(image,t2._1,t2._2,32,32)
+			//val y_offset = toInt(List(90,180).contains(Math.abs(deg).toInt%360))
+			//val x_offset = toInt(List(180,270).contains(Math.abs(deg).toInt%360)) 
+			//var t2 = rotate(x+(x_offset)*32.0,y+(y_offset)*32.0,-deg)
+			this.gc.drawImage(image,-16,-16,32,32)
 			this.gc.restore()
 		}
 		for (k <- 0 to this.Env.layerset.layers.length-1){ //Respect de l'empilement des layers
