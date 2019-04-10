@@ -1,7 +1,8 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala:237:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
-[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
-[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
-[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
-[0m[[0m[33mwarn[0m] [0m[0m						if (t()==1){[0m
-[0m[[0m[33mwarn[0m] [0m[0m						     ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Layer.scala:52:21: value :: is not a member of scala.collection.mutable.ListBuffer[Sprite.LocatedSprite][0m
+[0m[[0m[31merror[0m] [0m[0m		this.content = ls :: this.content[0m
+[0m[[0m[31merror[0m] [0m[0m		                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Layer.scala:51:6: method add_sprite is defined twice;[0m
+[0m[[0m[31merror[0m] [0m[0m  the conflicting method add_sprite was defined at line 47:13[0m
+[0m[[0m[31merror[0m] [0m[0m	def add_sprite(ls:LocatedSprite):Unit={[0m
+[0m[[0m[31merror[0m] [0m[0m	    ^[0m
+[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m

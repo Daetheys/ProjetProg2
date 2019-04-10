@@ -10,7 +10,7 @@ class Sprite(file:String) {
 	def orient(orientation:Orientation)={
 		this.orientation = orientation
 	}
-	
+
 	def int_to_orient(d:Int)={
           if (d==0) {
             this.orientation = Top()
@@ -26,7 +26,7 @@ class Sprite(file:String) {
             }
           }
 	}
-	
+
 	def load_image():Unit={
 		this.image = new Image(app.get_path(this.file))
 	}
@@ -36,3 +36,4 @@ class LocatedSprite(file:String) extends Sprite(file) {
 	var x:Int = -1
 	var y:Int = -1
 }
+

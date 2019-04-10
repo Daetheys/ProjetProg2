@@ -47,7 +47,7 @@ class Layer(width:Int,height:Int) {
 	def add_sprite(ls:LocatedSprite):Unit={
 		this.content += ls
 	} 
-	
+
 	def load_layer():Unit={
 		//Charge les images du layer
 		this.content.map( (e:LocatedSprite) => e.load_image() )
