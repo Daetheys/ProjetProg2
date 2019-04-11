@@ -1,4 +1,20 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala:87:46: Player.Player and Int are unrelated: they will most likely never compare equal[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case Some(j:Jeton) => if (j.model.player == 0){[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                         ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddCompetences.scala:184:1: Missing closing brace `}' assumed here[0m
+[0m[[0m[31merror[0m] [0m[0m}[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddItems.scala:7:18: '=' expected but identifier found.[0m
+[0m[[0m[31merror[0m] [0m[0m	def create_first-aid-kit() : OneUse = {[0m
+[0m[[0m[31merror[0m] [0m[0m	                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddItems.scala:16:1: illegal start of simple expression[0m
+[0m[[0m[31merror[0m] [0m[0m	def create_gun_confusion() : Weapon = {[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala:118:4: '=>' expected but 'case' found.[0m
+[0m[[0m[31merror[0m] [0m[0m			case Some(j:Jeton) =>  	this.selected_unit.selected = false[0m
+[0m[[0m[31merror[0m] [0m[0m			^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Loot.scala:3:1: '.' expected but eof found.[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala:25:52: ')' expected but ';' found.[0m
+[0m[[0m[31merror[0m] [0m[0m	var inventory = Array(None, None, None, None, None; None)[0m
+[0m[[0m[31merror[0m] [0m[0m	                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala:25:58: ';' expected but ')' found.[0m
+[0m[[0m[31merror[0m] [0m[0m	var inventory = Array(None, None, None, None, None; None)[0m
+[0m[[0m[31merror[0m] [0m[0m	                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m7 errors found[0m

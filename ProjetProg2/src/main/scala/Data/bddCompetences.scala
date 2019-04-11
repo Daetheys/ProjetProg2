@@ -106,8 +106,12 @@ object bddCompetences {
 		return autoattack
 	}
 	
-	def fire_spell(personnage:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double){
+	def orb_spell(personnage:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double,file:String){
 		val orb = new Movable(personnage.jeton.Env)
+		val ls = new LocatedSprite(file)
+		ls.x = p.jeton.x
+		ls.y = p.jeton.y
+		p.jeton.Env.layerset.get_layer("Spells").add_sprite(ls)
 		val orient = personnage.jeton.orientation
 		
 		def explose() = {
@@ -174,4 +178,7 @@ object bddCompetences {
 		}
 		personnage.jeton.Env.clock.add_macro_event(cooldowned(func(_),0.5))
 	}
+	def fire_spell()={
+		
+	
 }

@@ -28,12 +28,9 @@ class Environnement {
 			units(i)(j) = None
 		}
 	}
+	var phase:Int = 0 //0-Phase de Baston 1-Phase de loot 2-Phase de repartition
 	val clock = new Clock(this)
 	var selected_unit:Option[Jeton] = None
-	
-	def load()={
-		//Chargement de cet environnement comme environnement principal
-	}
 	
 	def start()={
 		//Lancement du jeu dans l'environnement
@@ -48,8 +45,15 @@ class Environnement {
 			return 1
 		}
 		
+		def check_win(typage:Unit):Int={
+			if (Game.Human.lost()) { app.lose_screen() } //Le joueur a perdu
+			if (Game.IA.lost()) { this.phase += 1 } //Le joueur passe à la phase de loot
+			return 1
+		}
+		
 		//Chargement de l'event de raffraichissement de l'environnement
 		this.clock.add_micro_event(aff_event(_))
+		this.clock.add_macro_events(check_win(_))
 		
 		//Préparation de l'event pour la loop -> les events ca sert a tout
 		val music = new Sound("dash_runner.wav")
@@ -109,7 +113,11 @@ class Environnement {
 	
 	def unselect_unit()={
 		// Deselectionne toutes les unités
-		this.selected_unit = None
+		this.selected_unit match {
+			case None -> ()
+			case Some(j:Jeton) =>  	this.selected_unit.selected = false
+									this.selected_unit = None
+		}
 	}
 	
 	def move(x1:Int,y1:Int,x2:Int,y2:Int)={
@@ -129,10 +137,21 @@ class Environnement {
 	def select_unit(j:Jeton)={
 		//Selectionne toutes les unités dans le rectangle spécifié
 		this.selected_unit = Some(j)
+		j.selected = true
 	}
 	
 	def tile_elem_effect(i:Int,j:Int,elem:Int)={
-		()
+		//On va faire simple
+		this.tiles(i)(j) += 1 + elem
+		var file = "sprite_tile_water_"+(if (elem == 0) { "fire" } 
+											else if (elem == 1) { "ice" } 
+											else if (elem == 2) { "poison" } 
+											else if (elem == 3) { "electricity" })
+		val ls = new LocatedSprite(file)
+		ls.x = i*32
+		ls.y = j*32
+		this.layerSet.get_layer("UpTiles").add_sprite(ls) //C'est très pas beau (on n'a pas enlevé celui d'en dessous)
+		this.layerSet.get_layer("UpTiles").load_layer()
 	}
 
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int):Unit={

@@ -14,34 +14,37 @@ returns the 25 * 25 matrix where each cells contains the list of
 all the sprites that must be displayed on the screen (sorted by layers)
 */
 
-/*
+
 import Mechanisms.{Sprite_group=>Sprite_groupe,Sprite_plan=>Sprite_plan,_}
 import Personnage.{Personnage=>Personnage,Jeton=>Jeton,_}
 import bddPersonnages.{bddPersonnages=>bddP,_}
 import Game._
 
 class All_sprites(plan:Sprite_plan) {
-  val main_grid = plan.all_the_sprites
+  val layerset = new LayerSet(25,25)
   var personnages:Array[Array[Option[Personnage]]] = Array()
   val robots_pos = Array((2,5),(9,5),(15,5),(22,5),(5,8),(19,8),(5,13),(19,13),(9,16),(15,16),(2,19),(22,19))
-  def load_demo_version1() {
+  val start_pos = Array((12,22),(12,20),(11,21),(12,21),(13,21),(13,22))
+  def load_stage() {
   	var p:Array[Array[Option[Personnage]]] = Array.ofDim[Option[Personnage]](main_grid.length,main_grid(0).length)
   	for (i <- 0 to p.length-1){
   		for (j <- 0 to p(i).length-1){
   			p(i)(j) = None
   		}
   	}
-    p(12)(22) = Some(bddP.create_turtle(Game.Human))
-    p(12)(20) = Some(bddP.create_bird(Game.Human))
-    p(11)(21) = Some(bddP.create_cat(Game.Human))
-    p(12)(21) = Some(bddP.create_monkey(Game.Human))
-    p(13)(21) = Some(bddP.create_snake(Game.Human))
+  	//Creation des unités du joueur
+  	for (i<-0 to Game.Human.units.length-1){
+  		val h = start_pos(i)
+  		p(h._1)(h._2) = Game.Human.units(i)
+  	}
+  	//Creation des robots
     for ( (x,y) <- this.robots_pos ) {
       p(x)(y) = (Some(bddP.create_robot(Game.IA)));
     }
     this.personnages = p
+    //Creation du layerset
   }
-} */
+}
 
 object sheet_slots {
 	val X = Array(22, 22, 22, 23, 23, 23)
