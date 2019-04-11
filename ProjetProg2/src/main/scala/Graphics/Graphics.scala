@@ -117,15 +117,15 @@ object app extends JFXApp {
 		this.stage.scene.value.onKeyPressed = (ke: KeyEvent) => {
 			print("Key Pressed\n")
 			(ke.code,this.Env.phase) match  {
-				case (KeyCode.Ampersand,0) => if (this.Env.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}
-				case (KeyCode.Undefined,0) => if (this.Env.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}
-				case (KeyCode.Quotedbl,0) => if (this.Env.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}
-				case (KeyCode.Quote,0) => if (this.Env.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}
-				case (KeyCode.Control,0) => if (this.Env.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}
-				case (KeyCode.LeftParenthesis,0) => if (this.Env.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}
-				case (KeyCode.A,0) => this.Env.selected_unit match {
+				case (KeyCode.Ampersand,0) => if (Game.Human.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}
+				case (KeyCode.Undefined,0) => if (Game.Human.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}
+				case (KeyCode.Quotedbl,0) => if (Game.Human.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}
+				case (KeyCode.Quote,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}
+				case (KeyCode.LeftParenthesis,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}
+				//case (KeyCode.LeftParenthesis,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}
+				case (KeyCode.A,0) => print("A\n");this.Env.selected_unit match {
 										case None => ()
-										case Some(j:Jeton) => j.model.actives("Feu").refresh(Array())
+										case Some(j:Jeton) => print("Throw\n");j.model.actives("Feu").refresh(Array())
 										}
 				case (KeyCode.LEFT,2) => ()
 				case (KeyCode.RIGHT,2) => ()

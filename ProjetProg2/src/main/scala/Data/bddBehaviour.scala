@@ -6,6 +6,7 @@ import Utilities.utils._
 import bddPersonnages._
 import Graphics2._
 import Algo._
+import Sprite._
 
 object bddBehaviour {
 	
@@ -31,6 +32,7 @@ object bddBehaviour {
 			}
 		}
 		def go_for_blood(){
+			//print("Go for Blood\n")
 			//Se déplace vers la cible
 			target match {
 				case None => ()
@@ -41,6 +43,7 @@ object bddBehaviour {
 				}
 			}
 		def move(x:Int,y:Int):Unit={
+			print("Move\n")
 			count_move -= 1
 			if (count_move == 0){
 				get_move_target()
@@ -114,7 +117,7 @@ object bddBehaviour {
 			}
 			def event(typage:Unit):Int={
 				if (!computed) { compute }
-				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(loop());return 0}
+				if (chained_events() == 1) {return 1} else {print("---RESET---\n");compute();return 1}
 			}
 			ref += 1
 			return event(_)
@@ -132,8 +135,31 @@ object bddBehaviour {
 			List(load_mitraillette(5,0.5,10),load_tir_soutenu(5.0,2))
 		}
 		
+		def pop_heal()={
+			print("Pop heal\n")
+			val y_min = 10
+			val y_max = 15
+			val x_min = 2
+			val x_max = 22
+			val rdX = r.nextInt(x_max-x_min) + x_min
+			val rdY = r.nextInt(y_max-y_min) + y_min
+			val heal = new LocatedSprite("sprite_item_first-aid-kit.png")
+			heal.x = rdX*32
+			heal.y = rdY*32
+			p.jeton.Env.layerset.get_layer("Rewards").add_sprite(heal)
+			p.jeton.Env.layerset.get_layer("Rewards").load_layer()
+			def heal_event(e:Unit):Int={
+				p.jeton.Env.units(rdX)(rdY) match {
+					case None => return 1
+					case Some(j:Jeton) => j.model.pv_current += 20;heal.x = -50;heal.y = -50;return 0
+				}
+			}
+			p.jeton.Env.clock.add_macro_event(heal_event)
+		}
+		
 		def load_tir_soutenu(time:Double,nb_targets:Int):Unit=>Int={
 			print("LOAD TIR SOUTENU\n")
+			pop_heal()
 			val sentinel = p.jeton
 			val attack_speed = 0.5
 			var array = Game.Human.units.toArray.toBuffer
@@ -196,15 +222,22 @@ object bddBehaviour {
 			def spawn_attack_bots(area:List[(Int,Int)]){
 				def apply(h:(Int,Int))={
 					val hb = bddPersonnages.create_attackbot(Game.IA) 
-					Env.spawn_personnage(hb,h._1,h._2)
+					Env.units(h._1)(h._2) match {
+						case None => Env.spawn_personnage(hb,h._1,h._2)
+						case Some(j:Jeton) => ()
+					}
 				}
 				area.map(apply(_))
 			}
 			
+			
 			def spawn_heal_bots(area:List[(Int,Int)]){
 				def apply(h:(Int,Int))={
 					val hb = bddPersonnages.create_healbot(Game.IA) 
-					Env.spawn_personnage(hb,h._1,h._2)
+					Env.units(h._1)(h._2) match {
+						case None => Env.spawn_personnage(hb,h._1,h._2)
+						case Some(j:Jeton) => ()
+					}
 				}
 				area.map(apply(_))
 			}
@@ -212,7 +245,10 @@ object bddBehaviour {
 			def spawn_explosion_bots(area:List[(Int,Int)]){
 				def apply(h:(Int,Int))={
 					val hb = bddPersonnages.create_explosionbot(Game.IA) 
-					Env.spawn_personnage(hb,h._1,h._2)
+					Env.units(h._1)(h._2) match {
+						case None => Env.spawn_personnage(hb,h._1,h._2)
+						case Some(j:Jeton) => ()
+					}
 				}
 				area.map(apply(_))
 			}
@@ -240,17 +276,22 @@ object bddBehaviour {
 			val a0 = Math.sin(cone_direction)/Math.cos(cone_direction)
 			val a1 = Math.sin(cone_direction+cone_angle/2)/Math.cos(cone_direction+cone_angle/2)
 			val a2 = Math.sin(cone_direction-cone_angle/2)/Math.cos(cone_direction-cone_angle/2)
+			var count = nb_fire
+			val vecteur_dir1 = (Math.cos(cone_direction+cone_angle/2),Math.sin(cone_direction+cone_angle/2))
+			val vecteur_dir2 = (Math.cos(cone_direction-cone_angle/2),Math.sin(cone_direction-cone_angle/2))
+			val dist = 10.0
+			val vecteur_final1 = (vecteur_dir1._1*dist,vecteur_dir1._2*dist)
+			val vecteur_final2 = (vecteur_dir2._1*dist,vecteur_dir2._2*dist)
 			def is_in_cone(j:Jeton):Boolean={
 				val x_center = sentinel.x
 				val y_center = sentinel.y
 				def f(a:Double):Double={
 					return (-a)*(j.x-x_center)+y_center
 				}
-				return (f(a2) < j.y && j.y < f(a1))
+				return (f(a2) > j.y && j.y > f(a1))
 			}
-			var count = nb_fire
 			def deal_damages(typage:Unit):Int={
-				print("mitraillette - deal damages\n")
+				print("m - deal damages\n")
 				//Dégats infligés
 				count -= 1
 				if (count == 0){
@@ -265,18 +306,13 @@ object bddBehaviour {
 					}
 				}
 				//Animation
-				val vecteur_dir1 = (Math.cos(cone_direction+cone_angle/2),Math.sin(cone_direction+cone_angle/2))
-				val vecteur_dir2 = (Math.cos(cone_direction-cone_angle/2),Math.sin(cone_direction-cone_angle/2))
-				val dist = 10.0
-				val vecteur_final1 = (vecteur_dir1._1*dist,vecteur_dir1._2*dist)
-				val vecteur_final2 = (vecteur_dir2._1*dist,vecteur_dir2._2*dist)
 				val vecteur_trans = (vecteur_final2._1-vecteur_final1._1,vecteur_final2._2-vecteur_final1._2)
 				val sub = 20
 				val vecteur_trans_sub = (vecteur_trans._1/sub,vecteur_trans._2/sub)
 				val nb = 15
 				for (i<-0 to nb){
 					val rdValue = r.nextInt(20)
-					var vect_add = (vecteur_trans_sub._1*rdValue+vecteur_final1._1+sentinel.x,vecteur_trans_sub._2*rdValue+vecteur_final1._2+sentinel.y)
+					var vect_add = (-(vecteur_trans_sub._1*rdValue+vecteur_final1._1)+sentinel.x,vecteur_trans_sub._2*rdValue+vecteur_final1._2+sentinel.y)
 					app.draw_shoot_line(sentinel.x,sentinel.y,vect_add._1.toInt,vect_add._2.toInt)
 				}
 				return 1

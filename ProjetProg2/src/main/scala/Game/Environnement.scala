@@ -57,8 +57,8 @@ class Environnement {
 		
 		//Préparation de l'event pour la loop -> les events ca sert a tout
 		val music = new Sound("dash_runner.wav")
-		//music.loop_on()
-		//music.play()
+		music.loop_on()
+		music.play()
 		
 		this.start_clock()
 	}
@@ -136,6 +136,7 @@ class Environnement {
 	
 	def select_unit(j:Jeton)={
 		//Selectionne toutes les unités dans le rectangle spécifié
+		this.unselect_unit()
 		this.selected_unit = Some(j)
 		j.selected = true
 	}

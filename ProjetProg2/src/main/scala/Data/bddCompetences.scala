@@ -59,7 +59,7 @@ object bddCompetences {
 		val autoattack = new Active("AutoAttack")
 		val Env = personnage.jeton.Env
 		autoattack.v_jeton("target") = new Jeton(new Personnage,Env) //Un jeton quelconque qui ne pourra jamais etre attaqué
-		
+		autoattack.v_int("range") = range
 		def refresh(typage:Array[Int]):Unit ={
 			get_new_target()
 			personnage.jeton.Env.clock.add_macro_event(cooldowned(event(_),attack_speed))
@@ -147,6 +147,7 @@ object bddCompetences {
 		ls.x = p.jeton.x
 		ls.y = p.jeton.y
 		p.jeton.Env.layerset.get_layer("Spells").add_sprite(ls)
+		p.jeton.Env.layerset.get_layer("Spells").load_layer()
 		val orient = p.jeton.orientation
 		
 		def explose() = {

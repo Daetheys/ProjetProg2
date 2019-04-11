@@ -43,6 +43,8 @@ object bddLevel {
 		val bird = bddPersonnages.create_bird(human)
 		val turtle = bddPersonnages.create_turtle(human)
 		val bees = bddPersonnages.create_bees(human)
+		val cat = bddPersonnages.create_cat(human)
+		val monkey = bddPersonnages.create_monkey(human)
 		val units:Array[Array[Option[Personnage]]] = 
 			Array(Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
@@ -57,9 +59,9 @@ object bddLevel {
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
+	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,Some(monkey),None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
-	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
-	  	  	Array(None,None,None,None,None,None,None,None,None,Some(turtle),None,Some(bees),Some(bird),None,None,None,None,None,None,None,None,None,None,None,None),
+	  	  	Array(None,None,None,None,None,None,None,Some(cat),None,Some(turtle),None,Some(bees),Some(bird),None,None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),
 	  	  	Array(None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None,None),

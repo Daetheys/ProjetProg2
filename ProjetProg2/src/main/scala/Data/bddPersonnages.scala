@@ -13,10 +13,12 @@ object bddPersonnages {
 		turtle.pv_max = 100
 		turtle.pv_current = 100
 		turtle.player = player
-		turtle.actives("Move") = bddComp.create_move(turtle,2.0,0) //speed,type(0:ground,1:air)
+		turtle.actives("Move") = bddComp.create_move(turtle,1.5,0) //speed,type(0:ground,1:air)
 		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle,1,6,1.2) //range,dmg,speed
+		turtle.actives("Feu") = bddComp.fire_spell(turtle) //range,dmg,speed
 		turtle.image_path = "sprite_character_turtle.png"
 		turtle.add_spawn_call("AutoAttack")
+		
 		return turtle
 	}
 
@@ -40,7 +42,7 @@ object bddPersonnages {
 		bees.pv_current = 60
 		bees.player = player
 		bees.actives("Move") = bddComp.create_move(bees,0.7,1)
-		bees.actives("AutoAttack") = bddComp.create_autoattack(bees,2,2,0.4)
+		bees.actives("AutoAttack") = bddComp.create_autoattack(bees,3,2,0.4)
 		bees.image_path = "sprite_character_bees.png"
 		return bees
 	}
@@ -114,7 +116,7 @@ object bddPersonnages {
 		sentinel.pv_current = 510
 		sentinel.player = player
 		sentinel.actives("AutoAttack") = bddComp.create_autoattack(sentinel,2,25,3.0) //Grosse attaque en mélée
-		sentinel.image_path = "sprite_character_turret.png" //Il faudra le mettre a jour
+		sentinel.image_path = "sprite_boss_drone.png" //Il faudra le mettre a jour
 		sentinel.add_spawn_call("AutoAttack")
 		sentinel.ia = bddBehaviour.create_sentinel(sentinel)
 		return sentinel

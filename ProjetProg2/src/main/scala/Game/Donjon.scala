@@ -11,7 +11,7 @@ import Display._
 
 class Donjon(taille:Int) {
 	val profondeur:Int = taille
-	val index_boss_stages:List[Int] = List(1)
+	val index_boss_stages:List[Int] = List(0)
 	// Attention boss_stages va etre remise a List() dans la suite
 	var boss_stages:List[(Array[Array[Int]],Array[Array[Option[Personnage]]],LayerSet)] = List(bddLevel.create_sentinel_level())
 	val stages:Array[Environnement] = Array.ofDim[Environnement](profondeur)
@@ -65,9 +65,9 @@ class Donjon(taille:Int) {
 	}
 	
 	def gen_level():Environnement={
-		//Chargement de l'objet contenant l'initialisation du terrain
+		//Chargement de l'objet contenant l'initialisation du terrain -> Marche pas 
 		val Env = new Environnement
-		val plan = new Plan
+		/*val plan = new Plan
 		var sprite_plan = new Sprite_plan(plan);
   		sprite_plan.random_loot();
   		sprite_plan.fill_layer_0135();
@@ -75,7 +75,7 @@ class Donjon(taille:Int) {
 		Env.layerset = sprite_plan.everything
 		val personnages = display.personnages
 		this.personnages_spawn(Env,personnages)
-		Env.tiles = sprite_plan.tile_type
+		Env.tiles = sprite_plan.tile_type*/
 		return Env
 	}
 }

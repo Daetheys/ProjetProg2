@@ -7,7 +7,7 @@ class Player {
 	val nb_max_units = 6
 	
 	def lost()={
-		this.units.forall( (e:Personnage) => !(e.jeton.died) )
+		this.units.forall( (e:Personnage) => (e.jeton.died) )
 	}
 	
 	def add_unit(p:Personnage){
