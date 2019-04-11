@@ -60,5 +60,9 @@ class Layer(width:Int,height:Int) {
 	def transpose()={
 		this.content.map( (e:LocatedSprite) => {val z = e.x; e.x = e.y; e.y = z} )
 	}
+
+	def clear() = {
+		this.content = ListBuffer()
+	}
 	
 }

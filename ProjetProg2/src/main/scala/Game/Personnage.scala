@@ -19,8 +19,10 @@ class Personnage {
 	var intelligence = 0 //Dmg de loin
 	var precision = 0 //Chances de toucher
 	var esquive = 0 //Chances d'esquive
+
 	//Stuff
-	var stuff = Map("head" -> None, "body" -> None, "gloves" -> None, "boots" -> None, "weapon" -> None)
+	var equipment = Array(None, None)
+	var inventory = Array(None, None, None, None, None; None)
 
 	//Compétences
 	var actives = scala.collection.mutable.Map[String,Active]()
@@ -30,6 +32,7 @@ class Personnage {
 	var player:Player = new Player //Le joueur contrôlant l'unité
 	
 	var image_path:String = ""
+	var sheet_image:String = ""
 	
 	var ia:Unit=>Int = bddBehaviour.dummy
 	
