@@ -71,14 +71,16 @@ class Sprite_plan(plan : Plan) {
     for ( k <- 0 to 3 ) {
       for ( a <- this.circuits(k) ) {
 	i = a._1; j =a._2;
-        couple = this.random_couple(r);
+    couple = this.random_couple(r);
 	c1 = couple._1; c2 = couple._2;
-        this.sprite_grid(i)(j) = Mechanisms.Circuit(c1,c2,k,false);
-        coord(0) = i; coord(1) = j;
+    this.sprite_grid(i)(j) = Mechanisms.Circuit(c1,c2,k,false);
+    coord(0) = i; coord(1) = j;
 	this.move(coord, k);
+	print(coord(0).toString+" "+coord(1).toString+"\n")
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c1,k,false);
           this.move(coord, k);
+          print(coord(0).toString+" "+coord(1).toString+"\n")
         }
         this.move(coord, (k+2)%4);
         if ( r.nextInt(12) > 0 ) {
