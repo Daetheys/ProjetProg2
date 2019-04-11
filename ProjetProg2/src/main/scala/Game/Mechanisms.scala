@@ -36,9 +36,9 @@ class Sprite_plan(plan : Plan) {
                        Array( (18,21), (18,11), (15,18) ) )
   val compet = Array("confusion","electricity","fire","ice","ink","poison")
   val animal = Array("bees","bird","cat","monkey","rabbit","snake")
-  val stuff = Array("confusion_gun","electricity_gun","fire_gun","ice_gun",
-                    "ink_gun","poison_gun","confusion_vest","electricity_vest",
-                    "fire_vest","ice_vest","ink_vest","poison_vest")
+  val stuff = Array("gun_confusion","gun_electricity","gun_fire","gun_ice",
+                    "gun_ink","gun_poison","vest_confusion","vest_electricity",
+                    "vest_fire","vest_ice","vest_ink","vest_poison")
 
   def random_couple(r:scala.util.Random):(Int, Int) = {
     var c1 = r.nextInt(6);
@@ -81,7 +81,7 @@ class Sprite_plan(plan : Plan) {
           this.move(coord, k);
         }
         this.move(coord, (k+2)%4);
-        if ( r.nextInt(4) > 0 ) {
+        if ( r.nextInt(12) > 0 ) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Vault(r.nextInt(this.stuff.length),false);
         } else {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Jail(r.nextInt(this.animal.length),false);
@@ -139,6 +139,9 @@ class Sprite_plan(plan : Plan) {
         }
       }
     }
+    token = new LocatedSprite("background_sheet.png");
+    token.x = 32*21; token.y = 0;
+    this.everything.layers(6).add_sprite(token);
   }
   def sprite_list(s_g:Sprite_group,i:Int,j:Int) = {
     s_g match {

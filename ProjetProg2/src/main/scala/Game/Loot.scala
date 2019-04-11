@@ -1,0 +1,3 @@
+package Loot
+import Inventory
+

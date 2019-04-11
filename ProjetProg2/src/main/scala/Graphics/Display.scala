@@ -1,4 +1,8 @@
 package Display
+import Personnage._
+import Layer._
+import Item._
+
 /*
 The main use for this file :
   (m is an initialized sprite matrix from Mechanisms.scala)
@@ -38,3 +42,46 @@ class All_sprites(plan:Sprite_plan) {
     this.personnages = p
   }
 } */
+
+object sheet_slots {
+	val X = Array(22, 22, 22, 23, 23, 23)
+	val Y = Array(4, 6, 8, 4, 6, 8)
+	val xequip = 24
+	val yequip = Array(4, 7)
+	val compet_slot = Array()
+}
+
+class Sheet(p : Personnage) {
+	def afficher(l : LayerSet) = {
+		l.layers(6).clear()
+		var token = new LocatedSprite("background_sheet.png")
+		token.x = 21*32; token.y = 0
+		l.layers(6).add_sprite(token)
+		token = new LocatedSprite(p.sheet_image)
+		token.x = 22*32; token.y = 32
+		l.layers(6).add_sprite(token)
+		for (i <- 0 to 5) {
+			p.inventory(i) match {
+				case Some(item:Item) => {
+					token = new LocatedSprite(item.image_path)
+					token.x = 32*sheet_slots.X(i); token.y = 32*sheet_slots.Y(i)
+					l.layers(6).add_sprite(token)
+				}
+				case None => ()
+			} 
+		}
+		for (i <- 0 to 1) {
+			p.equipment(i) match {
+				case Some(item:Item) => {
+					token = new LocatedSprite("sprite_sheet_frame_" + item.element + ".png")
+					token.x = 32*sheet_slots.xequip; token.y = 32*sheet_slots.yequip(i)
+					l.layers(6).add_sprite(token)
+					token = new LocatedSprite(item.image_path)
+					token.x = 32*sheet_slots.xequip; token.y = 32*sheet_slots.yequip(i)
+					l.layers(6).add_sprite(token)
+				}
+				case None => ()
+			}
+		}
+	}
+}

@@ -16,6 +16,7 @@ object bddPersonnages {
 		turtle.actives("Move") = bddComp.create_move(turtle,2.0,0) //speed,type(0:ground,1:air)
 		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle,1,6,1.2) //range,dmg,speed
 		turtle.image_path = "sprite_character_turtle.png"
+		turtle.sheet_image = "sprite_sheet_turtle.png"
 		turtle.add_spawn_call("AutoAttack")
 		return turtle
 	}
@@ -29,6 +30,7 @@ object bddPersonnages {
 		bird.actives("Move") = bddComp.create_move(bird,0.3,1)
 		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,3,3,0.8)
 		bird.image_path = "sprite_character_bird.png"
+		bird.sheet_image = "sprite_sheet_bird.png"
 		bird.add_spawn_call("AutoAttack")
 		return bird
 	}
@@ -42,6 +44,7 @@ object bddPersonnages {
 		bees.actives("Move") = bddComp.create_move(bees,2,1)
 		bees.actives("AutoAttack") = bddComp.create_autoattack(bees,2,2,1.0)
 		bees.image_path = "sprite_character_bees.png"
+		bees.sheet_image = "sprite_sheet_bees.png"
 		return bees
 	}
 
@@ -54,6 +57,7 @@ object bddPersonnages {
 		cat.actives("Move") = bddComp.create_move(cat,3,0)
 		cat.actives("AutoAttack") = bddComp.create_autoattack(cat,2,4,3.0)
 		cat.image_path = "sprite_character_cat.png"
+		cat.sheet_image = "sprite_sheet_cat.png"
 		return cat
 	}
 
@@ -66,6 +70,7 @@ object bddPersonnages {
 		monkey.actives("Move") = bddComp.create_move(monkey,2,0)
 		monkey.actives("AutoAttack") = bddComp.create_autoattack(monkey,2,5,1.0)
 		monkey.image_path = "sprite_character_monkey.png"
+		monkey.sheet_image = "sprite_sheet_monkey.png"
 		return monkey
 	}
 
@@ -78,6 +83,7 @@ object bddPersonnages {
 		rabbit.actives("Move") = bddComp.create_move(rabbit,4,0)
 		rabbit.actives("AutoAttack") = bddComp.create_autoattack(rabbit,3,2,2.0)
 		rabbit.image_path = "sprite_character_rabbit.png"
+		rabbit.sheet_image = "sprite_sheet_rabbit.png"
 		return rabbit
 	}
 
@@ -90,6 +96,7 @@ object bddPersonnages {
 		snake.actives("Move") = bddComp.create_move(snake,3,0)
 		snake.actives("AutoAttack") = bddComp.create_autoattack(snake,1,4,1.0)
 		snake.image_path = "sprite_character_snake.png"
+		snake.sheet_image = "sprite_sheet_snake.png"
 		return snake
 	}
 
