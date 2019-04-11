@@ -9,6 +9,7 @@ import Sound._
 import Graphics2._
 import Sprite._
 import Game._
+import Utilities._
 
 class Environnement {
 	//Représente une carte
@@ -28,7 +29,7 @@ class Environnement {
 		}
 	}
 	val clock = new Clock(this)
-	var selected_units:List[Jeton] = List()
+	var selected_unit:Option[Jeton] = None
 	
 	def load()={
 		//Chargement de cet environnement comme environnement principal
@@ -48,7 +49,7 @@ class Environnement {
 		}
 		
 		//Chargement de l'event de raffraichissement de l'environnement
-		this.clock.add_micro_event(aff_event)
+		this.clock.add_micro_event(aff_event(_))
 		
 		//Préparation de l'event pour la loop -> les events ca sert a tout
 		val music = new Sound("dash_runner.wav")
@@ -59,8 +60,11 @@ class Environnement {
 	}
 	
 	def apply_active(name:String,arg:Array[Int])={
-		//Chaque unité séléctionnée lance la compétence dont le nom est spécifié avec les arguments donnés
-		this.selected_units.map((j:Jeton) => j.model.actives(name).refresh(arg))
+		//L'unité séléctionnée lance la compétence dont le nom est spécifié avec les arguments donnés
+		this.selected_unit match {
+			case None => ()
+			case Some(p:Jeton) => p.model.actives(name).refresh(arg)
+			}
 	}
 	
 	def start_clock()={
@@ -71,18 +75,11 @@ class Environnement {
 	def remove_unit(j:Jeton)={
 		// Enleve le jeton spécifié des unités séléctionnées (utile en cas de décès)
 		this.units(j.x)(j.y) = None
-		def remove_elem(elmt:Jeton,l:List[Jeton]):List[Jeton]={
-			l match {
-				case t::q => if (t == elmt){
-								q
-							} else {
-								t::(remove_elem(elmt,q))
-							}
-				case Nil => Nil
-			}
-		}
+		selected_unit match {
+				case None => ()
+				case Some(j:Jeton) => if (j==this.selected_unit) { this.selected_unit = None } 
+				}
 		this.layerset.get_layer("Units").remove(j.located_sprite)
-		this.selected_units = remove_elem(j,this.selected_units)
 	}
 	
 	def dist(j1:Jeton,j2:Jeton):Double = {
@@ -110,20 +107,9 @@ class Environnement {
 		return (jeton_minimum,minimum)
 	}
 	
-	def unselect_all_units()={
+	def unselect_unit()={
 		// Deselectionne toutes les unités
-		this.selected_units = List()
-		for (i <- 0 to this.units.length -1){
-			for (j <- 0 to this.units(i).length -1){
-				this.units(i)(j) match{
-					case None => ()
-					// Pas opti mais on verra plus tard
-					case Some (j) =>{
-						j.selected = false
-					 }
-				}
-			}
-		}
+		this.selected_unit = None
 	}
 	
 	def move(x1:Int,y1:Int,x2:Int,y2:Int)={
@@ -140,23 +126,13 @@ class Environnement {
 			}
 	}
 	
-	def select_units(x1:Int,y1:Int,x2:Int,y2:Int)={
+	def select_unit(j:Jeton)={
 		//Selectionne toutes les unités dans le rectangle spécifié
-		this.unselect_all_units()
-		for (i <- Math.min(x1,x2) to Math.max(x1,x2)){
-			for (j <- Math.min(y1,y2) to Math.max(y1,y2)){
-				this.units(i)(j) match{
-					case None =>
-					// Pas opti mais on verra plus tard
-					case Some (j) =>{
-						if (j.model.player == Game.Human){
-							this.selected_units = j::this.selected_units
-							j.selected = true
-						}
-					 }
-				}
-			}
-		}
+		this.selected_unit = Some(j)
+	}
+	
+	def tile_elem_effect(i:Int,j:Int,elem:Int)={
+		()
 	}
 
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int):Unit={
@@ -165,6 +141,7 @@ class Environnement {
 			val jeton = new Jeton(personnage,this)
 			jeton.x = x
 			jeton.y = y
+			personnage.player.add_unit(personnage)
 			personnage.jeton = jeton
 			this.units(x)(y) = Some(jeton)
 			val ls = new LocatedSprite(personnage.image_path)
@@ -174,6 +151,16 @@ class Environnement {
 			personnage.jeton.located_sprite = ls
 			//Events de automatiques du jeton
 			personnage.call_when_spawn()
+			//Loading of AI
+			def load_ia(typage:Unit):Int={
+				if (personnage.jeton.died){
+					return 0
+				} else {
+					personnage.ia()
+					return 1
+				}
+			}
+			this.clock.add_macro_event( load_ia )
 		}else{
 			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
 		}
@@ -184,8 +171,9 @@ class Clock(env:Environnement) {
 	//Représente une horloge pour les phases de baston (permet de coordonner les events)
 	val macro_period = 0.1 //Timer entre 2 actions majeures
 	val micro_period = 0.01 //Timer entre 2 actions mineures
-	var macro_events = ListBuffer[Unit=>Int]()
-	var micro_events = ListBuffer[Unit=>Int]()
+	var macro_events:ListBuffer[Unit=>Int] = ListBuffer()
+	var micro_events:ListBuffer[Unit=>Int] = ListBuffer()
+	var l:List[Int] = List()
 	var active = true
 	var Env = env
 	
@@ -230,27 +218,28 @@ class Clock(env:Environnement) {
 		this.micro_events += event
 	}
 
-	def iter_events(events:ListBuffer[Unit=>Int]):ListBuffer[Unit=>Int] = { 
+	def iter_events(events_type:Period){
 	//Execute les fonctions de this.events et les enleve quand elles n'existent plus (si elles renvoient un truc != 1)
-		events match {
-				case t +: q => 	//On pourra implémenter des threads ici mais il n'y a pas encore assez d'events pour que ce soit rentable pour le moment
-						if (t()==1){
-							t +: (this.iter_events(q))
-						}
-						else {
-							this.iter_events(q)
-						}
-				case ListBuffer() => ListBuffer()
-			}
+		var events = (events_type match {
+					case Micro() => this.micro_events
+					case Macro() => this.macro_events})
+		def apply(t:Unit=>Int) = {
+				if (t()!=1){
+					(events_type match {
+						case Micro() => this.micro_events
+						case Macro() => this.macro_events
+					}) -= t
+				}}
+		events.map(apply(_)) 
 	}
 
 	def compute_macro_events(){
 		//Execute les macro events
-		this.macro_events = this.iter_events(this.macro_events)
+		this.iter_events(Macro())
 	}
 
 	def compute_micro_events(){
 		//Execute les micro events
-		this.micro_events = this.iter_events(this.micro_events)
+		this.iter_events(Micro())
 	}
 }

@@ -93,12 +93,7 @@ object bddCompetences {
 			}
 			if (target_alive() && target_in_range()){
 				val s = autoattack.v_jeton("target")
-				def delayed(typage:Unit):Int={
-					s.model.take_damages(dmg)
-					return 0
-				}
-				app.draw_shoot_line(personnage.jeton.x,personnage.jeton.y,s.x,s.y)
-				app.Env.clock.add_micro_event(delay_micro(delayed(_),20*personnage.jeton.Env.clock.micro_period))
+				shoot(personnage.jeton.x,personnage.jeton.y,s,dmg)
 				return 1
 			} else {
 				get_new_target()
@@ -111,15 +106,30 @@ object bddCompetences {
 		return autoattack
 	}
 	
-	def fire_spell(personnage:Personnage,power:Int,step_speed:Double){
+	def fire_spell(personnage:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double){
 		val orb = new Movable(personnage.jeton.Env)
 		val orient = personnage.jeton.orientation
+		
 		def explose() = {
 			for (i <- -1 to 1){
 				for (j <- -1 to 1){
 					if (0 <= orb.x + i && orb.x + i <= orb.Env.size_x -1 && 0 <= orb.y + j && orb.y + j <= orb.Env.size_y -1){
 						orb.Env.units(orb.x+i)(orb.y+j) match {
-							case Some(j:Jeton) => j.model.take_damages(power)
+							case Some(j:Jeton) => 
+								//Direct damages
+								j.model.take_damages(power)
+								//Dot damages
+								var count_ignite = nb_dot_tick //Inglige 5 fois des dégats
+								def ignite(typage:Unit):Int={
+									count_ignite -= 1
+									if (count_ignite == 0){
+										return 0
+									}
+									j.model.take_damages(tick_dmg)
+									return 1
+								}
+								j.Env.clock.add_macro_event(cooldowned(ignite,tick_period))
+								
 							case None => ()
 						}
 					}

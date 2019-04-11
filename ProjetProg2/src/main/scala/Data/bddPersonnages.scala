@@ -113,9 +113,10 @@ object bddPersonnages {
 		sentinel.pv_max = 23
 		sentinel.pv_current = 23
 		sentinel.player = player
-		sentinel.actives("AutoAttack1") = bddComp.create_autoattack(sentinel,5,1,0.3) //Attaque vite mais fait peu de dmg
-		sentinel.actives("AutoAttack2") = bddComp.create_autoattack(sentinel,5,1,0.3) //2e attaque de base similaire a la 1ere
+		sentinel.actives("AutoAttack") = bddComp.create_autoattack(sentinel,2,25,3.0) //Grosse attaque en mélée
 		sentinel.image_path = "sprite_character_turret.png" //Il faudra le mettre a jour
+		sentinel.add_spawn_call("AutoAttack")
+		sentinel.ia = bddBehaviour.create_sentinel(sentinel)
 		return sentinel
 	}
 	
@@ -143,7 +144,7 @@ object bddPersonnages {
 		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,7,3,2.0) //Ils font très mal
 		robot.image_path = "sprite_character_turret.png"
-		robot.ia = bddBehaviour.create_shooter(robot)
+		robot.ia = bddBehaviour.create_rage(robot)
 		return robot
 	}
 	

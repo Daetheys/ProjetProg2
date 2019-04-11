@@ -4,6 +4,7 @@ import Competence.{Competence=>Competence,Active=>Active,Passive=>Passive}
 import Movable.{Movable}
 import Player._
 import Graphics2._
+import bddBehaviour._
 
 class Personnage {
 	// Représente un personnage de manière générale
@@ -30,7 +31,7 @@ class Personnage {
 	
 	var image_path:String = ""
 	
-	var ia:Unit=>Unit = (e:Unit) => ()
+	var ia:Unit=>Int = bddBehaviour.dummy
 	
 	var jeton = new Jeton(this,new Environnement)
 	

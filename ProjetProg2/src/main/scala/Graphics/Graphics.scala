@@ -70,7 +70,11 @@ object app extends JFXApp {
 		this.right_click_command_load()
 		//this.load_colored_cursors() //-> Les images sont introuvables !!! (même avec un chemin absolu)
 		}
-	
+		
+	def win_screen()={
+		this.gc.fillText("WIN !",5*32,5*32,50)
+	}
+		
 	def load_colored_cursors()={
 		//Colorie le curseur en fonction de l'unité qu'il y a en dessous
 		//Pour le moment ce programme plante
@@ -99,6 +103,23 @@ object app extends JFXApp {
 		def borne_y(nb:Int):Int={
 			return Math.min(Math.max(nb,0),Env.size_y-1)
 			}
+		this.stage.scene.value.onKeyPressed = (ke: KeyEvent) => {
+			print("Key Pressed\n")
+			ke.code match  {
+				case KeyCode.Ampersand => this.Env.select_unit(Game.Human.units(0).jeton)
+				case KeyCode.Undefined => this.Env.select_unit(Game.Human.units(1).jeton)
+				case KeyCode.Quotedbl => this.Env.select_unit(Game.Human.units(2).jeton)
+				case KeyCode.Quote => this.Env.select_unit(Game.Human.units(3).jeton)
+				case KeyCode.Control => this.Env.select_unit(Game.Human.units(4).jeton)
+				case KeyCode.LeftParenthesis => this.Env.select_unit(Game.Human.units(5).jeton)
+				case KeyCode.A => this.Env.selected_unit match {
+										case None => ()
+										case Some(j:Jeton) => j.model.actives("Feu").refresh(Array())
+										}
+				case _ => print(ke.code.toString+"\n")
+			}
+		}
+		/* //Ancienne façon de faire :
 		this.canvas.onMouseDragged = (e: MouseEvent) =>
 			{
 			this.mousePosX = e.x
@@ -123,7 +144,7 @@ object app extends JFXApp {
 			this.mousePosY = e.y
 			this.mouseOldX = e.x
 			this.mouseOldY = e.y
-			e.consume()}
+			e.consume()}*/
 	}
 	def right_click_command_load()={
 		//Permet de déplacer les unités selectionnées
@@ -149,26 +170,23 @@ object app extends JFXApp {
 		}
 		
 	def draw_damages(dmg:Int,target:Jeton)={
-		var timer = 20
+		var timer = (0.5/this.Env.clock.micro_period).toInt
 		def aff_damage(typage:Unit):Int={
-			print("aff_damage "+timer.toString+"\n")
-			timer-= 1
+			timer -= 1
 			if (timer == 0){
 				return 0
 			}
-			print("draw dmg text\n")
 			this.draw_dmg_text(target.x,target.y,10,dmg,"-",Red)
 			return 1
 		}
 		//print("add event+"+aff_damage(_).toString+"\n")
-		this.Env.clock.add_micro_event(cooldowned_micro(aff_damage(_),0.5)) //reste 0.5 sec
+		this.Env.clock.add_micro_event(aff_damage(_)) //reste 0.5 sec
 	}
-		
-	def draw_shoot_line(x1:Int,y1:Int,x2:Int,y2:Int)={
+	
+	def draw_line(x1:Int,y1:Int,x2:Int,y2:Int,color:scalafx.scene.paint.Color,projectile_length:Int){
 		//Affiche un projectile pour représenter une attaque
 		val timer_max = 20
 		var timer = timer_max
-		val projectile_length = 10 //10px
 		val r = scala.util.Random
 		var x_offset = r.nextInt(16)
 		var y_offset = r.nextInt(16)
@@ -177,7 +195,7 @@ object app extends JFXApp {
 			if (timer <= 0){
 				return 0
 			} else {
-				this.gc.stroke = Red
+				this.gc.stroke = color
 				val init_x = x1.toDouble*32+16
 				val init_y = y1.toDouble*32+16
 				val target_x = x2.toDouble*32+8+x_offset.toDouble
@@ -191,7 +209,11 @@ object app extends JFXApp {
 				return 1
 			}
 		}
-		this.Env.clock.add_micro_event(cooldowned_micro(aff_line(_),this.Env.clock.micro_period))
+		this.Env.clock.add_micro_event(aff_line(_))
+	}
+		
+	def draw_shoot_line(x1:Int,y1:Int,x2:Int,y2:Int)={
+		this.draw_line(x1,y1,x2,y2,Red,10)
 	}
 	
 	def draw_dmg_text(x:Int,y:Int,length:Int,nb:Int,signe:String,color:scalafx.scene.paint.Color)={

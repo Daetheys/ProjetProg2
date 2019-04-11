@@ -1,8 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Layer.scala:52:21: value :: is not a member of scala.collection.mutable.ListBuffer[Sprite.LocatedSprite][0m
-[0m[[0m[31merror[0m] [0m[0m		this.content = ls :: this.content[0m
-[0m[[0m[31merror[0m] [0m[0m		                  ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Layer.scala:51:6: method add_sprite is defined twice;[0m
-[0m[[0m[31merror[0m] [0m[0m  the conflicting method add_sprite was defined at line 47:13[0m
-[0m[[0m[31merror[0m] [0m[0m	def add_sprite(ls:LocatedSprite):Unit={[0m
-[0m[[0m[31merror[0m] [0m[0m	    ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala:87:46: Player.Player and Int are unrelated: they will most likely never compare equal[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case Some(j:Jeton) => if (j.model.player == 0){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
