@@ -14,37 +14,34 @@ returns the 25 * 25 matrix where each cells contains the list of
 all the sprites that must be displayed on the screen (sorted by layers)
 */
 
-
+/*
 import Mechanisms.{Sprite_group=>Sprite_groupe,Sprite_plan=>Sprite_plan,_}
 import Personnage.{Personnage=>Personnage,Jeton=>Jeton,_}
 import bddPersonnages.{bddPersonnages=>bddP,_}
 import Game._
 
 class All_sprites(plan:Sprite_plan) {
-  val layerset = new LayerSet(25,25)
+  val main_grid = plan.all_the_sprites
   var personnages:Array[Array[Option[Personnage]]] = Array()
   val robots_pos = Array((2,5),(9,5),(15,5),(22,5),(5,8),(19,8),(5,13),(19,13),(9,16),(15,16),(2,19),(22,19))
-  val start_pos = Array((12,22),(12,20),(11,21),(12,21),(13,21),(13,22))
-  def load_stage() {
+  def load_demo_version1() {
   	var p:Array[Array[Option[Personnage]]] = Array.ofDim[Option[Personnage]](main_grid.length,main_grid(0).length)
   	for (i <- 0 to p.length-1){
   		for (j <- 0 to p(i).length-1){
   			p(i)(j) = None
   		}
   	}
-  	//Creation des unités du joueur
-  	for (i<-0 to Game.Human.units.length-1){
-  		val h = start_pos(i)
-  		p(h._1)(h._2) = Game.Human.units(i)
-  	}
-  	//Creation des robots
+    p(12)(22) = Some(bddP.create_turtle(Game.Human))
+    p(12)(20) = Some(bddP.create_bird(Game.Human))
+    p(11)(21) = Some(bddP.create_cat(Game.Human))
+    p(12)(21) = Some(bddP.create_monkey(Game.Human))
+    p(13)(21) = Some(bddP.create_snake(Game.Human))
     for ( (x,y) <- this.robots_pos ) {
       p(x)(y) = (Some(bddP.create_robot(Game.IA)));
     }
     this.personnages = p
-    //Creation du layerset
   }
-}
+} */
 
 object sheet_slots {
 	val X = Array(22, 22, 22, 23, 23, 23)
@@ -106,6 +103,8 @@ class InventoryTabs (m : mainInventory) {
 	val tab_limit = m.equip.length + 1
 	val item_limit = 0
 	var token = new LocatedSprite("")
+	var curseur = new LocatedSprite("sprite_inventory_slot_selected.png")
+	
 
 	def oneTab(i : Int, s : String, l : LayerSet) : Unit = {
 		this.token = new LocatedSprite(s)
@@ -183,7 +182,19 @@ class InventoryTabs (m : mainInventory) {
 		}
 	}
 	
-	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]) :  = {
+	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]) = {
+		ls_list match {
+			case (LocatedSprite(s) as ls) :: tail => {
+				if (s.startsWith("sprite_item")) {
+					if (j > 0) {
+						return this.coord_item(j-1, tail)
+					} else {
+						return (ls.x, ls.y)
+					}
+				} else {
+					return this.coord_item(j, tail)
+			case Nil => return (X(0), Y(0))
+		}
 	}
 
 	def afficher(l : LayerSet) = {
@@ -195,6 +206,13 @@ class InventoryTabs (m : mainInventory) {
 		this.token = new LocatedSprite("sprite_inventory_slot_selection.png")
 		(this.token.x, this.token.y) = this.coord_item(this.selected_item, l.layers(6).content)
 		l.layers(6).add_sprite(this.token)
+		l.layers(6).load_layer()
+	}
+
+	def move_curseur(l : LayerSet) = {
+		l.layers(6).remove(this.curseur)
+		(this.curseur.x, this.curseur.y) = this.coord_item(this.selected_item, l.layers(6).content)
+		l.layers(6).add_sprite(this.curseur)
 		l.layers(6).load_layer()
 	}
 
@@ -216,8 +234,22 @@ class InventoryTabs (m : mainInventory) {
 		this.afficher(l)
 	}
 
-	def down_item(){}
+	def down_item(l : LayerSet) {
+		if (this.selected_item < this.item_limit) {
+			this.selected_item += 1
+		} else {
+			this.selected_item = 0
+		}
+		this.move_curseur(l)
+	}
 	
-	def up_item(){}
+	def up_item(l : LayerSet) {
+		if (this.selected_item > 0) {
+			this.selected_item -= 1
+		} else {
+			this.selected_item = this.item_limit
+		}
+		this.move_curseur(l)
+	}
 }
 
