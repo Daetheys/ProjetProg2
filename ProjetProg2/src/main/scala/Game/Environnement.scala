@@ -53,7 +53,7 @@ class Environnement {
 		
 		//Chargement de l'event de raffraichissement de l'environnement
 		this.clock.add_micro_event(aff_event(_))
-		this.clock.add_macro_events(check_win(_))
+		this.clock.add_macro_event(check_win(_))
 		
 		//Préparation de l'event pour la loop -> les events ca sert a tout
 		val music = new Sound("dash_runner.wav")
@@ -114,8 +114,8 @@ class Environnement {
 	def unselect_unit()={
 		// Deselectionne toutes les unités
 		this.selected_unit match {
-			case None -> ()
-			case Some(j:Jeton) =>  	this.selected_unit.selected = false
+			case None => ()
+			case Some(j:Jeton) =>  	j.selected = false
 									this.selected_unit = None
 		}
 	}
@@ -150,8 +150,8 @@ class Environnement {
 		val ls = new LocatedSprite(file)
 		ls.x = i*32
 		ls.y = j*32
-		this.layerSet.get_layer("UpTiles").add_sprite(ls) //C'est très pas beau (on n'a pas enlevé celui d'en dessous)
-		this.layerSet.get_layer("UpTiles").load_layer()
+		this.layerset.get_layer("UpTiles").add_sprite(ls) //C'est très pas beau (on n'a pas enlevé celui d'en dessous)
+		this.layerset.get_layer("UpTiles").load_layer()
 	}
 
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int):Unit={

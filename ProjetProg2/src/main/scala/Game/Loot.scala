@@ -1,3 +1,3 @@
 package Loot
-import Inventory
+import Inventory._
 

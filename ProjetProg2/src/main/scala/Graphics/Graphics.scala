@@ -72,12 +72,12 @@ object app extends JFXApp {
 		}
 		
 	def win_screen()={
-		this.phase = -1
+		this.Env.phase = -1
 		this.gc.fillText("WIN !",5*32,5*32,50)
 	}
 	
 	def lose_screen()={
-		this.phase = -1
+		this.Env.phase = -1
 		this.gc.fillText("LOSE !",5*32,5*32,50)
 	}
 	
@@ -116,7 +116,7 @@ object app extends JFXApp {
 			}
 		this.stage.scene.value.onKeyPressed = (ke: KeyEvent) => {
 			print("Key Pressed\n")
-			(ke.code,this.phase) match  {
+			(ke.code,this.Env.phase) match  {
 				case (KeyCode.Ampersand,0) => if (this.Env.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}
 				case (KeyCode.Undefined,0) => if (this.Env.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}
 				case (KeyCode.Quotedbl,0) => if (this.Env.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}
@@ -127,10 +127,10 @@ object app extends JFXApp {
 										case None => ()
 										case Some(j:Jeton) => j.model.actives("Feu").refresh(Array())
 										}
-				case (KeyCode.LeftArrow,2) => ()
-				case (KeyCode.RightArrow,2) => ()
-				case (KeyCode.UpArrow,2) => ()
-				case (KeyCode.DownArrow,2) => ()
+				case (KeyCode.LEFT,2) => ()
+				case (KeyCode.RIGHT,2) => ()
+				case (KeyCode.Up,2) => ()
+				case (KeyCode.Down,2) => ()
 				case _ => print(ke.code.toString+"\n")
 			}
 		}
@@ -165,20 +165,17 @@ object app extends JFXApp {
 		//Permet de déplacer les unités selectionnées
 		this.canvas.onMousePressed = (e: MouseEvent) =>
 			{
-				if (e.isSecondaryButtonDown && this.phase == 0){
+				if (e.isSecondaryButtonDown && this.Env.phase == 0){
 					var target = Array((e.x/32).toInt,(e.y/32).toInt)
 					this.Env.apply_active("Move",target)
 				}
-				if (e.isPrimaryButtonDown && this.phase == 1){ //Casse les mécanismes
+				if (e.isPrimaryButtonDown && this.Env.phase == 1){ //Casse les mécanismes
 					//Casse les mécanismes (se ferra avec des compétences précises plus tard)
 					val x = (e.x/32).toInt
 					val y = (e.y/32).toInt
-					for (comp <- 0 to this.Env.sprite_plan.compet.length - 1){
-						this.Env.sprite_plan.activation(y,x,comp)
-						this.Env.sprite_plan.init_sprites
-						this.Env.sprites = this.Env.sprite_plan.all_the_sprites.transpose
-						this.load_sprites()
-					}
+					//TODO TODO TODO TODO TODO TODO TODO TODO TODO
+					//--------------> Detruire le mecanisme
+					//TODO TODO TODO TODO TODO TODO TODO TODO TODO
 					this.Env.phase = 3 //Passe en phase 3 
 				}
 			}
