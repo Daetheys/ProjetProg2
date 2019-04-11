@@ -112,6 +112,54 @@ object bddPersonnages {
 		return robot
 	}
 	
+	def create_robot_elec(player:Player):Personnage = {
+		var robot = new Personnage
+		robot.name = "Lightning Thrower"
+		robot.pv_max = 50
+		robot.pv_current = 50
+		robot.player = player
+		robot.actives("Move") = bddComp.create_move(robot,3,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,1,2.0)
+		robot.image_path = "sprite_character_tank_electricity.png"
+		return robot
+	}
+	
+	def create_robot_fire(player:Player):Personnage = {
+		var robot = new Personnage
+		robot.name = "Flame Hellriser"
+		robot.pv_max = 50
+		robot.pv_current = 50
+		robot.player = player
+		robot.actives("Move") = bddComp.create_move(robot,3,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,1,2.0)
+		robot.image_path = "sprite_character_tank_fire.png"
+		return robot
+	}
+
+	def create_robot_ice(player:Player):Personnage = {
+		var robot = new Personnage
+		robot.name = "Absolute Zero"
+		robot.pv_max = 50
+		robot.pv_current = 50
+		robot.player = player
+		robot.actives("Move") = bddComp.create_move(robot,3,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,1,2.0)
+		robot.image_path = "sprite_character_tank_ice.png"
+		return robot
+	}
+
+	def create_robot_poison(player:Player):Personnage = {
+		var robot = new Personnage
+		robot.name = "X-Spider"
+		robot.pv_max = 50
+		robot.pv_current = 50
+		robot.player = player
+		robot.actives("Move") = bddComp.create_move(robot,3,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,1,2.0)
+		robot.image_path = "sprite_character_tank_poison.png"
+		return robot
+	}
+
 	//Boss
 	def create_sentinel(player:Player):Personnage = {
 		// 1er Boss
@@ -121,7 +169,7 @@ object bddPersonnages {
 		sentinel.pv_current = 23
 		sentinel.player = player
 		sentinel.actives("AutoAttack") = bddComp.create_autoattack(sentinel,2,25,3.0) //Grosse attaque en mélée
-		sentinel.image_path = "sprite_character_turret.png" //Il faudra le mettre a jour
+		sentinel.image_path = "sprite_boss_drone.png" //Il faudra le mettre a jour
 		sentinel.add_spawn_call("AutoAttack")
 		sentinel.ia = bddBehaviour.create_sentinel(sentinel)
 		return sentinel
@@ -136,7 +184,7 @@ object bddPersonnages {
 		robot.player = player
 		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,2,1,2.0)
-		robot.image_path = "sprite_character_turret.png"
+		robot.image_path = "sprite_character_tank_healer.png"
 		robot.ia = bddBehaviour.create_support(robot)
 		return robot
 	}
@@ -150,7 +198,7 @@ object bddPersonnages {
 		robot.player = player
 		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,7,3,2.0) //Ils font très mal
-		robot.image_path = "sprite_character_turret.png"
+		robot.image_path = "sprite_character_tank_fighter.png"
 		robot.ia = bddBehaviour.create_rage(robot)
 		return robot
 	}
@@ -163,7 +211,7 @@ object bddPersonnages {
 		robot.pv_current = 20
 		robot.player = player
 		robot.actives("Move") = bddComp.create_move(robot,0.7,1) //Se déplace très vite
-		robot.image_path = "sprite_character_turret.png"
+		robot.image_path = "sprite_character_tank_plasma.png"
 		robot.ia = bddBehaviour.create_rage(robot)
 		return robot
 	}
