@@ -3,8 +3,7 @@ import scalafx.scene.image.Image
 import Graphics2._
 import Movable._
 
-class Sprite(file2:String) {
-	var file = file2
+class Sprite(file:String) {
 	var orientation:Orientation = Top()
 	var image:Image = new Image(app.unknown_path())
 	

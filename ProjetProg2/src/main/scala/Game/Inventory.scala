@@ -1,7 +1,6 @@
 package Inventory
 import Personnage._
 import Player._
-import bddItem.bddItem._
 
 class Item {
 
@@ -46,7 +45,7 @@ class mainInventory(p:Player) {
 
 	var content : Array[Empile] = {
 		var c = new Array[Empile](19)		
-		c(0) = new Empile (create_first_aid_kit())
+		c(0) = new Empile (create_first-aid-kit())
 		c(1) = new Empile (create_gun_confusion())
 		c(2) = new Empile (create_gun_electricity())
 		c(3) = new Empile (create_gun_fire())
@@ -65,10 +64,10 @@ class mainInventory(p:Player) {
 		c(16) = new Empile (create_vest_confusion())
 		c(17) = new Empile (create_vest_ink())
 		c(18) = new Empile (create_vest_poison())
-		c	
+		return c	
 	}
 	var equipe = p.units
-	var items_perso : List[Array[Option[Item]]] = List()
+	var items_perso : List[Array] = Nil()
 	def add_inventory(c : Personnage) : Unit = {
 		this.items_perso +: c.inventory
 	}

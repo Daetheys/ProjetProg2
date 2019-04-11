@@ -4,7 +4,7 @@ import Inventory._
 
 object bddItem {
 
-	def create_first_aid_kit() : OneUse = {
+	def create_first-aid-kit() : OneUse = {
 		var o = new OneUse
 		o.id = 1
 		o.name = "Fist Aid Kit"
@@ -178,7 +178,7 @@ object bddItem {
 		return a
 	}
 
-	def create_vest_confusion2() : Armor = {
+	def create_vest_confusion() : Armor = {
 		var a = new Armor
 		a.id = 17
 		a.name = "Fur Coat"
