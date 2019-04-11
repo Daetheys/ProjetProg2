@@ -23,7 +23,7 @@ import bddPersonnages.{bddPersonnages=>bddP,_}
 import Game._
 
 class All_sprites(plan:Sprite_plan) {
-  val main_grid = plan.all_the_sprites
+  //val main_grid = plan.all_the_sprites
   var personnages:Array[Array[Option[Personnage]]] = Array()
   val robots_pos = Array((2,5),(9,5),(15,5),(22,5),(5,8),(19,8),(5,13),(19,13),(9,16),(15,16),(2,19),(22,19))
   val start_pos = Array((12,22),(12,20),(11,21),(12,21),(13,21),(13,22))
@@ -81,7 +81,7 @@ class Sheet(p : Personnage) {
 					token.x = 32*sheet_slots.equipX; token.y = 32*sheet_slots.equipY(i)
 					l.layers(6).add_sprite(token)
 					token = new LocatedSprite(item.image_path)
-					token.x = 32*sheet_slots.equipX token.y = 32*sheet_slots.equipY(i)
+					token.x = 32*sheet_slots.equipX; token.y = 32*sheet_slots.equipY(i)
 					l.layers(6).add_sprite(token)
 				}
 			}
@@ -186,10 +186,10 @@ class InventoryTabs (m : mainInventory) {
 		}
 	}
 	
-	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]) = {
+	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]):(Int,Int) = {
 		ls_list match {
-			case (LocatedSprite(s) as ls) :: tail => {
-				if (s.startsWith("sprite_item")) {
+			case (ls:LocatedSprite) +: tail => {
+				if (ls.file.startsWith("sprite_item")) {
 					if (j > 0) {
 						return this.coord_item(j-1, tail)
 					} else {
@@ -197,7 +197,8 @@ class InventoryTabs (m : mainInventory) {
 					}
 				} else {
 					return this.coord_item(j, tail)
-			case Nil => return (X(0), Y(0))
+				}}
+			case ListBuffer() => return (0, 0)
 		}
 	}
 
@@ -217,7 +218,8 @@ class InventoryTabs (m : mainInventory) {
 
 	def move_curseur(l : LayerSet) = {
 		l.layers(6).remove(this.curseur)
-		(this.curseur.x, this.curseur.y) = this.coord_item(this.selected_item, l.layers(6).content)
+		val h = this.coord_item(this.selected_item, l.layers(6).content)
+		this.curseur.x = h._1; this.curseur.y = h._2
 		l.layers(6).add_sprite(this.curseur)
 		l.layers(6).load_layer()
 	}

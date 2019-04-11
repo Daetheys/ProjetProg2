@@ -5,7 +5,7 @@ import Movable.{Movable}
 import Player._
 import Graphics2._
 import bddBehaviour._
-import Item
+import Inventory._
 
 class Personnage {
 	// Représente un personnage de manière générale

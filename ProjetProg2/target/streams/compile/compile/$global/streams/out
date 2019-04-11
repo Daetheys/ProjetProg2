@@ -1,7 +1,83 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala:8:12: . expected[0m
-[0m[[0m[31merror[0m] [0m[0mimport Item[0m
-[0m[[0m[31merror[0m] [0m[0m           ^[0m
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Display.scala:85:43: ';' expected but '.' found.[0m
-[0m[[0m[31merror[0m] [0m[0m					token.x = 32*sheet_slots.equipX token.y = 32*sheet_slots.equipY(i)[0m
-[0m[[0m[31merror[0m] [0m[0m					                                     ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddBehaviour.scala:117:23: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(loop());return 0}[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddBehaviour.scala:117:110: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: create_sentinel.loop(typage: Unit): Unit => Int[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: create_sentinel.loop((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(loop());return 0}[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                                                                                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddBehaviour.scala:159:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: load_tir_soutenu.attack(typage: Unit): Int[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: load_tir_soutenu.attack((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m					attack() //return déja un int[0m
+[0m[[0m[33mwarn[0m] [0m[0m					      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddBehaviour.scala:286:20: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: create_sentinel.loop(typage: Unit): Unit => Int[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: create_sentinel.loop((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m		val result = loop()[0m
+[0m[[0m[33mwarn[0m] [0m[0m		                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala:178:19: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m					personnage.ia()[0m
+[0m[[0m[33mwarn[0m] [0m[0m					             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala:246:10: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (t()!=1){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Mechanisms.scala:213:17: a pure expression does nothing in statement position[0m
+[0m[[0m[33mwarn[0m] [0m[0m      case x => x[0m
+[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Utilities/Utilities.scala:48:49: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (closed) { return true } else { if (event() == 1) {return false } else {closed = true;return true}}[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                                            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Utilities/Utilities.scala:55:28: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (closed || new_event() == 0){ //-> Surapplication[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Utilities/Utilities.scala:57:21: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m								return event()[0m
+[0m[[0m[33mwarn[0m] [0m[0m								            ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Algo.scala:82:11: patterns after a variable pattern cannot match (SLS 8.1.1)[0m
+[0m[[0m[33mwarn[0m] [0m[0m					case a => get_move(P,a)[0m
+[0m[[0m[33mwarn[0m] [0m[0m					     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Algo.scala:83:19: unreachable code due to variable pattern 'a' on line 82[0m
+[0m[[0m[33mwarn[0m] [0m[0m					case null => ()[0m
+[0m[[0m[33mwarn[0m] [0m[0m					             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Loot.scala:1:1: [0m
+[0m[[0m[33mwarn[0m] [0m[0mFound names but no class, trait or object is defined in the compilation unit.[0m
+[0m[[0m[33mwarn[0m] [0m[0mThe incremental compiler cannot record the dependency information in such case.[0m
+[0m[[0m[33mwarn[0m] [0m[0mSome errors like unused import referring to a non-existent class might not be reported.[0m
+[0m[[0m[33mwarn[0m] [0m[0m    [0m
+[0m[[0m[33mwarn[0m] [0m[0mpackage Loot[0m
+[0m[[0m[33mwarn[0m] [0m[0m^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala:84:32: Personnage.Jeton and Option[Personnage.Jeton] are unrelated: they will most likely never compare equal[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case Some(j:Jeton) => if (j==this.selected_unit) { this.selected_unit = None } [0m
+[0m[[0m[33mwarn[0m] [0m[0m				                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala:98:46: Player.Player and Int are unrelated: they will most likely never compare equal[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case Some(j:Jeton) => if (j.model.player == 0){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                                         ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala:130:19: value LEFT in object KeyCode is deprecated (since 8.0.60-R10): Use Left; LEFT will be removed in a future release[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.LEFT,2) => ()[0m
+[0m[[0m[33mwarn[0m] [0m[0m				              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala:131:19: value RIGHT in object KeyCode is deprecated (since 8.0.60-R10): Use Right; RIGHT will be removed in a future release[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.RIGHT,2) => ()[0m
+[0m[[0m[33mwarn[0m] [0m[0m				              ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m17 warnings found[0m
