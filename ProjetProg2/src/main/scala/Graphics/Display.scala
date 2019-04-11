@@ -82,7 +82,7 @@ class Sheet(p : Personnage) {
 					token.x = 32*sheet_slots.equipX; token.y = 32*sheet_slots.equipY(i)
 					l.layers(6).add_sprite(token)
 					token = new LocatedSprite(item.image_path)
-					token.x = 32*sheet_slots.equipX token.y = 32*sheet_slots.equipY(i)
+					token.x = 32*sheet_slots.equipX; token.y = 32*sheet_slots.equipY(i)
 					l.layers(6).add_sprite(token)
 				}
 			}
@@ -185,7 +185,8 @@ class InventoryTabs (m : mainInventory) {
 		}
 	}
 	
-	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]) = {
+	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]):(Int,Int) = {
+		return (0,0)
 	}
 
 	def afficher(l : LayerSet) = {
@@ -195,9 +196,8 @@ class InventoryTabs (m : mainInventory) {
 			this.persoDisplay(this.selected_tab, l)
 		}
 		this.token = new LocatedSprite("sprite_inventory_slot_selection.png")
-		val h = this.coord_item(this.selected_item, l.layers(6).content)
-		this.token.x = h._1
-		this.token.y = h._2
+		val h = this.coord_item(this.selected_item, l.layers(6).content);
+		this.token.x = h._1; this.token.y = h._2
 		l.layers(6).add_sprite(this.token)
 		l.layers(6).load_layer()
 	}
