@@ -184,3 +184,5 @@ compile
 run
 compile
 run
+compile
+git commit ".scala"

@@ -5,6 +5,7 @@ import Movable.{Movable}
 import Player._
 import Graphics2._
 import bddBehaviour._
+import Item
 
 class Personnage {
 	// Représente un personnage de manière générale
@@ -21,8 +22,8 @@ class Personnage {
 	var esquive = 0 //Chances d'esquive
 
 	//Stuff
-	var equipment = Array(None, None)
-	var inventory = Array(None, None, None, None, None; None)
+	var equipment:Array[Option[Item]] = Array(None, None)
+	var inventory:Array[Option[Item]] = Array(None, None, None, None, None, None)
 
 	//Compétences
 	var actives = scala.collection.mutable.Map[String,Active]()

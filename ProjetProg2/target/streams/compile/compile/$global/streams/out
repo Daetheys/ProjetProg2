@@ -1,4 +1,28 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Mechanisms.scala:215:17: a pure expression does nothing in statement position[0m
-[0m[[0m[33mwarn[0m] [0m[0m      case x => x[0m
-[0m[[0m[33mwarn[0m] [0m[0m                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddItems.scala:7:18: '=' expected but identifier found.[0m
+[0m[[0m[31merror[0m] [0m[0m	def create_first-aid-kit() : OneUse = {[0m
+[0m[[0m[31merror[0m] [0m[0m	                ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddItems.scala:16:1: illegal start of simple expression[0m
+[0m[[0m[31merror[0m] [0m[0m	def create_gun_confusion() : Weapon = {[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Loot.scala:7:1: identifier expected but 'class' found.[0m
+[0m[[0m[31merror[0m] [0m[0mclass Loot_phase(sprite_grid : Array[Array[Sprite_group]]) {[0m
+[0m[[0m[31merror[0m] [0m[0m^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Loot.scala:46:2: '.' expected but eof found.[0m
+[0m[[0m[31merror[0m] [0m[0m}[0m
+[0m[[0m[31merror[0m] [0m[0m ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala:25:52: ')' expected but ';' found.[0m
+[0m[[0m[31merror[0m] [0m[0m	var inventory = Array(None, None, None, None, None; None)[0m
+[0m[[0m[31merror[0m] [0m[0m	                                                  ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala:25:58: ';' expected but ')' found.[0m
+[0m[[0m[31merror[0m] [0m[0m	var inventory = Array(None, None, None, None, None; None)[0m
+[0m[[0m[31merror[0m] [0m[0m	                                                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Display.scala:196:4: Missing closing brace `}' assumed here[0m
+[0m[[0m[31merror[0m] [0m[0m			case Nil => return (X(0), Y(0))[0m
+[0m[[0m[31merror[0m] [0m[0m			^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Display.scala:207:32: ';' expected but '=' found.[0m
+[0m[[0m[31merror[0m] [0m[0m		(this.token.x, this.token.y) = this.coord_item(this.selected_item, l.layers(6).content)[0m
+[0m[[0m[31merror[0m] [0m[0m		                             ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Display.scala:214:36: ';' expected but '=' found.[0m
+[0m[[0m[31merror[0m] [0m[0m		(this.curseur.x, this.curseur.y) = this.coord_item(this.selected_item, l.layers(6).content)[0m
+[0m[[0m[31merror[0m] [0m[0m		                                 ^[0m
+[0m[[0m[31merror[0m] [0m[0m9 errors found[0m

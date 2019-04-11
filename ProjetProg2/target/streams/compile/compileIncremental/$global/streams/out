@@ -1,1 +1,33 @@
-[0m[[0m[0mdebug[0m] [0m[0mNo changes[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial source changes: [0m
+[0m[[0m[0mdebug[0m] [0m[0m	removed:Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	added: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	modified: Set(/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Sprite.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddBehaviour.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddPersonnages.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Loot.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddCompetences.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Inventory.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Display.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddItems.scala)[0m
+[0m[[0m[0mdebug[0m] [0m[0mInvalidated products: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mExternal API changes: API Changes: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mModified binary dependencies: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mInitial directly invalidated classes: Set(bddBehaviour.bddBehaviour, Environnement.Clock, bddCompetences.bddCompetences, bddItem.bddItem, Inventory.Item, Inventory.Empile, Inventory.Weapon, Inventory.Armor, Display.Sheet, Inventory.mainInventory, Sprite.LocatedSprite, Environnement.Environnement, Display.inventory_slots, Graphics2.app, Display.All_sprites, Personnage.Personnage, bddPersonnages.bddPersonnages, Personnage.Jeton, Sprite.Sprite, Inventory.OneUse, Display.sheet_slots, Display.InventoryTabs)[0m
+[0m[[0m[0mdebug[0m] [0m[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0mSources indirectly invalidated by:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	product: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	binary dep: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0m	external source: Set()[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated classes: Set(bddBehaviour.bddBehaviour, Environnement.Clock, bddCompetences.bddCompetences, bddItem.bddItem, Inventory.Item, Inventory.Empile, Inventory.Weapon, Inventory.Armor, Display.Sheet, Inventory.mainInventory, Sprite.LocatedSprite, Environnement.Environnement, Display.inventory_slots, Graphics2.app, Display.All_sprites, Personnage.Personnage, bddPersonnages.bddPersonnages, Personnage.Jeton, Sprite.Sprite, Inventory.OneUse, Display.sheet_slots, Display.InventoryTabs)[0m
+[0m[[0m[0mdebug[0m] [0m[0mAll initially invalidated sources:Set(/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Sprite.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddBehaviour.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddPersonnages.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Loot.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddCompetences.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Inventory.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Environnement.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Display.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Graphics/Graphics.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Game/Personnage.scala, /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/src/main/scala/Data/bddItems.scala)[0m
+[0m[[0m[0minfo[0m] [0m[0mCompiling 11 Scala sources to /home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0mGetting org.scala-sbt:compiler-bridge_2.12:1.2.5:compile for Scala 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] Running cached compiler 7aaa8f4a for Scala compiler version 2.12.7[0m
+[0m[[0m[0mdebug[0m] [0m[0m[zinc] The Scala compiler is invoked with:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-unchecked[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-deprecation[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-Xcheckinit[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-encoding[0m
+[0m[[0m[0mdebug[0m] [0m[0m	utf8[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-feature[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-bootclasspath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/daetheys/.sbt/boot/scala-2.12.7/lib/scala-library.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	-classpath[0m
+[0m[[0m[0mdebug[0m] [0m[0m	/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2/target/scala-2.12/classes:/home/daetheys/.ivy2/cache/org.scalafx/scalafx_2.12/jars/scalafx_2.12-11-R16.jar:/home/daetheys/.sbt/boot/scala-2.12.7/lib/scala-reflect.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-base/jars/javafx-base-11-linux.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-controls/jars/javafx-controls-11-linux.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-graphics/jars/javafx-graphics-11-linux.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-fxml/jars/javafx-fxml-11-linux.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-media/jars/javafx-media-11-linux.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-swing/jars/javafx-swing-11-linux.jar:/home/daetheys/.ivy2/cache/org.openjfx/javafx-web/jars/javafx-web-11-linux.jar[0m
+[0m[[0m[0mdebug[0m] [0m[0mCompilation failed (CompilerInterface)[0m
+[0m[[0m[31merror[0m] [0m[0m(Compile / [31mcompileIncremental[0m) Compilation failed[0m
