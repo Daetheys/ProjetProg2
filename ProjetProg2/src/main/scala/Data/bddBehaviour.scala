@@ -72,8 +72,8 @@ object bddBehaviour {
 	}
 	
 	def create_explosive(p:Personnage):Unit=>Int={
-		//Go for blood and explode -> Same but with the active Explosion instead of Autoattack
-		return create_rage(p)
+		//Go for blood and explode
+		return this.dummy
 	}
 	
 	def create_support(p:Personnage):Unit=>Int={

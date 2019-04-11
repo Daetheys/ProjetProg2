@@ -2,8 +2,6 @@ package Display
 import Personnage._
 import Layer._
 import Inventory._
-import Sprite._
-import scala.collection.mutable.ListBuffer
 
 /*
 The main use for this file :
@@ -16,36 +14,34 @@ returns the 25 * 25 matrix where each cells contains the list of
 all the sprites that must be displayed on the screen (sorted by layers)
 */
 
-
+/*
 import Mechanisms.{Sprite_group=>Sprite_groupe,Sprite_plan=>Sprite_plan,_}
 import Personnage.{Personnage=>Personnage,Jeton=>Jeton,_}
 import bddPersonnages.{bddPersonnages=>bddP,_}
 import Game._
 
 class All_sprites(plan:Sprite_plan) {
-  //val main_grid = plan.all_the_sprites
+  val main_grid = plan.all_the_sprites
   var personnages:Array[Array[Option[Personnage]]] = Array()
   val robots_pos = Array((2,5),(9,5),(15,5),(22,5),(5,8),(19,8),(5,13),(19,13),(9,16),(15,16),(2,19),(22,19))
-  val start_pos = Array((12,22),(12,20),(11,21),(12,21),(13,21),(13,22))
-  def load_stage() {
-  	var p:Array[Array[Option[Personnage]]] = Array.ofDim[Option[Personnage]](25,25)
+  def load_demo_version1() {
+  	var p:Array[Array[Option[Personnage]]] = Array.ofDim[Option[Personnage]](main_grid.length,main_grid(0).length)
   	for (i <- 0 to p.length-1){
   		for (j <- 0 to p(i).length-1){
   			p(i)(j) = None
   		}
   	}
-  	//Creation des unités du joueur
-  	for (i<-0 to Game.Human.units.length-1){
-  		val h = start_pos(i)
-  		p(h._1)(h._2) = Some(Game.Human.units(i))
-  	}
-  	//Creation des robots
+    p(12)(22) = Some(bddP.create_turtle(Game.Human))
+    p(12)(20) = Some(bddP.create_bird(Game.Human))
+    p(11)(21) = Some(bddP.create_cat(Game.Human))
+    p(12)(21) = Some(bddP.create_monkey(Game.Human))
+    p(13)(21) = Some(bddP.create_snake(Game.Human))
     for ( (x,y) <- this.robots_pos ) {
       p(x)(y) = (Some(bddP.create_robot(Game.IA)));
     }
     this.personnages = p
   }
-} 
+} */
 
 object sheet_slots {
 	val X = Array(22, 22, 22, 23, 23, 23)
@@ -65,25 +61,25 @@ class Sheet(p : Personnage) {
 		l.layers(6).add_sprite(token)
 		for (i <- 0 to 5) {
 			p.inventory(i) match {
-				case None => ()
 				case Some(item:Item) => {
 					token = new LocatedSprite(item.image_path)
 					token.x = 32*sheet_slots.X(i); token.y = 32*sheet_slots.Y(i)
 					l.layers(6).add_sprite(token)
 				}
+				case None => ()
 			} 
 		}
 		for (i <- 0 to 1) {
 			p.equipment(i) match {
-				case None => ()
 				case Some(item:Item) => {
 					token = new LocatedSprite("sprite_sheet_frame_" + item.element + ".png")
-					token.x = 32*sheet_slots.equipX; token.y = 32*sheet_slots.equipY(i)
+					token.x = 32*sheet_slots.xequip; token.y = 32*sheet_slots.yequip(i)
 					l.layers(6).add_sprite(token)
 					token = new LocatedSprite(item.image_path)
-					token.x = 32*sheet_slots.equipX; token.y = 32*sheet_slots.equipY(i)
+					token.x = 32*sheet_slots.xequip; token.y = 32*sheet_slots.yequip(i)
 					l.layers(6).add_sprite(token)
 				}
+				case None => ()
 			}
 		}
 		l.layers(6).load_layer()
@@ -104,7 +100,7 @@ object inventory_slots {
 class InventoryTabs (m : mainInventory) {
 	var selected_tab = 0
 	var selected_item = 0
-	val tab_limit = m.equipe.length + 1
+	val tab_limit = m.equip.length + 1
 	val item_limit = 0
 	var token = new LocatedSprite("")
 	var curseur = new LocatedSprite("sprite_inventory_slot_selected.png")
@@ -124,7 +120,7 @@ class InventoryTabs (m : mainInventory) {
 		l.layers(6).add_sprite(this.token)
 		for (i <- 0 to tab_limit - 1) {
 			this.oneTab(i+1, "sprite_inventory_tab.png", l)
-			this.token = new LocatedSprite(m.equipe(i).image_path)
+			this.token = new LocatedSprite(m.equip(i).image_path)
 			this.token.x = inventory_slots.tabX*32+16
 			this.token.y = inventory_slots.tabY(i+1)*32
 			l.layers(6).add_sprite(this.token)
@@ -133,7 +129,7 @@ class InventoryTabs (m : mainInventory) {
 	}
 
 	def persoDisplay(j : Int, l : LayerSet) = { //j est 1+l'indice dans units du perso sélectionné
-		var p = m.equipe(j-1)
+		var p = m.equip(j-1)
 		l.layers(6).clear()
 		this.token = new LocatedSprite("background_inventory.png")
 		this.token.x = 5*32; this.token.y = 2*32
@@ -141,18 +137,17 @@ class InventoryTabs (m : mainInventory) {
 		this.tabDisplay(j, l)
 		for (i <- 0 to 5) {
 			p.inventory(i) match {
-				case None => ()
 				case Some(item:Item) => {
 					this.token = new LocatedSprite(item.image_path)
 					this.token.x = 32*inventory_slots.persoX(i)
 					this.token.y = 32*inventory_slots.persoY
 					l.layers(6).add_sprite(this.token)
 				}
+				case None => ()
 			} 
 		}
 		for (i <- 0 to 1) {
 			p.equipment(i) match {
-				case None => ()
 				case Some(item:Item) => {
 					this.token = new LocatedSprite(
 						"sprite_sheet_frame_" + item.element + ".png")
@@ -164,6 +159,7 @@ class InventoryTabs (m : mainInventory) {
 					this.token.y = 32*inventory_slots.equipY
 					l.layers(6).add_sprite(this.token)
 				}
+				case None => ()
 			}
 		}
 	}
@@ -186,10 +182,10 @@ class InventoryTabs (m : mainInventory) {
 		}
 	}
 	
-	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]):(Int,Int) = {
+	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]) = {
 		ls_list match {
-			case (ls:LocatedSprite) +: tail => {
-				if (ls.file.startsWith("sprite_item")) {
+			case (LocatedSprite(s) as ls) :: tail => {
+				if (s.startsWith("sprite_item")) {
 					if (j > 0) {
 						return this.coord_item(j-1, tail)
 					} else {
@@ -197,8 +193,7 @@ class InventoryTabs (m : mainInventory) {
 					}
 				} else {
 					return this.coord_item(j, tail)
-				}}
-			case ListBuffer() => return (0, 0)
+			case Nil => return (X(0), Y(0))
 		}
 	}
 
@@ -209,17 +204,14 @@ class InventoryTabs (m : mainInventory) {
 			this.persoDisplay(this.selected_tab, l)
 		}
 		this.token = new LocatedSprite("sprite_inventory_slot_selection.png")
-		val h = this.coord_item(this.selected_item, l.layers(6).content)
-		this.token.x = h._1
-		this.token.y = h._2
+		(this.token.x, this.token.y) = this.coord_item(this.selected_item, l.layers(6).content)
 		l.layers(6).add_sprite(this.token)
 		l.layers(6).load_layer()
 	}
 
 	def move_curseur(l : LayerSet) = {
 		l.layers(6).remove(this.curseur)
-		val h = this.coord_item(this.selected_item, l.layers(6).content)
-		this.curseur.x = h._1; this.curseur.y = h._2
+		(this.curseur.x, this.curseur.y) = this.coord_item(this.selected_item, l.layers(6).content)
 		l.layers(6).add_sprite(this.curseur)
 		l.layers(6).load_layer()
 	}
