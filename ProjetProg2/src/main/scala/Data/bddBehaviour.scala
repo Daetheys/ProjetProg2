@@ -196,7 +196,7 @@ object bddBehaviour {
 			val target = array(r.nextInt(array.length))
 			val dist = Math.pow(Math.pow(target.jeton.x-sentinel.x,2)+Math.pow(target.jeton.y-sentinel.y,2),0.5)
 			val vecteur_dir = ((target.jeton.x-sentinel.x).toDouble/dist,(target.jeton.y-sentinel.y).toDouble/dist)
-			val sg = if (target.jeton.x < sentinel.x) { -1 } else { 1} //Sert a renverset une inégalité plus loin
+			val sg = if (target.jeton.x < sentinel.x) { -1 } else { 1} //Sert a renverser une inégalité plus loin
 			def event(typage:Unit):Int={
 				print("tir elem\n")
 				target.take_damages(dmg)

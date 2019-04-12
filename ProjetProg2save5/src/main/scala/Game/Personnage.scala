@@ -1,0 +1,103 @@
+package Personnage
+import Environnement.{Environnement=>Environnement}
+import Competence.{Competence=>Competence,Active=>Active,Passive=>Passive}
+import Movable.{Movable}
+import Player._
+import Graphics2._
+import bddBehaviour._
+import Inventory._
+
+class Personnage {
+	// Représente un personnage de manière générale
+
+	//Stats principales
+	var name:String = ""
+	var pv_max:Int = 0
+	var pv_current:Int = 0
+	
+	var force = 0 //PV + dmg attaque melee
+	var vitesse = 0 //Vitesse depl + augmente un peu la cadence de tir (l'essentiel est sur l'arme)
+	var intelligence = 0 //Dmg de loin
+	var precision = 0 //Chances de toucher
+	var esquive = 0 //Chances d'esquive
+
+	//Stuff
+	var equipment:Array[Option[Item]] = Array(None, None)
+	var inventory:Array[Option[Item]] = Array(None, None, None, None, None, None)
+
+	//Compétences
+	var actives = scala.collection.mutable.Map[String,Active]()
+	var passives = scala.collection.mutable.Map[String,Passive]()
+	var call_when_spawn_list:List[String] = List()
+	//Player
+	var player:Player = new Player //Le joueur contrôlant l'unité
+	
+	var image_path:String = ""
+	var sheet_image:String = ""
+	
+	var ia:Unit=>Int = bddBehaviour.dummy
+	
+	var jeton = new Jeton(this,new Environnement)
+	
+	def full_inventory() :Boolean ={
+		for (opt <- this.inventory) {
+			if (opt.isEmpty) { return false }
+		}
+		return true
+	}
+	def add_item(i : Item) = {
+		var j = 0
+		while (j < 6 && !(this.inventory(j).isEmpty)) {
+				j += 1
+		}
+		if (j < 6) {
+			this.inventory(j) = Some(i)
+		}
+	}
+	def equip_weapon(w : Weapon) = {
+		if (this.equipment(0).isEmpty) {
+			this.equipment(0) = Some (w)
+		}
+	}
+	def equip_armor(a : Armor) = {
+		if (this.equipment(1).isEmpty) {
+			this.equipment(1) = Some (a)
+		}
+	}
+	
+	def add_active(act:Active){
+		this.actives(act.name) = act
+	}
+	def take_damages(amount:Int){
+		this.pv_current -= amount
+		app.draw_damages(amount,this.jeton)
+		if (this.pv_current <= 0){
+			this.jeton.died = true
+			this.jeton.Env.remove_unit(this.jeton)
+		}
+	}
+	
+	def add_spawn_call(e:String)={
+		this.call_when_spawn_list = e::this.call_when_spawn_list
+	}
+	
+	def call_when_spawn():Unit={
+		this.call_when_spawn_list.map( (e:String) => this.actives(e).refresh(Array()) )
+	}
+}
+
+class Jeton(modell:Personnage,env:Environnement) extends Movable(env){
+	// Personnage en mode Baston (avec emplacement sur le terrain et les effets)
+	var died = false
+	var model = modell
+	//Attributs graphiques
+	var selected:Boolean = false
+	//Status
+	var status = None
+	
+	override def set_position(x:Int,y:Int,t:Double){ //Permet de mettre a jour le tableau des jetons de Env en plus de modifier les attributs necessaires
+		this.Env.units(this.x)(this.y) = None
+		this.Env.units(x)(y) = Some(this)
+		super.set_position(x,y,t)
+	}
+}

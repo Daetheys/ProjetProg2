@@ -42,17 +42,10 @@ object utils {
 	}
 	
 	def chain(list_events:List[Unit=>Int]):Unit=>Int={ //-> Abus de prog fonctionelle
-		def exec_event(event:Unit=>Int):Unit=>Boolean={ //-> Boxage
-			var closed = false
-			def box(typage:Unit):Boolean={
-				if (closed) { return true } else { if (event() == 1) {return false } else {closed = true;return true}}
-			}
-			return box
-		}
 		def fold_fun(event:Unit=>Int,new_event:Unit=>Int):Unit=>Int={ //-> Recursivité complexe (pas hyper opti mais on ne lancera pas chain sur des listes trop grandes
 			var closed = false
 			def fun(typage:Unit):Int={
-				if (closed || new_event() == 0){ //-> Surapplication
+				if (closed || new_event() == 0){
 								closed = true
 								return event()
 				} else { 

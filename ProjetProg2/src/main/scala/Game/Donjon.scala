@@ -40,6 +40,7 @@ class Donjon(taille:Int) {
 			// WIN !!
 			app.win_screen()
 		} else {
+			//TODO -> Il faut stop le thread
 			val next_stage = this.get_next_stage()
 			//next_stage.load()
 			next_stage.start()
@@ -51,7 +52,7 @@ class Donjon(taille:Int) {
 		return this.stages(index_current_stage)
 	}
 	
-	def personnages_spawn(Env:Environnement,personnages:Array[Array[Option[Personnage]]])={
+	private def personnages_spawn(Env:Environnement,personnages:Array[Array[Option[Personnage]]])={
 		//Spawn des unités sur l'environnement
 		for (i <- 0 to personnages.length-1){
 			for (j <- 0 to personnages(i).length-1){
@@ -64,7 +65,7 @@ class Donjon(taille:Int) {
 		}
 	}
 	
-	def gen_level():Environnement={
+	private def gen_level():Environnement={
 		//Chargement de l'objet contenant l'initialisation du terrain -> Marche pas 
 		val Env = new Environnement
 		/*val plan = new Plan
