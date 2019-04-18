@@ -11,16 +11,16 @@ import Display._
 
 class Donjon(taille:Int) {
 	val profondeur:Int = taille
-	val index_boss_stages:List[Int] = List(1)
+	val index_boss_stages:List[Int] = List(2)
 	var index_current_stage:Int = -1
 	// Attention boss_stages va etre remise a List() dans la suite
 	var boss_stages:List[(Array[Array[Int]],Array[Array[Option[Personnage]]],LayerSet)] = List(bddLevel.create_sentinel_level())
 	val boss_stages_ref = boss_stages
 	val stages:Array[Environnement] = Array.ofDim[Environnement](profondeur)
 	val personnages:Array[Array[Array[Option[Personnage]]]] = Array.ofDim[Array[Array[Option[Personnage]]]](profondeur)
+	
 	for (i<-0 to profondeur-1){
 		if (index_boss_stages.contains(i)){
-			print("boss stage"+i.toString+"\n")
 			val h = boss_stages.last
 			val tiles = h._1
 			var personnages = h._2
@@ -33,13 +33,12 @@ class Donjon(taille:Int) {
 			stages(i) = env
 			boss_stages = boss_stages.init
 		} else {
-			print("classic stage"+i.toString+"\n")
 			stages(i) = this.gen_level(i)
 		}
 	}
 	boss_stages = boss_stages_ref
 	
-	def start()={
+	def start():Unit={
 		if (index_current_stage == profondeur){
 			// WIN !!
 			app.win_screen()

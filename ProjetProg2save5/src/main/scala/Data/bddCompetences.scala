@@ -144,13 +144,15 @@ object bddCompetences {
 	
 	def orb_spell(p:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double,file:String){
 		val orb = new Movable(p.jeton.Env)
+		orb.x = p.jeton.x
+		orb.y = p.jeton.y
 		val ls = new LocatedSprite(file)
-		ls.x = p.jeton.x
-		ls.y = p.jeton.y
+		ls.x = p.jeton.x*32
+		ls.y = p.jeton.y*32
 		p.jeton.Env.layerset.get_layer("Spells").add_sprite(ls)
-		val orient = p.jeton.orientation
-		
-		def explose() = {
+		orb.located_sprite = ls
+		orb.set_orientation(p.jeton.orientation)
+		def explode() = {
 			for (i <- -1 to 1){
 				for (j <- -1 to 1){
 					if (0 <= orb.x + i && orb.x + i <= orb.Env.size_x -1 && 0 <= orb.y + j && orb.y + j <= orb.Env.size_y -1){
@@ -175,15 +177,16 @@ object bddCompetences {
 					}
 				}
 			}
+			orb.Env.layerset.get_layer("Spells").remove(orb.located_sprite)
 		}
 		def func(typage:Unit):Int = {
-			orient match {
+			orb.orientation match {
 				case Left() =>
 					if (1 <= orb.x && orb.Env.tiles(orb.x-1)(orb.y) != 1 && orb.Env.units(orb.x-1)(orb.y) != None) {
 						orb.move(Left(),step_speed)
 						return 1
 					} else {
-						explose()
+						explode()
 						return 0
 					}
 				case Right() =>
@@ -191,15 +194,15 @@ object bddCompetences {
 						orb.move(Right(),step_speed)
 						return 1
 					} else {
-						explose()
+						explode()
 						return 0
 					}
 				case Top() =>
-					if (1 <= orb.y && orb.Env.tiles(orb.x)(orb.y-1) != 1 && orb.Env.units(orb.x)(orb.y-1) != None) {
+					if (1 <= orb.y && orb.Env.tiles(orb.x)(orb.y-1) != 1 && orb.Env.units(orb.x)(orb.y-1) == None) {
 						orb.move(Top(),step_speed)
 						return 1
 					} else {
-						explose()
+						explode()
 						return 0
 					}
 				case Bottom() =>
@@ -207,20 +210,20 @@ object bddCompetences {
 						orb.move(Bottom(),step_speed)
 						return 1
 					} else {
-						explose()
+						explode()
 						return 0
 					}
 			}
 		}
 		p.jeton.Env.clock.add_macro_event(cooldowned(func(_),0.5))
 	}
-	def fire_spell(p:Personnage):Active={
-		val fire_spell = new Active("Feu")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,25,2,5,1.0,0.5,"fireball.png")
+	def create_fire_spell(p:Personnage):Active={
+		val fire_spell = new Active("Fire")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,25,2,5,1.0,0.5,"sprite_charge_fire.png")
 		return fire_spell
 	}
 	def ice_spell(p:Personnage):Active={
-		val fire_spell = new Active("Glace")
+		val fire_spell = new Active("Ice")
 		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,30,0,0,0,0.5,"iceball.png")
 		return fire_spell
 	}

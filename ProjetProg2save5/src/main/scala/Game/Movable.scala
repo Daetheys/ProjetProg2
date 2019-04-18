@@ -36,9 +36,9 @@ class Movable(env:Environnement){
 		}
 	}
 	
-	def orient(o:Orientation)={
+	def set_orientation(o:Orientation)={
 		this.orientation = o
-		this.located_sprite.orient(o)
+		this.located_sprite.set_orientation(o)
 	}
 	
 	def animation_move(x1:Int,y1:Int,x2:Int,y2:Int,time:Double):Unit={
@@ -83,7 +83,7 @@ class Movable(env:Environnement){
 					this.set_position(this.x,this.y+1,time)
 				}
 		}
-		this.orient(o)
+		this.set_orientation(o)
 	}
 }
 

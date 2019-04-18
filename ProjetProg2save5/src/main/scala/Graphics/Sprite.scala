@@ -7,7 +7,7 @@ class Sprite(file:String) {
 	var orientation:Orientation = Top()
 	var image:Image = new Image(app.unknown_path())
 	
-	def orient(orientation:Orientation)={
+	def set_orientation(orientation:Orientation)={
 		this.orientation = orientation
 	}
 

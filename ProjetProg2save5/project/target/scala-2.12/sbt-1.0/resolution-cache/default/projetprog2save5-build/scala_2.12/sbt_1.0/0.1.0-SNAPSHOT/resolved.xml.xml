@@ -4,7 +4,7 @@
 		module="projetprog2save5-build"
 		revision="0.1.0-SNAPSHOT"
 		status="integration"
-		publication="20190412140056"
+		publication="20190415190506"
 		e:sbtVersion="1.0" e:scalaVersion="2.12"
 	>
 		<description>

@@ -16,6 +16,7 @@ object bddPersonnages {
 		turtle.player = player
 		turtle.actives("Move") = bddComp.create_move(turtle,2.0,0) //speed,type(0:ground,1:air)
 		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle,2,6,1.2) //range,dmg,speed
+		turtle.actives("Feu") = bddComp.create_fire_spell(turtle)
 		turtle.image_path = "sprite_character_turtle.png"
 		turtle.sheet_image = "sprite_sheet_turtle.png"
 		turtle.add_spawn_call("AutoAttack")
@@ -28,8 +29,8 @@ object bddPersonnages {
 		bird.pv_max = 75
 		bird.pv_current = 75
 		bird.player = player
-		bird.actives("Move") = bddComp.create_move(bird,0.3,1)
-		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,3,30,0.4)
+		bird.actives("Move") = bddComp.create_move(bird,0.1,1)
+		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,2,6,0.6)
 		bird.image_path = "sprite_character_bird.png"
 		bird.sheet_image = "sprite_sheet_bird.png"
 		bird.add_spawn_call("AutoAttack")
@@ -46,6 +47,7 @@ object bddPersonnages {
 		bees.actives("AutoAttack") = bddComp.create_autoattack(bees,2,2,0.4)
 		bees.image_path = "sprite_character_bees.png"
 		bees.sheet_image = "sprite_sheet_bees.png"
+		bees.add_spawn_call("AutoAttack")
 		return bees
 	}
 
@@ -59,6 +61,7 @@ object bddPersonnages {
 		cat.actives("AutoAttack") = bddComp.create_autoattack(cat,2,4,1.2)
 		cat.image_path = "sprite_character_cat.png"
 		cat.sheet_image = "sprite_sheet_cat.png"
+		cat.add_spawn_call("AutoAttack")
 		return cat
 	}
 
@@ -72,6 +75,7 @@ object bddPersonnages {
 		monkey.actives("AutoAttack") = bddComp.create_autoattack(monkey,3,7,1.5)
 		monkey.image_path = "sprite_character_monkey.png"
 		monkey.sheet_image = "sprite_sheet_monkey.png"
+		monkey.add_spawn_call("AutoAttack")
 		return monkey
 	}
 
@@ -85,6 +89,7 @@ object bddPersonnages {
 		rabbit.actives("AutoAttack") = bddComp.create_autoattack(rabbit,3,2,1.2)
 		rabbit.image_path = "sprite_character_rabbit.png"
 		rabbit.sheet_image = "sprite_sheet_rabbit.png"
+		rabbit.add_spawn_call("AutoAttack")
 		return rabbit
 	}
 
@@ -98,6 +103,7 @@ object bddPersonnages {
 		snake.actives("AutoAttack") = bddComp.create_autoattack(snake,1,4,1.0)
 		snake.image_path = "sprite_character_snake.png"
 		snake.sheet_image = "sprite_sheet_snake.png"
+		snake.add_spawn_call("AutoAttack")
 		return snake
 	}
 
@@ -107,8 +113,8 @@ object bddPersonnages {
 		robot.pv_max = 50
 		robot.pv_current = 50
 		robot.player = player
-		robot.actives("Move") = bddComp.create_move(robot,1.3,1)
-		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,4,2,1.1)
+		robot.actives("Move") = bddComp.create_move(robot,0.9,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,2,1.1)
 		robot.image_path = "sprite_character_turret.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
@@ -169,6 +175,7 @@ object bddPersonnages {
 		robot.actives("Move") = bddComp.create_move(robot,0.7,1) //Se déplace très vite
 		robot.actives("Explode") = bddComp.create_explode(robot,15)
 		robot.image_path = "sprite_character_tank_plasma.png"
+		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
 		return robot
 	}

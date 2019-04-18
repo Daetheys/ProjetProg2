@@ -32,15 +32,9 @@ object app extends JFXApp {
 	
 	private var canvas:scalafx.scene.canvas.Canvas = new Canvas(800,800)
 	var gc:scalafx.scene.canvas.GraphicsContext = canvas.graphicsContext2D
-	private var button = new Button("Start")
-	button.onAction = new EventHandler[ActionEvent] {
-            override def handle(event: ActionEvent) {
-                Game.initialize()
-            }
-        }
 	
 	private val pane = new Group
-	pane.children = List(canvas,button)
+	pane.children = List(canvas)
 	var Env:Environnement = new Environnement
 	
 	stage = new JFXApp.PrimaryStage {
@@ -51,6 +45,7 @@ object app extends JFXApp {
 			content = pane
 		}
 	}
+	Game.initialize()
 	//private var env_images:Array[Array[Image]] = Array.ofDim[Image](Env.size_x,Env.size_y)
 	//private var sprites_images:Array[Array[List[(Image,Int)]]]= Array.ofDim[List[(Image,Int)]](Env.size_x,Env.size_y)
 	
@@ -73,12 +68,16 @@ object app extends JFXApp {
 		
 	def win_screen()={
 		this.Env.phase = -1
-		this.gc.fillText("WIN !",5*32,5*32,50)
+		this.gc.fill = Green
+		this.gc.fillText("WIN !",375,350)
+		this.gc.fillText("Good Job you beat the dongeon with your turtle alive",250,400)
 	}
 	
 	def lose_screen()={
 		this.Env.phase = -1
-		this.gc.fillText("LOSE !",5*32,5*32,50)
+		this.gc.fill = Red
+		this.gc.fillText("YOU LOSE !",375,350)
+		this.gc.fillText("You should take care of your turtle next time",250,400)
 	}
 	
 	def aff_text(x:Int,y:Int,text:String){
@@ -92,7 +91,6 @@ object app extends JFXApp {
 		this.canvas.onMouseMoved = (e: MouseEvent) =>
 			{val x = (e.x/32).toInt
 			val y = (e.y/32).toInt
-			println(x,y)
 			val path = this.Env.units(x)(y) match{
 				case None => 	this.get_path("cursor_black.png")
 				case Some(j:Jeton) => if (j.model.player == 0){
@@ -115,7 +113,7 @@ object app extends JFXApp {
 			return Math.min(Math.max(nb,0),Env.size_y-1)
 			}
 		this.stage.scene.value.onKeyPressed = (ke: KeyEvent) => {
-			print("Key Pressed\n")
+			print("Key Pressed : "+ke.code.toString+" "+this.Env.phase.toString+"\n")
 			(ke.code,this.Env.phase) match  {
 				case (KeyCode.Ampersand,0) => if (Game.Human.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}
 				case (KeyCode.Undefined,0) => if (Game.Human.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}
@@ -123,43 +121,23 @@ object app extends JFXApp {
 				case (KeyCode.Quote,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}
 				case (KeyCode.Control,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}
 				case (KeyCode.LeftParenthesis,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}
-				case (KeyCode.A,0) => this.Env.selected_unit match {
-										case None => ()
-										case Some(j:Jeton) => j.model.actives("Feu").refresh(Array())
+				case (KeyCode.A,0) => print("Lauch spell\n")
+										this.Env.selected_unit match {
+										case None => print("No one selected\n")
+										case Some(j:Jeton) => 
+											print("Jeton selected\n")
+											j.model.actives("Feu").refresh(Array())
 										}
-				case (KeyCode.LEFT,2) => ()
-				case (KeyCode.RIGHT,2) => ()
-				case (KeyCode.Up,2) => ()
-				case (KeyCode.Down,2) => ()
+				case (KeyCode.Q,2) =>
+					this.Env.inv_tabs.left_tab()
+				case (KeyCode.D,2) =>
+					this.Env.inv_tabs.right_tab()
+				case (KeyCode.Z,2) => this.Env.inv_tabs.down_item()
+				case (KeyCode.S,2) => this.Env.inv_tabs.up_item()
+				case (KeyCode.E,2) => {this.Env.end_stage();Game.Donjon.start()}
 				case _ => print(ke.code.toString+"\n")
 			}
 		}
-		/* //Ancienne façon de faire :
-		this.canvas.onMouseDragged = (e: MouseEvent) =>
-			{
-			this.mousePosX = e.x
-			this.mousePosY = e.y
-			//Affichage du rectangle de selection -> Crée trop de bugs pour le moment 
-			val xrect = Math.min(this.mouseOldX,e.x)
-			val yrect = Math.min(this.mouseOldY,e.y)
-			val wrect = Math.abs(this.mouseOldX-e.x)
-			val hrect = Math.abs(this.mouseOldY-e.y)
-			this.gc.fill = Green
-			this.gc.strokeRoundRect(xrect,yrect,wrect,hrect,2,2)
-			//Calcul des unités selectionnées
-			val x1 = borne_x((this.mouseOldX/32).toInt)
-			val x2 = borne_x((e.x/32).toInt)
-			val y1 = borne_y((this.mouseOldY/32).toInt)
-			val y2 = borne_y((e.y/32).toInt)
-			Env.select_units(x1,y1,x2,y2)
-			e.consume()}
-		this.canvas.onDragDetected = (e: MouseEvent) => 
-			{
-			this.mousePosX = e.x
-			this.mousePosY = e.y
-			this.mouseOldX = e.x
-			this.mouseOldY = e.y
-			e.consume()}*/
 	}
 	def right_click_command_load()={
 		//Permet de déplacer les unités selectionnées
@@ -173,10 +151,12 @@ object app extends JFXApp {
 					//Casse les mécanismes (se ferra avec des compétences précises plus tard)
 					val x = (e.x/32).toInt
 					val y = (e.y/32).toInt
+					print("CASSER MECA! - Inserer la fonction SVP\n")
 					//TODO TODO TODO TODO TODO TODO TODO TODO TODO
-					//--------------> Detruire le mecanisme
+					//--------------> Detruire les mecanisme
 					//TODO TODO TODO TODO TODO TODO TODO TODO TODO
-					this.Env.phase = 3 //Passe en phase 3 
+					this.Env.phase = 2 //Passe en phase 3 
+					this.Env.start_inventory_phase()
 				}
 			}
 		}
@@ -191,7 +171,6 @@ object app extends JFXApp {
 			this.draw_dmg_text(target.x,target.y,10,dmg,"-",Red)
 			return 1
 		}
-		//print("add event+"+aff_damage(_).toString+"\n")
 		this.Env.clock.add_micro_event(aff_damage(_)) //reste 0.5 sec
 	}
 	
@@ -368,5 +347,6 @@ object app extends JFXApp {
 		for (k <- 0 to this.Env.layerset.layers.length-1){ //Respect de l'empilement des layers
 			this.Env.layerset.layers(k).content.map( (e:LocatedSprite) => aff_image(e.x,e.y,e.image,e.orientation) )
 		}
+		print("\n")
 	}
 }

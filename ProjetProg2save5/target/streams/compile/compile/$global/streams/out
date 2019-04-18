@@ -1,4 +1,4 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjetProg2save5/src/main/scala/Game/Personnage.scala:62:22: not found: type armor[0m
-[0m[[0m[31merror[0m] [0m[0m	def equip_armor(a : armor) = {[0m
-[0m[[0m[31merror[0m] [0m[0m	                    ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Data/bddCompetences.scala:180:21: value remove is not a member of Layer.LayerSet[0m
+[0m[[0m[31merror[0m] [0m[0m			orb.Env.layerset.remove(orb.located_sprite)[0m
+[0m[[0m[31merror[0m] [0m[0m			                 ^[0m
 [0m[[0m[31merror[0m] [0m[0mone error found[0m

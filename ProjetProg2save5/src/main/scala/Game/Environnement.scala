@@ -29,6 +29,7 @@ class Environnement {
 			units(i)(j) = None
 		}
 	}
+	var inv_tabs = new InventoryTabs
 	var phase:Int = 0 //0-Phase de Baston 1-Phase de loot 2-Phase de repartition
 	val clock = new Clock(this)
 	var selected_unit:Option[Jeton] = None
@@ -42,13 +43,13 @@ class Environnement {
 		def aff_event(typage:Unit):Int={
 			app.load_refresh_layers()
 			app.aff_layers()
-			app.aff_life_bars()
+			if (this.phase < 2) {app.aff_life_bars()} //On ne refresh pas les life bar en phase 3
 			return 1
 		}
 		
 		def check_win(typage:Unit):Int={
-			if (Game.Human.lost()) { app.lose_screen() } //Le joueur a perdu
-			if (Game.IA.lost()) { this.phase += 1 } //Le joueur passe à la phase de loot
+			if (Game.Human.lost()) { app.lose_screen(); return 0 } //Le joueur a perdu
+			if (Game.IA.lost()) { this.phase = 1; return 0 } //Le joueur passe à la phase de loot
 			return 1
 		}
 		//Chargement de l'event de raffraichissement de l'environnement
@@ -62,13 +63,17 @@ class Environnement {
 		val music = new Sound("dash_runner.wav")
 		//music.loop_on()
 		//music.play()
-		for (i<-0 to this.tiles.length-1){
-			for (j<-0 to this.tiles(i).length-1){
-				print(this.tiles(i)(j).toString)
-			}
-			print("\n")
-		}
+		
 		this.start_clock()
+	}
+	
+	def start_inventory_phase(){
+		this.inv_tabs = new InventoryTabs
+		this.inv_tabs.afficher()
+	}
+	
+	def end_stage(){
+		this.phase = -1
 	}
 	
 	def apply_active(name:String,arg:Array[Int])={
@@ -178,7 +183,7 @@ class Environnement {
 			val ls = new LocatedSprite(personnage.image_path)
 			ls.x = x*32
 			ls.y = y*32
-			this.layerset.layers(4).add_sprite(ls)
+			this.layerset.get_layer("Units").add_sprite(ls)
 			personnage.jeton.located_sprite = ls
 			//Events de automatiques du jeton
 			personnage.call_when_spawn()
@@ -215,6 +220,7 @@ class Clock(env:Environnement) {
 	def launch()={ //Attention le thread n'est pas tué quand on quitte l'application !!! (je ne sais pas comment faire)
 		//Initialise et lance la clock
 		val clock = this
+		val Env = this.Env
 		this.thread_clock = new Thread { 
 								override def run { 
 											while (true) {
@@ -222,6 +228,7 @@ class Clock(env:Environnement) {
 													clock.iter_clock()
 												}
 												Thread.sleep((clock.micro_period*1000).toLong)
+												if (Env.phase == -1){ return 0 }
 												}
 											}
 										}
@@ -233,7 +240,6 @@ class Clock(env:Environnement) {
 		this.compute_micro_events()
 		this.nb_micro_loop += 1
 		if (this.micro_period * this.nb_micro_loop > this.macro_period) {
-			//println(("length events",this.macro_events.length,this.micro_events.length))
 			this.compute_macro_events()
 			this.nb_micro_loop = 0
 		}
