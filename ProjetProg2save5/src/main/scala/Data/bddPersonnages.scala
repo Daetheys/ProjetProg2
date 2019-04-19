@@ -30,7 +30,7 @@ object bddPersonnages {
 		bird.pv_current = 75
 		bird.player = player
 		bird.actives("Move") = bddComp.create_move(bird,0.1,1)
-		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,2,6,0.6)
+		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,3,10,0.3)
 		bird.image_path = "sprite_character_bird.png"
 		bird.sheet_image = "sprite_sheet_bird.png"
 		bird.add_spawn_call("AutoAttack")

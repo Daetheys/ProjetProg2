@@ -206,7 +206,7 @@ class Environnement {
 class Clock(env:Environnement) {
 	//Représente une horloge pour les phases de baston (permet de coordonner les events)
 	val macro_period = 0.1 //Timer entre 2 actions majeures
-	val micro_period = 0.01 //Timer entre 2 actions mineures
+	val micro_period = 0.05 //Timer entre 2 actions mineures
 	var macro_events:ListBuffer[Unit=>Int] = ListBuffer()
 	var micro_events:ListBuffer[Unit=>Int] = ListBuffer()
 	var l:List[Int] = List()

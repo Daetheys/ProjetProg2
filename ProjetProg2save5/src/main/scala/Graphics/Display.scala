@@ -5,6 +5,11 @@ import Inventory._
 import Sprite._
 import scala.collection.mutable.ListBuffer
 import Graphics2._
+import Mechanisms.{Sprite_group=>Sprite_groupe,Sprite_plan=>Sprite_plan,_}
+import Personnage.{Personnage=>Personnage,Jeton=>Jeton,_}
+import bddPersonnages.{bddPersonnages=>bddP,_}
+import Game._
+
 
 /*
 The main use for this file :
@@ -18,10 +23,6 @@ all the sprites that must be displayed on the screen (sorted by layers)
 */
 
 
-import Mechanisms.{Sprite_group=>Sprite_groupe,Sprite_plan=>Sprite_plan,_}
-import Personnage.{Personnage=>Personnage,Jeton=>Jeton,_}
-import bddPersonnages.{bddPersonnages=>bddP,_}
-import Game._
 
 class All_sprites(plan:Sprite_plan) {
   val layerset = new LayerSet(25,25)
@@ -109,12 +110,13 @@ class InventoryTabs {
 	var selected_tab = 0
 	var selected_item = 0
 	val tab_limit = m.equipe.length //+ 1
-	val item_limit = 0
+	var itemArray : Array[LocatedSprite] = Array()
 	var token = new LocatedSprite("")
 
 	def oneTab(i : Int, s : String, l : LayerSet) : Unit = {
 		this.token = new LocatedSprite(s)
-		this.token.x = inventory_slots.tabX*32; this.token.y = inventory_slots.tabY(i)*32
+		this.token.x = inventory_slots.tabX*32
+		this.token.y = inventory_slots.tabY(i)*32
 		l.get_layer("UI").add_sprite(this.token)
 	}
 
@@ -124,11 +126,12 @@ class InventoryTabs {
 		this.token.x = inventory_slots.tabX*32+16
 		this.token.y = inventory_slots.tabY(0)*32
 		l.get_layer("UI").add_sprite(this.token)
-		for (i <- 0 to tab_limit - 1) {
+		this.tab_limit = m.equipe.length
+		for (i <- 0 to this.tab_limit - 1) {
 			this.oneTab(i+1, "sprite_inventory_tab.png", l)
 			this.token = new LocatedSprite(m.equipe(i).image_path)
 			this.token.x = inventory_slots.tabX*32+16
-			this.token.y = inventory_slots.tabY(i+1)*32
+			this.token.y = inventory_slots.tabY(i+1)*32 + 32
 			l.get_layer("UI").add_sprite(this.token)
 		}
 		oneTab(j, "sprite_inventory_tab_selection.png", l)
@@ -136,6 +139,7 @@ class InventoryTabs {
 
 	def persoDisplay(j : Int, l : LayerSet) = { //j est 1+l'indice dans units du perso sélectionné
 		var p = m.equipe(j-1)
+		var ilist : List[LocatedSprite] = Nil
 		l.get_layer("UI").clear()
 		this.token = new LocatedSprite("background_inventory.png")
 		this.token.x = 5*32; this.token.y = 2*32
@@ -146,6 +150,7 @@ class InventoryTabs {
 				case None => ()
 				case Some(item:Item) => {
 					this.token = new LocatedSprite(item.image_path)
+					ilist = this.token :: ilist
 					this.token.x = 32*inventory_slots.persoX(i)
 					this.token.y = 32*inventory_slots.persoY
 					l.get_layer("UI").add_sprite(this.token)
@@ -162,16 +167,19 @@ class InventoryTabs {
 					this.token.y = 32*inventory_slots.equipY
 					l.get_layer("UI").add_sprite(this.token)
 					this.token = new LocatedSprite(item.image_path)
+					ilist = this.token :: ilist
 					this.token.x = 32*inventory_slots.equipX(i)
 					this.token.y = 32*inventory_slots.equipY
 					l.get_layer("UI").add_sprite(this.token)
 				}
 			}
 		}
+		this.itemArray = ilist.toArray()
 	}
 
 	def mainDisplay() = {
 		val l = app.Env.layerset
+		var ilist : List[LocatedSprite] = Nil
 		l.get_layer("UI").clear()
 		this.token = new LocatedSprite("background_inventory.png")
 		this.token.x = 5*32; this.token.y = 2*32
@@ -182,15 +190,13 @@ class InventoryTabs {
 			if (m.content(i).quantity > 0) {
 				item = m.content(i).it
 				this.token = new LocatedSprite(item.image_path)
+				ilist = this.token :: ilist
 				this.token.x = 32*inventory_slots.X(i)
 				this.token.y = 32*inventory_slots.Y(i)
 				l.get_layer("UI").add_sprite(this.token)
 			}
 		}
-	}
-	
-	def coord_item(j : Int, ls_list : ListBuffer[LocatedSprite]):(Int,Int) = {
-		return (0,0)
+		this.itemArray = ilist.toArray()
 	}
 
 	def afficher() = {
@@ -200,10 +206,12 @@ class InventoryTabs {
 		} else {
 			this.persoDisplay(this.selected_tab, l)
 		}
-		this.token = new LocatedSprite("sprite_inventory_slot_selection.png")
-		val h = this.coord_item(this.selected_item, l.layers(6).content);
-		this.token.x = h._1; this.token.y = h._2
-		l.get_layer("UI").add_sprite(this.token)
+		if (this.itemArray.length > 0) {
+			this.token = new LocatedSprite("sprite_inventory_slot_selection.png")
+			this.token.x = this.itemArray(this.selected_item).x
+			this.token.y = this.itemArray(this.selected_item).y
+			l.get_layer("UI").add_sprite(this.token)
+		}
 		l.get_layer("UI").transpose()
 		l.get_layer("UI").load_layer()
 	}
@@ -226,8 +234,22 @@ class InventoryTabs {
 		this.afficher()
 	}
 
-	def down_item(){}
+	def down_item() {
+		if (this.selected_item < this.itemArray.lenght-1) {
+			this.selected_item += 1
+		} else {
+			this.selected_item = 0
+		}
+		this.afficher()
+	}
 	
-	def up_item(){}
+	def up_item() {
+		if (this.selected_item > 0) {
+			this.selected_item -= 1
+		} else {
+			this.selected_item = this.itemArray.length-1
+		}
+		this.afficher()
+	}
 }
 

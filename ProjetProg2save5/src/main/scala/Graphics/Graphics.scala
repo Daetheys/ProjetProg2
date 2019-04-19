@@ -115,12 +115,12 @@ object app extends JFXApp {
 		this.stage.scene.value.onKeyPressed = (ke: KeyEvent) => {
 			print("Key Pressed : "+ke.code.toString+" "+this.Env.phase.toString+"\n")
 			(ke.code,this.Env.phase) match  {
-				case (KeyCode.Ampersand,0) => if (Game.Human.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}
-				case (KeyCode.Undefined,0) => if (Game.Human.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}
-				case (KeyCode.Quotedbl,0) => if (Game.Human.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}
-				case (KeyCode.Quote,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}
-				case (KeyCode.Control,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}
-				case (KeyCode.LeftParenthesis,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}
+				case (KeyCode.Ampersand,0)|(KeyCode.DIGIT1,0) => if (Game.Human.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}
+				case (KeyCode.Undefined,0)|(KeyCode.DIGIT2,0) => if (Game.Human.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}
+				case (KeyCode.Quotedbl,0)|(KeyCode.DIGIT3,0) => if (Game.Human.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}
+				case (KeyCode.Quote,0)|(KeyCode.DIGIT4,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}
+				case (KeyCode.Control,0)|(KeyCode.DIGIT5,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}
+				case (KeyCode.LeftParenthesis,0)|(KeyCode.DIGIT6,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}
 				case (KeyCode.A,0) => print("Lauch spell\n")
 										this.Env.selected_unit match {
 										case None => print("No one selected\n")

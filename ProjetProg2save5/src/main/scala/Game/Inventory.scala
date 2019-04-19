@@ -3,6 +3,7 @@ import Personnage._
 import Player._
 import bddItems.bddItem._
 
+
 class Item {
 
 	var id : Int = 0
@@ -45,7 +46,7 @@ class Empile (i : Item) {
 class mainInventory(p:Player) {
 
 	var content : Array[Empile] = {
-		var c = new Array[Empile](19)		
+		val c = new Array[Empile](19)		
 		c(0) = new Empile (create_first_aid_kit())
 		c(1) = new Empile (create_gun_confusion())
 		c(2) = new Empile (create_gun_electricity())
@@ -75,8 +76,18 @@ class mainInventory(p:Player) {
 	def init_perso : Unit = {
 		equipe.foreach(add_inventory)
 	}
-	def add_to_main(i : Item) : Unit = {
-		this.content(i.id-1).incr(1)
+	def add_to_main(i : Int) : Unit = {
+		this.content(i).incr(1)
+	}
+	def send_to(i : Int, tab : Int) = {
+		if (tab == 0) {
+			this.add_to_main(i)
+		} else {
+			val pos = this.items_perso.apply(tab-1).indexOf(None)
+			if (pos > -1) {
+				this.items_perso.apply(tab-1)(pos) = Some(this.content(i).it)
+			}
+		}
 	}
 	
 }
