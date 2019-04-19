@@ -109,7 +109,7 @@ class InventoryTabs {
 	var m = Game.Human.inventory
 	var selected_tab = 0
 	var selected_item = 0
-	val tab_limit = m.equipe.length //+ 1
+	var tab_limit = m.equipe.length //+ 1
 	var itemArray : Array[LocatedSprite] = Array()
 	var token = new LocatedSprite("")
 
@@ -124,7 +124,7 @@ class InventoryTabs {
 		this.oneTab(0, "sprite_inventory_tab.png", l)
 		this.token = new LocatedSprite("sprite_inventory_bag.png")
 		this.token.x = inventory_slots.tabX*32+16
-		this.token.y = inventory_slots.tabY(0)*32
+		this.token.y = inventory_slots.tabY(0)*32+32
 		l.get_layer("UI").add_sprite(this.token)
 		this.tab_limit = m.equipe.length
 		for (i <- 0 to this.tab_limit - 1) {
@@ -174,7 +174,7 @@ class InventoryTabs {
 				}
 			}
 		}
-		this.itemArray = ilist.toArray()
+		this.itemArray = ilist.toArray
 	}
 
 	def mainDisplay() = {
@@ -196,7 +196,7 @@ class InventoryTabs {
 				l.get_layer("UI").add_sprite(this.token)
 			}
 		}
-		this.itemArray = ilist.toArray()
+		this.itemArray = ilist.toArray
 	}
 
 	def afficher() = {
@@ -235,7 +235,7 @@ class InventoryTabs {
 	}
 
 	def down_item() {
-		if (this.selected_item < this.itemArray.lenght-1) {
+		if (this.selected_item < this.itemArray.length-1) {
 			this.selected_item += 1
 		} else {
 			this.selected_item = 0
