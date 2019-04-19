@@ -4,7 +4,7 @@
 		module="scalafx-hello-world_2.12"
 		revision="11-R16"
 		status="integration"
-		publication="20190409173433"
+		publication="20190419170337"
 	>
 		<description>
 		ScalaFX Hello World
@@ -33,6 +33,9 @@
 		<dependency org="org.scala-lang" name="scala-compiler" rev="2.12.7" conf="scala-tool->default,optional(default)"/>
 		<dependency org="org.scala-lang" name="scala-library" rev="2.12.7" conf="scala-tool->default,optional(default);compile->default(compile)"/>
 		<dependency org="org.scalafx" name="scalafx_2.12" rev="11-R16" conf="compile->default(compile)"/>
+		<dependency org="org.platanios" name="tensorflow_2.12" rev="0.4.0" conf="compile->default(compile)">
+			<artifact name="tensorflow_2.12" type="jar" ext="jar" conf="*" e:classifier="linux-cpu-x86_64"/>
+		</dependency>
 		<dependency org="org.openjfx" name="javafx-base" rev="11" conf="compile->default(compile)">
 			<artifact name="javafx-base" type="jar" ext="jar" conf="*" e:classifier="linux"/>
 		</dependency>

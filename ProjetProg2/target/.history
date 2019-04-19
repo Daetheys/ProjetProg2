@@ -245,3 +245,6 @@ compile
 run
 compile
 run
+compile
+cd ..
+compile

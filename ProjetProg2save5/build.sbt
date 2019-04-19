@@ -9,6 +9,7 @@ scalaVersion := "2.12.7"
 
 // Add dependency on ScalaFX library
 libraryDependencies += "org.scalafx" %% "scalafx" % "11-R16"
+libraryDependencies += "org.platanios" % "tensorflow_2.12" % "0.4.0" classifier "linux-cpu-x86_64"
 resolvers += Resolver.sonatypeRepo("snapshots")
 
 scalacOptions ++= Seq("-unchecked", "-deprecation", "-Xcheckinit", "-encoding", "utf8", "-feature")

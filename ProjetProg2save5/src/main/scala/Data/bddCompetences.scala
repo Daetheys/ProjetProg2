@@ -142,7 +142,7 @@ object bddCompetences {
 			
 	}
 	
-	def orb_spell(p:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double,file:String){
+	def orb_spell(p:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double,elem:Int,file:String){
 		val orb = new Movable(p.jeton.Env)
 		orb.x = p.jeton.x
 		orb.y = p.jeton.y
@@ -152,6 +152,7 @@ object bddCompetences {
 		p.jeton.Env.layerset.get_layer("Spells").add_sprite(ls)
 		orb.located_sprite = ls
 		orb.set_orientation(p.jeton.orientation)
+		print(orb.orientation.toString)
 		def explode() = {
 			for (i <- -1 to 1){
 				for (j <- -1 to 1){
@@ -180,9 +181,10 @@ object bddCompetences {
 			orb.Env.layerset.get_layer("Spells").remove(orb.located_sprite)
 		}
 		def func(typage:Unit):Int = {
+			p.jeton.Env.tile_elem_effect(orb.x,orb.y,elem)
 			orb.orientation match {
 				case Left() =>
-					if (1 <= orb.x && orb.Env.tiles(orb.x-1)(orb.y) != 1 && orb.Env.units(orb.x-1)(orb.y) != None) {
+					if (1 <= orb.x && orb.Env.tiles(orb.x-1)(orb.y) != 1 && orb.Env.units(orb.x-1)(orb.y) == None) {
 						orb.move(Left(),step_speed)
 						return 1
 					} else {
@@ -190,7 +192,7 @@ object bddCompetences {
 						return 0
 					}
 				case Right() =>
-					if (orb.x <= orb.Env.size_x - 2 && orb.Env.tiles(orb.x+1)(orb.y) != 1 && orb.Env.units(orb.x+1)(orb.y) != None) {
+					if (orb.x <= orb.Env.size_x - 2 && orb.Env.tiles(orb.x+1)(orb.y) != 1 && orb.Env.units(orb.x+1)(orb.y) == None) {
 						orb.move(Right(),step_speed)
 						return 1
 					} else {
@@ -206,7 +208,7 @@ object bddCompetences {
 						return 0
 					}
 				case Bottom() =>
-					if (orb.y <= orb.Env.size_y - 2 && orb.Env.tiles(orb.x)(orb.y+1) != 1 && orb.Env.units(orb.x)(orb.y+1) != None) {
+					if (orb.y <= orb.Env.size_y - 2 && orb.Env.tiles(orb.x)(orb.y+1) != 1 && orb.Env.units(orb.x)(orb.y+1) == None) {
 						orb.move(Bottom(),step_speed)
 						return 1
 					} else {
@@ -219,22 +221,22 @@ object bddCompetences {
 	}
 	def create_fire_spell(p:Personnage):Active={
 		val fire_spell = new Active("Fire")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,25,2,5,1.0,0.5,"sprite_charge_fire.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,25,2,5,1.0,0.5,1,"sprite_charge_fire.png")
 		return fire_spell
 	}
 	def ice_spell(p:Personnage):Active={
 		val fire_spell = new Active("Ice")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,30,0,0,0,0.5,"iceball.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,30,0,0,0,0.5,2,"iceball.png")
 		return fire_spell
 	}
 	def poison_spell(p:Personnage):Active={
 		val fire_spell = new Active("Poison")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,15,3,7,1.2,0.5,"poisonball.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,15,3,7,1.2,0.5,3,"poisonball.png")
 		return fire_spell
 	}
 	def eletricity_spell(p:Personnage):Active={
 		val fire_spell = new Active("Electricity")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,20,0,0,0,0.5,"electricityball.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,20,0,0,0,0.5,4,"electricityball.png")
 		return fire_spell
 	}		
 	

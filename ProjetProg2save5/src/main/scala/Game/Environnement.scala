@@ -22,6 +22,7 @@ class Environnement {
 	val size_y = real_size_y*factor_y
 	var layerset = new LayerSet(size_x,size_y) //Sert à l'affichage graphique
 	var tiles = Array.ofDim[Int](size_x,size_y)
+	var tiles_located_sprites = Array.ofDim[LocatedSprite](size_x,size_y)
 	var units = Array.ofDim[Option[Jeton]](size_x,size_y)
 	for (i<-0 to size_x-1){
 		for (j<-0 to size_y-1){
@@ -158,17 +159,20 @@ class Environnement {
 	}
 	
 	def tile_elem_effect(i:Int,j:Int,elem:Int)={
+		print("tile elem effect"+i.toString+" "+j.toString+" "+elem.toString+"\n")
 		//On va faire simple
-		this.tiles(i)(j) += 1 + elem
-		var file = "sprite_tile_water_"+(if (elem == 0) { "fire" } 
-											else if (elem == 1) { "ice" } 
-											else if (elem == 2) { "poison" } 
-											else if (elem == 3) { "electricity" })
-		val ls = new LocatedSprite(file)
-		ls.x = i*32
-		ls.y = j*32
-		this.layerset.get_layer("UpTiles").add_sprite(ls) //C'est très pas beau (on n'a pas enlevé celui d'en dessous)
-		this.layerset.get_layer("UpTiles").load_layer()
+		if (this.tiles(i)(j) >= 2){ //On verifie qu'on est au dessus de l'eau
+			this.tiles(i)(j) += 2 + elem
+			var file = "sprite_tile_water_"+(if (elem == 0) { "fire" } 
+												else if (elem == 1) { "ice" } 
+												else if (elem == 2) { "poison" } 
+												else if (elem == 3) { "electricity" })
+			val ls = new LocatedSprite(file)
+			ls.x = i*32
+			ls.y = j*32
+			this.layerset.get_layer("UpTiles").add_sprite(ls) //C'est très pas beau (on n'a pas enlevé celui d'en dessous)
+			this.layerset.get_layer("UpTiles").load_layer()
+		}
 	}
 
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int):Unit={
