@@ -4,7 +4,7 @@ import Personnage.{Jeton=>Jeton}
 import bddPersonnages.{bddPersonnages=>bddp}
 import scala.collection.mutable.{ListBuffer,PriorityQueue,ArrayBuffer}
 import Schematics.{Tile=>Tile}
-import mylib.misc.{FibonacciHeap,FNode}
+
 
 class FileP{
 	var array:ArrayBuffer[((Int,Int),Double)] = ArrayBuffer()

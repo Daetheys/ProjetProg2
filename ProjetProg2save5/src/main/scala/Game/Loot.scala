@@ -4,8 +4,41 @@ import Environnement._
 import Mechanisms._
 import Schematics._
 import Personnage._
+import bddItems.{bddItem => ibdd}
 
-class Loot_phase(m : mainInventory, sprite_grid : Array[Array[Sprite_group]], plan: Plan) {
+abstract class Recompense
+	case class Animal (a : Int) extends Recompense
+	case class Stuff (s : Int) extends Recompense
+	case class NoRecomp () extends Recompense
+
+
+class Loot_phase(m : mainInventory, sprite_grid : Array[Array[Sprite_group]], plan : Plan) {
+
+	val compet = Array("confusion","electricity","fire","ice","ink","poison")
+	val animal = Array("bees","bird","cat","monkey","rabbit","snake")
+	val stuff = Array("gun_confusion", "gun_electricity", "gun_fire", "gun_ice",
+			"gun_ink", "gun_poison", "vest_confusion", "vest_electricity",
+			"vest_fire", "vest_ice", "vest_ink", "vest_poison")
+	
+	def mainSwitch(x : Int, y: Int) {
+		var recomp : Array[Recompense] = Array(NoRecomp())
+		(sprite_grid(x)(y)) match {
+			case Circuit(c1,c2,d,false) =>
+				if (this.check(this.compet(c1))) {
+					this.activation(x, y, c1, recomp)
+				} else if (this.check(this.compet(c2))) {
+					this.activation(x, y, c2, recomp)
+				}
+			case x => ()
+		};
+		recomp(0) match {
+			case NoRecomp() => ()
+			case Stuff(s) =>
+				m.add_to_main(s)
+			case Animal(a)=>
+					
+		}
+	}
 
 	def check(compet : String) : Boolean = {
 		for (p <- m.equipe) {
@@ -36,38 +69,42 @@ class Loot_phase(m : mainInventory, sprite_grid : Array[Array[Sprite_group]], pl
   	}
 
 	
-	def destruct(x:Int,y:Int) = {
-		(this.sprite_grid(x)(y)) match {
+	def destruct(x:Int,y:Int) : Recompense = {
+		(sprite_grid(x)(y)) match {
 			case Circuit(c1,c2,di,false) =>
 				this.sprite_grid(x)(y) = Circuit(c1,c2,di,true)
+				return NoRecomp()
       			case Vault(s,false) =>
 				this.sprite_grid(x)(y) = Vault(s,true)
+				return Stuff(s)
 			case Pipe(c,d,false) =>
 				this.sprite_grid(x)(y) = Pipe(c,d,true)
+				return NoRecomp()
 			case Jail(a,false) =>
 				this.sprite_grid(x)(y) = Jail(a,true)
-			case x => x
+				return Animal(a)
+			case x => return NoRecomp()
 		}
 	}
    
-	def activation(x:Int, y:Int, c:Int) = {
-		(this.sprite_grid(x)(y)) match {
+	def activation(x:Int, y:Int, c:Int, r:Array[Recompense]) = {
+		(sprite_grid(x)(y)) match {
 			case Circuit(c1,c2,d,false) =>
 				if ( c1 == c ) {
-					this.destruct(x,y);
+					r(0) = this.destruct(x,y);
 					var coord = Array(x, y);
 					this.move(coord, d);
 					while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
-						this.destruct(coord(0),coord(1));
+						r(0) = this.destruct(coord(0),coord(1));
 						this.move(coord, d);
 	  				}
 				} else if ( c2 == c ) {
-		  			this.destruct(x,y);
+		  			r(0) = this.destruct(x,y);
 		  			var coord = Array(x, y);
 		  			val e = (d+1)%4;
 		  			this.move(coord, e);
 		  			while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
-						this.destruct(coord(0),coord(1));
+						r(0) = this.destruct(coord(0),coord(1));
 						this.move(coord, e);
 		  			}
 				}
