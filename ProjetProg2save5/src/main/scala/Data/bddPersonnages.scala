@@ -11,29 +11,43 @@ object bddPersonnages {
 	def create_turtle(player:Player):Personnage = {
 		var turtle = new Personnage
 		turtle.name = "Tortue"
-		turtle.pv_max = 100
-		turtle.pv_current = 100
+		//Base Stat
+		turtle.strength = 50
+		turtle.vivacity = 30
+		turtle.intelligence = 50
+		turtle.accuracy = 50
+		turtle.dodge = 50
+		//Base Stat
 		turtle.player = player
-		turtle.actives("Move") = bddComp.create_move(turtle,2.0,0) //speed,type(0:ground,1:air)
-		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle,2,6,1.2) //range,dmg,speed
+		turtle.actives("Move") = bddComp.create_move(turtle,0) //speed,type(0:ground,1:air)
+		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle) //range,dmg,speed
 		turtle.actives("Feu") = bddComp.create_fire_spell(turtle)
 		turtle.image_path = "sprite_character_turtle.png"
 		turtle.sheet_image = "sprite_sheet_turtle.png"
 		turtle.add_spawn_call("AutoAttack")
+		turtle.refresh_hp_max()
+		turtle.full_heal()
 		return turtle
 	}
 
 	def create_bird(player:Player):Personnage = {
 		var bird = new Personnage
 		bird.name = "Oiseau"
-		bird.pv_max = 75
-		bird.pv_current = 75
+		//Base Stat
+		bird.strength = 50
+		bird.vivacity = 80
+		bird.intelligence = 50
+		bird.accuracy = 50
+		bird.dodge = 50
+		//Base Stat
 		bird.player = player
-		bird.actives("Move") = bddComp.create_move(bird,0.1,1)
-		bird.actives("AutoAttack") = bddComp.create_autoattack(bird,40,60,0.1)
+		bird.actives("Move") = bddComp.create_move(bird,1)
+		bird.actives("AutoAttack") = bddComp.create_autoattack(bird)
 		bird.image_path = "sprite_character_bird.png"
 		bird.sheet_image = "sprite_sheet_bird.png"
 		bird.add_spawn_call("AutoAttack")
+		bird.refresh_hp_max()
+		bird.full_heal()
 		return bird
 	}
 	
@@ -43,8 +57,8 @@ object bddPersonnages {
 		bees.pv_max = 60
 		bees.pv_current = 60
 		bees.player = player
-		bees.actives("Move") = bddComp.create_move(bees,0.7,1)
-		bees.actives("AutoAttack") = bddComp.create_autoattack(bees,2,2,0.4)
+		bees.actives("Move") = bddComp.create_move(bees,1)
+		bees.actives("AutoAttack") = bddComp.create_autoattack(bees)
 		bees.image_path = "sprite_character_bees.png"
 		bees.sheet_image = "sprite_sheet_bees.png"
 		bees.add_spawn_call("AutoAttack")
@@ -57,8 +71,8 @@ object bddPersonnages {
 		cat.pv_max = 90
 		cat.pv_current = 90
 		cat.player = player
-		cat.actives("Move") = bddComp.create_move(cat,0.9,0)
-		cat.actives("AutoAttack") = bddComp.create_autoattack(cat,2,4,1.2)
+		cat.actives("Move") = bddComp.create_move(cat,0)
+		cat.actives("AutoAttack") = bddComp.create_autoattack(cat)
 		cat.image_path = "sprite_character_cat.png"
 		cat.sheet_image = "sprite_sheet_cat.png"
 		cat.add_spawn_call("AutoAttack")
@@ -71,8 +85,8 @@ object bddPersonnages {
 		monkey.pv_max = 110
 		monkey.pv_current = 110
 		monkey.player = player
-		monkey.actives("Move") = bddComp.create_move(monkey,1.2,0)
-		monkey.actives("AutoAttack") = bddComp.create_autoattack(monkey,3,7,1.5)
+		monkey.actives("Move") = bddComp.create_move(monkey,0)
+		monkey.actives("AutoAttack") = bddComp.create_autoattack(monkey)
 		monkey.image_path = "sprite_character_monkey.png"
 		monkey.sheet_image = "sprite_sheet_monkey.png"
 		monkey.add_spawn_call("AutoAttack")
@@ -85,8 +99,8 @@ object bddPersonnages {
 		rabbit.pv_max = 65
 		rabbit.pv_current = 65
 		rabbit.player = player
-		rabbit.actives("Move") = bddComp.create_move(rabbit,0.6,0)
-		rabbit.actives("AutoAttack") = bddComp.create_autoattack(rabbit,3,2,1.2)
+		rabbit.actives("Move") = bddComp.create_move(rabbit,0)
+		rabbit.actives("AutoAttack") = bddComp.create_autoattack(rabbit)
 		rabbit.image_path = "sprite_character_rabbit.png"
 		rabbit.sheet_image = "sprite_sheet_rabbit.png"
 		rabbit.add_spawn_call("AutoAttack")
@@ -99,8 +113,8 @@ object bddPersonnages {
 		snake.pv_max = 80
 		snake.pv_current = 80
 		snake.player = player
-		snake.actives("Move") = bddComp.create_move(snake,1.1,0)
-		snake.actives("AutoAttack") = bddComp.create_autoattack(snake,1,4,1.0)
+		snake.actives("Move") = bddComp.create_move(snake,0)
+		snake.actives("AutoAttack") = bddComp.create_autoattack(snake)
 		snake.image_path = "sprite_character_snake.png"
 		snake.sheet_image = "sprite_sheet_snake.png"
 		snake.add_spawn_call("AutoAttack")
@@ -113,11 +127,20 @@ object bddPersonnages {
 		robot.pv_max = 50
 		robot.pv_current = 50
 		robot.player = player
-		robot.actives("Move") = bddComp.create_move(robot,0.9,1)
-		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,5,2,1.1)
+		//Base Stat
+		robot.strength = 30
+	 	robot.vivacity = 50
+		robot.intelligence = 40
+		robot.accuracy = 30
+		robot.dodge = 20
+		//Base Stat
+		robot.actives("Move") = bddComp.create_move(robot,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot)
 		robot.image_path = "sprite_character_turret.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
+		robot.refresh_hp_max()
+		robot.full_heal()
 		return robot
 	}
 	
@@ -129,7 +152,7 @@ object bddPersonnages {
 		sentinel.pv_max = 510
 		sentinel.pv_current = 510
 		sentinel.player = player
-		sentinel.actives("AutoAttack") = bddComp.create_autoattack(sentinel,2,25,3.0) //Grosse attaque en mélée
+		sentinel.actives("AutoAttack") = bddComp.create_autoattack(sentinel) //Grosse attaque en mélée
 		sentinel.image_path = "sprite_character_turret.png" //Il faudra le mettre a jour
 		sentinel.add_spawn_call("AutoAttack")
 		sentinel.ia = bddBehaviour.create_sentinel(sentinel)
@@ -143,8 +166,8 @@ object bddPersonnages {
 		robot.pv_max = 50
 		robot.pv_current = 50
 		robot.player = player
-		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
-		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,2,1,2.0)
+		robot.actives("Move") = bddComp.create_move(robot,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot)
 		robot.image_path = "sprite_character_tank_healer.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
@@ -158,8 +181,8 @@ object bddPersonnages {
 		robot.pv_max = 30
 		robot.pv_current = 30
 		robot.player = player
-		robot.actives("Move") = bddComp.create_move(robot,1.5,1)
-		robot.actives("AutoAttack") = bddComp.create_autoattack(robot,3,7,2.0) //Ils font très mal
+		robot.actives("Move") = bddComp.create_move(robot,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot) //Ils font très mal
 		robot.image_path = "sprite_character_tank_fighter.png"
 		robot.ia = bddBehaviour.create_rage(robot)
 		return robot
@@ -172,7 +195,7 @@ object bddPersonnages {
 		robot.pv_max = 20
 		robot.pv_current = 20
 		robot.player = player
-		robot.actives("Move") = bddComp.create_move(robot,0.7,1) //Se déplace très vite
+		robot.actives("Move") = bddComp.create_move(robot,1) //Se déplace très vite
 		robot.actives("Explode") = bddComp.create_explode(robot,15)
 		robot.image_path = "sprite_character_tank_plasma.png"
 		robot.add_spawn_call("AutoAttack")

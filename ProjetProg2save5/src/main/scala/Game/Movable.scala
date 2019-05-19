@@ -42,7 +42,7 @@ class Movable(env:Environnement){
 	}
 	
 	def animation_move(x1:Int,y1:Int,x2:Int,y2:Int,time:Double):Unit={
-		val nb_iter_max = (time/this.Env.clock.micro_period).toInt
+		val nb_iter_max = (time/this.Env.clock.micro_period).toInt+1
 		var no_iter = 0
 		val dx = (x2-x1)*32
 		val dy = (y2-y1)*32

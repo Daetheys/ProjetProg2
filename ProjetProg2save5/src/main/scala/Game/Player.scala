@@ -8,8 +8,12 @@ class Player {
 	val nb_max_units = 10000
 	var inventory = new mainInventory(this)
 	
-	def lost()={
-		this.units.forall( (e:Personnage) => (e.jeton.died) )
+	def lost():Boolean={
+		return this.units.forall( (e:Personnage) => (e.jeton.died) )
+	}
+	
+	def full_heal()={
+		this.units.foreach( (e:Personnage) => e.full_heal() )
 	}
 	
 	def add_unit(p:Personnage){

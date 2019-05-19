@@ -2,7 +2,8 @@ package Environnement
 import Personnage.{Jeton=>Jeton,Personnage=>Personnage}
 import scala.collection.mutable.ListBuffer
 import Schematics.{Tile=>Tile}
-import Mechanisms.{Sprite_plan => Sprite_plan}
+import Mechanisms._
+import Schematics._
 import Layer._
 import scalafx.application.{Platform}
 import Sound._
@@ -11,6 +12,7 @@ import Sprite._
 import Game._
 import Utilities._
 import Display._
+import Loot._
 
 class Environnement {
 	//Représente une carte
@@ -34,6 +36,9 @@ class Environnement {
 	var phase:Int = 0 //0-Phase de Baston 1-Phase de loot 2-Phase de repartition
 	val clock = new Clock(this)
 	var selected_unit:Option[Jeton] = None
+	var plan:Plan = null
+	var sprite_grid:Array[Array[Sprite_group]] = null
+	var loot_phase:Loot_phase = null
 	
 	def start()={
 		//Lancement du jeu dans l'environnement
@@ -50,7 +55,12 @@ class Environnement {
 		
 		def check_win(typage:Unit):Int={
 			if (Game.Human.lost()) { app.lose_screen(); return 0 } //Le joueur a perdu
-			if (Game.IA.lost()) { this.phase = 1; return 0 } //Le joueur passe à la phase de loot
+			if (Game.IA.lost()) {
+				print("IA LOST\n")
+				this.phase = 1
+				this.loot_phase = new Loot_phase(Game.Human.inventory,this.sprite_grid,this.plan)
+				return 0 
+			} //Le joueur passe à la phase de loot
 			return 1
 		}
 		//Chargement de l'event de raffraichissement de l'environnement
@@ -232,7 +242,7 @@ class Clock(env:Environnement) {
 													clock.iter_clock()
 												}
 												Thread.sleep((clock.micro_period*1000).toLong)
-												if (Env.phase == -1){ return 0 }
+												if (Env.phase == -1){ print("END\n");return 0 }
 												}
 											}
 										}

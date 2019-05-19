@@ -76,8 +76,9 @@ class Sheet(p : Personnage) {
 				}
 			} 
 		}
+		val equipment:Array[Option[Item]] = Array(p.weapon,p.armor)
 		for (i <- 0 to 1) {
-			p.equipment(i) match {
+			equipment(i) match {
 				case None => ()
 				case Some(item:Item) => {
 					token = new LocatedSprite("sprite_sheet_frame_" + item.element + ".png")
@@ -157,8 +158,9 @@ class InventoryTabs {
 				}
 			} 
 		}
+		val equipment:Array[Option[Item]] = Array(p.weapon,p.armor)
 		for (i <- 0 to 1) {
-			p.equipment(i) match {
+			equipment(i) match {
 				case None => ()
 				case Some(item:Item) => {
 					this.token = new LocatedSprite(

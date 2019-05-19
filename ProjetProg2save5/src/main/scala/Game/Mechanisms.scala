@@ -12,6 +12,13 @@ returns the layerset for one level
 import Schematics._
 import Layer._
 import Sprite._
+import Loot._
+import bddItems.bddItem._
+import bddPersonnages.bddPersonnages._
+import Inventory._
+import Personnage._
+import Game._
+import Utilities.utils._
 
 abstract class Sprite_group
   case class Circuit(comp1 : Int,
@@ -34,9 +41,9 @@ class Sprite_plan(plan : Plan) {
                        Array( (6,3), (6,13), (9,16) ),
                        Array( (18,3), (18,13), (15,6) ),
                        Array( (18,21), (18,11), (15,18) ) )
-  val compet = Array("confusion","electricity","fire","ice","ink","poison")
-  val animal = Array("bees","bird","cat","monkey","rabbit","snake")
-  val stuff = Array("gun_confusion","gun_electricity","gun_fire","gun_ice",
+  val compet:Array[String] = Array("confusion","electricity","fire","ice","ink","poison")
+  val animal:Array[String] = Array("bees","bird","cat","monkey","rabbit","snake")
+  val stuff:Array[String] = Array("gun_confusion","gun_electricity","gun_fire","gun_ice",
                     "gun_ink","gun_poison","vest_confusion","vest_electricity",
                     "vest_fire","vest_ice","vest_ink","vest_poison")
 

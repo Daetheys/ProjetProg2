@@ -84,6 +84,8 @@ class Donjon(taille:Int) {
 		this.personnages(i) = personnages
 		//this.personnages_spawn(Env,personnages)
 		Env.tiles = sprite_plan.tile_type.transpose
+		Env.plan = plan
+		Env.sprite_grid = sprite_plan.sprite_grid.transpose
 		return Env
 	}
 }

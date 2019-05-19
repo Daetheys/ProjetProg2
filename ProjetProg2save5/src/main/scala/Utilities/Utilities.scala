@@ -1,9 +1,17 @@
 package Utilities
 import Graphics2._
 import Personnage._
+import bddItems.bddItem._
+import bddPersonnages.bddPersonnages._
+import Inventory._
+import Game._
 
 //Helper functions
 object utils {
+	val animal:Array[String] = Array("bees","bird","cat","monkey","rabbit","snake")
+  	val stuff:Array[String] = Array("gun_confusion","gun_electricity","gun_fire","gun_ice",
+                    "gun_ink","gun_poison","vest_confusion","vest_electricity",
+                    "vest_fire","vest_ice","vest_ink","vest_poison")
 	def cooldowned_fun(func:Unit=>Int,cd:Double,period:Period,base_arg:Int):Unit=>Int={ //Considere que func est appelée toutes les macro_period
 		//Monade pour ajouter un cooldown a des compétences -> déplacement plus lent // Attaque plus lente // ...
 		var base = base_arg
@@ -34,11 +42,11 @@ object utils {
 	}
 	
 	def delay(func:Unit=>Int,time:Double):Unit=>Int={ //Pas fresh initialement
-		this.cooldowned_fun(func,time,Macro(),1)
+		this.cooldowned_fun(func,time,Macro(),0)
 	}
 	
 	def delay_micro(func:Unit=>Int,time:Double):Unit=>Int={
-		this.cooldowned_fun(func,time,Micro(),1)
+		this.cooldowned_fun(func,time,Micro(),0)
 	}
 	
 	def chain(list_events:List[Unit=>Int]):Unit=>Int={ //-> Abus de prog fonctionelle
@@ -72,13 +80,56 @@ object utils {
 	}
 	
 	def shoot(x1:Int,y1:Int,target:Jeton,dmg:Int)={
+		//Utilisé pour les interactions de l'environnement
 		def delayed(typage:Unit):Int={
-			target.model.take_damages(dmg)
+			target.model.take_hit(dmg)
 			return 0
 		}
 		app.draw_shoot_line(x1,y1,target.x,target.y)
 		app.Env.clock.add_micro_event(delay_micro(delayed(_),20*target.Env.clock.micro_period))
 	}
+	
+	def shoot(attacker:Jeton,target:Jeton,dmg:Int)={
+		//Utilisé pour les combats entre jetons
+		def delayed(typage:Unit):Int={
+			val r = scala.util.Random
+			printf("hit chance %f %d ",attacker.model.get_hit_chance(),dmg)
+			if (attacker.model.get_hit_chance() >= r.nextDouble()*100)
+				{target.model.take_hit(dmg)} else { app.draw_miss(target) }
+			return 0
+		}
+		app.draw_shoot_line(attacker.x,attacker.y,target.x,target.y)
+		app.Env.clock.add_micro_event(delay_micro(delayed(_),20*target.Env.clock.micro_period))
+	}
+	
+	def get_object_stuff(s:Int):Item={
+    	this.stuff(s) match {
+    		case "gun_confusion" => create_gun_confusion()
+    		case "gun_electricity" => create_gun_electricity()
+    		case "gun_fire" => create_gun_fire()
+    		case "gun_ice" => create_gun_ice()
+    		case "gun_ink" => create_gun_ink()
+    		case "gun_poison" => create_gun_poison()
+    		case "vest_confusion" => create_vest_confusion()
+    		case "vest_electricity" => create_vest_electricity()
+    		case "vest_fire" => create_vest_fire()
+    		case "vest_ice" => create_vest_ice()
+    		case "vest_ink" => create_vest_ink()
+    		case "vest_poison" => create_vest_poison()
+    	}
+    }
+    
+    def get_object_animal(a:Int):Personnage={
+    	val h = Game.Human
+    	this.animal(a) match {
+    		case "bees" => create_bees(h)
+    		case "bird" => create_bird(h)
+    		case "cat" => create_cat(h)
+    		case "monkey" => create_monkey(h)
+    		case "rabbit" => create_rabbit(h)
+    		case "snake" => create_snake(h)
+    	}
+    }
 }
 
 abstract class Period

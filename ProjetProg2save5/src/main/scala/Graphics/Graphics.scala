@@ -23,6 +23,7 @@ import Game.{Game=>Game}
 import Movable._
 import Sprite._
 import Utilities.utils._
+import Loot._
 
 object app extends JFXApp {
 	private var mousePosX: Double = .0
@@ -140,7 +141,7 @@ object app extends JFXApp {
 		}
 	}
 	def right_click_command_load()={
-		//Permet de déplacer les unités selectionnées
+		var count = 0 //Number of rewards already taken (3 max per room)
 		this.canvas.onMousePressed = (e: MouseEvent) =>
 			{
 				if (e.isSecondaryButtonDown && this.Env.phase == 0){
@@ -152,11 +153,15 @@ object app extends JFXApp {
 					val x = (e.x/32).toInt
 					val y = (e.y/32).toInt
 					print("CASSER MECA! - Inserer la fonction SVP\n")
-					//TODO TODO TODO TODO TODO TODO TODO TODO TODO
-					//--------------> Detruire les mecanisme
-					//TODO TODO TODO TODO TODO TODO TODO TODO TODO
-					this.Env.phase = 2 //Passe en phase 3 
-					this.Env.start_inventory_phase()
+					printf("x:%d y:%d\n",x,y)
+					count += this.Env.loot_phase.mainSwitch(x,y) //On a récupéré une récompense ou non 
+					printf("count %d\n",count)
+
+					if (count >= 3) {
+						this.Env.phase = 2 //Passe en phase 3 
+						this.Env.start_inventory_phase()
+						count = 0
+					}
 				}
 			}
 		}
@@ -168,7 +173,33 @@ object app extends JFXApp {
 			if (timer == 0){
 				return 0
 			}
-			this.draw_dmg_text(target.x,target.y,10,dmg,"-",Red)
+			this.draw_popup(target.x,target.y,10,"-"+dmg.toString,Red)
+			return 1
+		}
+		this.Env.clock.add_micro_event(aff_damage(_)) //reste 0.5 sec
+	}
+	
+	def draw_dodge(jeton:Jeton)={
+		var timer = (0.5/this.Env.clock.micro_period).toInt
+		def aff_damage(typage:Unit):Int={
+			timer -= 1
+			if (timer == 0){
+				return 0
+			}
+			this.draw_popup(jeton.x,jeton.y,15,"dodge",LightBlue)
+			return 1
+		}
+		this.Env.clock.add_micro_event(aff_damage(_)) //reste 0.5 sec
+	}
+	
+	def draw_miss(target:Jeton)={
+		var timer = (0.5/this.Env.clock.micro_period).toInt
+		def aff_damage(typage:Unit):Int={
+			timer -= 1
+			if (timer == 0){
+				return 0
+			}
+			this.draw_popup(target.x,target.y,15,"miss",Grey)
 			return 1
 		}
 		this.Env.clock.add_micro_event(aff_damage(_)) //reste 0.5 sec
@@ -207,7 +238,7 @@ object app extends JFXApp {
 		this.draw_line(x1,y1,x2,y2,Red,10)
 	}
 	
-	def draw_dmg_text(x:Int,y:Int,length:Int,nb:Int,signe:String,color:scalafx.scene.paint.Color)={
+	def draw_popup(x:Int,y:Int,length:Int,text:String,color:scalafx.scene.paint.Color)={
 		//Affiche un texte pour les dégats pris
 		var timer = 20 // On suppose ne pas a voir trop d'attaque ne meme temps
 		def aff_text(typage:Unit):Int={
@@ -216,7 +247,7 @@ object app extends JFXApp {
 				return 0
 			} else {
 				this.gc.fill = color
-				this.gc.fillText(signe+nb.toString,x*32+18,y*32+2,length)
+				this.gc.fillText(text,x*32+18,y*32+2,length)
 				return 1
 			}
 		}

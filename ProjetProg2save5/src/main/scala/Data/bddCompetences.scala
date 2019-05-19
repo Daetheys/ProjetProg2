@@ -12,7 +12,7 @@ import Sprite._
 
 object bddCompetences {
 	//Spells
-	def create_move(p:Personnage,cd:Double,form:Int):Active={
+	def create_move(p:Personnage,form:Int):Active={
 		//Cooldown est le tps pour se déplacer d'une case; form est la facon dont il se déplace
 		// -> 0:ground 1:fly 2:ghost
 		val move_comp = new Active("Move")
@@ -21,20 +21,27 @@ object bddCompetences {
 		move_comp.v_int("y_dest") = 1
 		move_comp.v_int("active") = 0
 		
+		var count = 0
+		
 		def refresh(target:Array[Int]):Unit = {
 			//La destination du mouvement est une variable dans la compétence
 			move_comp.v_int("x_dest") = target(0)
 			move_comp.v_int("y_dest") = target(1)
 			if (move_comp.v_int("active") == 0){
 				move_comp.v_int("active") = 1
+				val cd = p.get_cd_move_speed()
+				printf("refresh move %d\n",cd.toInt)
 				p.jeton.Env.clock.add_macro_event(cooldowned(event(_),cd))
 			}
 		}
+		
 		def event(typage:Unit):Int ={
 			//Deplace le jeton (avec un astar, ...)
+			val cd = p.get_cd_move_speed()
+			if (count < cd) { count += 1; return 1} else { count = 0 }
+			val x_dest = move_comp.v_int("x_dest")
+			val y_dest = move_comp.v_int("y_dest")
 			if (p.jeton.died == false){
-				val x_dest = move_comp.v_int("x_dest")
-				val y_dest = move_comp.v_int("y_dest")
 				val x = p.jeton.x
 				val y = p.jeton.y
 				var mvt = Algo.astar(p.jeton.Env,p.jeton,(x_dest,y_dest))
@@ -45,7 +52,7 @@ object bddCompetences {
 					p.jeton.move(p.jeton.corresponding_orient(x,y,mvt._1,mvt._2),cd)
 					return 1
 				}
-			} else { return 0 }
+			} else { return 1 } //Vu que la vitesse de deplacement peut varier, on doit mettre cd a jour dans l'event
 		}
 		move_comp.refresh = refresh
 		move_comp.autocast_disable()
@@ -54,16 +61,24 @@ object bddCompetences {
 	}
 	
 
-	def create_autoattack(personnage:Personnage,range:Int,dmg:Int,attack_speed:Double):Active = {
+	def create_autoattack(personnage:Personnage):Active = {
 		// Renvoie la compétence d'attaque automatique
 		val autoattack = new Active("AutoAttack")
 		val Env = personnage.jeton.Env
 		autoattack.v_jeton("target") = new Jeton(new Personnage,Env) //Un jeton quelconque qui ne pourra jamais etre attaqué
+		val weapon = personnage.get_weapon()
+		val range = weapon match {
+							case Some(w) => (w.range*personnage.get_range_fact()).toInt
+							case None => 2 //Melee attack
+						}
+		var count = 0
+		
 		autoattack.v_int("range") = range
 		
 		def refresh(typage:Array[Int]):Unit ={
 			get_new_target()
-			personnage.jeton.Env.clock.add_macro_event(cooldowned(event(_),attack_speed))
+			//print("refresh_attack\n");
+			personnage.jeton.Env.clock.add_macro_event(event(_))
 		}
 		
 		def target_alive():Boolean={
@@ -71,11 +86,21 @@ object bddCompetences {
 		}
 		
 		def target_in_range():Boolean={
+			val weapon = personnage.get_weapon()
+			val range = weapon match {
+							case Some(w) => (w.range*personnage.get_range_fact()).toInt
+							case None => 2 //Melee attack
+			}
 			return Env.dist(personnage.jeton,autoattack.v_jeton("target")) < range
 		}
 		
 		def get_new_target()={
 			//Recherche de l'ennemi le plus proche
+			val weapon = personnage.get_weapon()
+			val range = weapon match {
+							case Some(w) => (w.range*personnage.get_range_fact()).toInt
+							case None => 2 // Melee attack
+			}
 			val result = personnage.jeton.Env.get_nearest_opposite_unit(personnage.jeton)
 			val jeton_minimum = result._1
 			val minimum = result._2
@@ -90,17 +115,33 @@ object bddCompetences {
 		
 		def event(typage:Unit):Int={
 			//Fonction d'attaque
+			val weapon = personnage.get_weapon()
+			val cd_attack :Double = weapon match {
+								case Some(w) => w.cd_attack*personnage.get_cd_attack_fact()
+								case None => personnage.get_cd_melee_attack //Melee attack
+								}
+			if (count*personnage.jeton.Env.clock.macro_period < cd_attack) { count += 1; return 1} else { count = 0 }
+			val range :Int= weapon match {
+							case Some(w) => (w.range*personnage.get_range_fact()).toInt
+							case None => 2 //Melee attack
+						}
 			if (personnage.jeton.died){
 				return 0
 			}
+			//printf("target alive %b target in range %b range %d %s %d %d\n",target_alive(),target_in_range(),range,personnage.name,autoattack.v_jeton("target").x,autoattack.v_jeton("target").y)
 			if (target_alive() && target_in_range()){
 				val s = autoattack.v_jeton("target")
-				shoot(personnage.jeton.x,personnage.jeton.y,s,dmg)
+				weapon match {
+						case Some(w) => val dmg = (w.force*personnage.get_attack_dmg_fact()).toInt
+										shoot(personnage.jeton,s,dmg)
+						case None => val dmg = (personnage.get_melee_attack_dmg()).toInt
+										shoot(personnage.jeton,s,dmg) //Il y aura un tir laser mais ce n'est pas grave
+						}
 				return 1
 			} else {
 				get_new_target()
 				return 1
-			}	
+			}
 		}
 		
 		autoattack.refresh = refresh

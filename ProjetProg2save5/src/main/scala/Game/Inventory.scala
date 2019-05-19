@@ -17,6 +17,8 @@ class Weapon extends Item {
 
 	var force : Int = 0
 	var charge : Boolean = true
+	var cd_attack : Double = 0D
+	var range : Int = 0
 	var powerA : String = "" //compétence active du tireur
 	var effect : String = "" //compétence passive de la cible
 
@@ -25,6 +27,11 @@ class Weapon extends Item {
 class Armor extends Item {
 
 	var defense : Int = 0
+	var bonus_strength : Int = 0
+	var bonus_vivacity : Int = 0
+	var bonus_intelligence : Int = 0
+	var bonus_accuracy : Int = 0
+	var bonus_dodge : Int = 0
 	var powerP : String = "" //compétence passive
 
 }
@@ -32,6 +39,7 @@ class Armor extends Item {
 class OneUse extends Item {
 
 	var effect : String = "" //modification des stats
+	var use : Personnage => Unit = null
 
 }
 
