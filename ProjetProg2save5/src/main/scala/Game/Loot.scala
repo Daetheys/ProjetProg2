@@ -26,6 +26,7 @@ class Loot_phase(m : mainInventory, sprite_grid : Array[Array[Sprite_group]], pl
 		var recomp : Array[Recompense] = Array(NoRecomp())
 		(sprite_grid(x)(y)) match {
 			case Circuit(c1,c2,d,false) =>
+				print("Circuit",c1,c2)
 				if (this.check(this.compet(c1))) {
 					this.activation(x, y, c1, recomp)
 				} else if (this.check(this.compet(c2))) {
@@ -78,7 +79,7 @@ class Loot_phase(m : mainInventory, sprite_grid : Array[Array[Sprite_group]], pl
 			case Circuit(c1,c2,di,false) =>
 				this.sprite_grid(x)(y) = Circuit(c1,c2,di,true)
 				return NoRecomp()
-      			case Vault(s,false) =>
+      		case Vault(s,false) =>
 				this.sprite_grid(x)(y) = Vault(s,true)
 				return Stuff(s)
 			case Pipe(c,d,false) =>
@@ -99,6 +100,7 @@ class Loot_phase(m : mainInventory, sprite_grid : Array[Array[Sprite_group]], pl
 					var coord = Array(x, y);
 					this.move(coord, d);
 					while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
+						print(plan.grid(coord(0))(coord(1)).is_an_obstacle,sprite_grid(coord(0))(coord(1)),"\n")
 						r(0) = this.destruct(coord(0),coord(1));
 						this.move(coord, d);
 	  				}

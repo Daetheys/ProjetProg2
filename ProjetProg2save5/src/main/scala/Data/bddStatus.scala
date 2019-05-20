@@ -1,3 +1,4 @@
+package bddStatus
 import Attribute._
 import Personnage._
 import Status._
@@ -17,6 +18,20 @@ object bddStatus {
 		buff.name = "Late Heal"
 		buff.effect_desc = "Heals for 10hp 4 seconds later"
 		buff.data = List((Health(),10,4.0,0.0))
+		return buff
+	}
+	
+	def create_poison(p:Personnage):Buff={
+		var buff = new Buff(p)
+		buff.name = "Poison"
+		buff.effect_desc = "Inflict damages for 8 seconds"
+		buff.data = List()
+		val period = 1.0
+		val damages = 4
+		val duration = 8
+		for (i<-0 to (duration/period).toInt){
+			buff.data = (Health(),-damages,period*i,period)::buff.data
+		}
 		return buff
 	}
 }

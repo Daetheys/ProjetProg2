@@ -184,6 +184,9 @@ object bddCompetences {
 	}
 	
 	def orb_spell(p:Personnage,power:Int,tick_dmg:Int,nb_dot_tick:Int,tick_period:Double,step_speed:Double,elem:Int,file:String){
+		val recharge_id = elem match { case 1 => 10 case 2 => 11 case 3 => 13 case 4 => 9 }
+		print(p.inventory,p.is_in_inventory(recharge_id),recharge_id)
+		if (p.is_in_inventory(recharge_id)) { p.remove_from_inventory(recharge_id) } else { return () }
 		val orb = new Movable(p.jeton.Env)
 		orb.x = p.jeton.x
 		orb.y = p.jeton.y
@@ -193,7 +196,6 @@ object bddCompetences {
 		p.jeton.Env.layerset.get_layer("Spells").add_sprite(ls)
 		orb.located_sprite = ls
 		orb.set_orientation(p.jeton.orientation)
-		print(orb.orientation.toString)
 		def explode() = {
 			for (i <- -1 to 1){
 				for (j <- -1 to 1){
@@ -265,20 +267,20 @@ object bddCompetences {
 		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,25,2,5,1.0,0.5,1,"sprite_charge_fire.png")
 		return fire_spell
 	}
-	def ice_spell(p:Personnage):Active={
+	def create_ice_spell(p:Personnage):Active={
 		val fire_spell = new Active("Ice")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,30,0,0,0,0.5,2,"iceball.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,30,0,0,0,0.5,2,"sprite_charge_ice.png")
 		return fire_spell
 	}
-	def poison_spell(p:Personnage):Active={
+	def create_poison_spell(p:Personnage):Active={
 		val fire_spell = new Active("Poison")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,15,3,7,1.2,0.5,3,"poisonball.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,15,3,7,1.2,0.5,3,"sprite_charge_poison.png")
 		return fire_spell
 	}
-	def eletricity_spell(p:Personnage):Active={
+	def create_electricity_spell(p:Personnage):Active={
 		val fire_spell = new Active("Electricity")
-		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,20,0,0,0,0.5,4,"electricityball.png")
+		fire_spell.refresh = (e:Array[Int]) => orb_spell(p,20,0,0,0,0.5,4,"sprite_charge_electricity.png")
 		return fire_spell
-	}		
+	}
 	
 }

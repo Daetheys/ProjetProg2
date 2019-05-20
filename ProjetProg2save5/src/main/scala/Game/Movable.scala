@@ -84,6 +84,8 @@ class Movable(env:Environnement){
 				}
 		}
 		this.set_orientation(o)
+		//Check water interactions
+		if (this.Env.tiles(this.x)(this.y) == 4) {this.move(o,time)}
 	}
 }
 

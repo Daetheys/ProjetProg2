@@ -53,8 +53,14 @@ class Layer(width:Int,height:Int) {
 		this.content.map( (e:LocatedSprite) => e.load_image() )
 	}
 	
-	def remove(l:LocatedSprite)={
+	def remove(l:LocatedSprite):Unit={
 		this.content -= l
+	}
+	
+	def get(x:Int,y:Int):LocatedSprite={
+		var element:LocatedSprite = null
+		this.content.foreach( (e:LocatedSprite) => if (e.x == x && e.y == y) {element = e} )
+		return element
 	}
 	
 	def transpose()={

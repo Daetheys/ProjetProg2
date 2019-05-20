@@ -5,6 +5,7 @@ import Movable._
 
 class Sprite(file:String) {
 	var orientation:Orientation = Top()
+	var path:String = file
 	var image:Image = new Image(app.unknown_path())
 	
 	def set_orientation(orientation:Orientation)={
@@ -33,7 +34,7 @@ class Sprite(file:String) {
 }
 
 class LocatedSprite(file:String) extends Sprite(file) {
-	var x:Int = -1
-	var y:Int = -1
+	var x:Int = -2
+	var y:Int = -2
 }
 

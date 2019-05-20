@@ -1,22 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:97:46: Player.Player and Int are unrelated: they will most likely never compare equal[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case Some(j:Jeton) => if (j.model.player == 0){[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                         ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:119:41: value DIGIT1 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit1; DIGIT1 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Ampersand,0)|(KeyCode.DIGIT1,0) => if (Game.Human.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:120:41: value DIGIT2 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit2; DIGIT2 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Undefined,0)|(KeyCode.DIGIT2,0) => if (Game.Human.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:121:40: value DIGIT3 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit3; DIGIT3 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Quotedbl,0)|(KeyCode.DIGIT3,0) => if (Game.Human.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                   ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:122:37: value DIGIT4 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit4; DIGIT4 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Quote,0)|(KeyCode.DIGIT4,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:123:39: value DIGIT5 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit5; DIGIT5 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Control,0)|(KeyCode.DIGIT5,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:124:47: value DIGIT6 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit6; DIGIT6 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.LeftParenthesis,0)|(KeyCode.DIGIT6,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                          ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m7 warnings found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Personnage.scala:208:99: ';' expected but 'return' found.[0m
+[0m[[0m[31merror[0m] [0m[0m				case Some(o) => print("removed",this.inventory);remove_from_inventory(i);print(this.inventory)return ()[0m
+[0m[[0m[31merror[0m] [0m[0m				                                                                                              ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

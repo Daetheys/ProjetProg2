@@ -24,6 +24,7 @@ import Movable._
 import Sprite._
 import Utilities.utils._
 import Loot._
+import Inventory._
 
 object app extends JFXApp {
 	private var mousePosX: Double = .0
@@ -64,7 +65,7 @@ object app extends JFXApp {
 		//charge les commandes du jeu
 		this.load_drag_selection_command()
 		this.right_click_command_load()
-		//this.load_colored_cursors() //-> Les images sont introuvables !!! (même avec un chemin absolu)
+		this.load_colored_cursors() //-> Les images sont introuvables !!! (même avec un chemin absolu)
 		}
 		
 	def win_screen()={
@@ -94,7 +95,7 @@ object app extends JFXApp {
 			val y = (e.y/32).toInt
 			val path = this.Env.units(x)(y) match{
 				case None => 	this.get_path("cursor_black.png")
-				case Some(j:Jeton) => if (j.model.player == 0){
+				case Some(j:Jeton) => if (j.model.player == Game.Human){
 											this.get_path("cursor_green.png")
 										} else {
 											this.get_path("cursor_red.png")
@@ -113,6 +114,21 @@ object app extends JFXApp {
 		def borne_y(nb:Int):Int={
 			return Math.min(Math.max(nb,0),Env.size_y-1)
 			}
+		def use_item(i:Int):Unit={
+			print("use item\n")
+			this.Env.selected_unit match { 
+				case None => () 
+				case Some(u) => print("unit selected\n");u.model.inventory(i) match { 
+													case None => () 
+													case Some(o) => print(o);o match {
+																		case ou : OneUse => print("ou\n");ou.use(u.model)
+																		case w : Weapon => print("weapon\n");u.model.swap_weapon(i)
+																		case a : Armor => u.model.swap_armor(i)
+																		case x => print("Unrecognize weapon \n")
+													}
+								}
+			}
+		}
 		this.stage.scene.value.onKeyPressed = (ke: KeyEvent) => {
 			print("Key Pressed : "+ke.code.toString+" "+this.Env.phase.toString+"\n")
 			(ke.code,this.Env.phase) match  {
@@ -122,13 +138,21 @@ object app extends JFXApp {
 				case (KeyCode.Quote,0)|(KeyCode.DIGIT4,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}
 				case (KeyCode.Control,0)|(KeyCode.DIGIT5,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}
 				case (KeyCode.LeftParenthesis,0)|(KeyCode.DIGIT6,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}
-				case (KeyCode.A,0) => print("Lauch spell\n")
+				case (KeyCode.A,0) => 	//Launch Spell
 										this.Env.selected_unit match {
 										case None => print("No one selected\n")
 										case Some(j:Jeton) => 
 											print("Jeton selected\n")
-											j.model.actives("Feu").refresh(Array())
+											j.model.actives("Spell_Ball").refresh(Array())
 										}
+				//Use items
+				case (KeyCode.F1,0) => use_item(0)
+				case (KeyCode.F2,0) => use_item(1)
+				case (KeyCode.F3,0) => use_item(2)
+				case (KeyCode.F4,0) => use_item(3)
+				case (KeyCode.F5,0) => use_item(4)
+				case (KeyCode.F6,0) => use_item(5)
+				//Phase 2
 				case (KeyCode.Q,2) =>
 					this.Env.inv_tabs.left_tab()
 				case (KeyCode.D,2) =>
@@ -173,11 +197,12 @@ object app extends JFXApp {
 			if (timer == 0){
 				return 0
 			}
-			this.draw_popup(target.x,target.y,10,"-"+dmg.toString,Red)
+			this.draw_popup(target.x,target.y,15,(if (dmg >= 0) {"-"} else {"+"}) +dmg.toString,if (dmg >= 0) {Red} else {Green})
 			return 1
 		}
 		this.Env.clock.add_micro_event(aff_damage(_)) //reste 0.5 sec
 	}
+
 	
 	def draw_dodge(jeton:Jeton)={
 		var timer = (0.5/this.Env.clock.micro_period).toInt
@@ -247,7 +272,7 @@ object app extends JFXApp {
 				return 0
 			} else {
 				this.gc.fill = color
-				this.gc.fillText(text,x*32+18,y*32+2,length)
+				this.gc.fillText(text,x*32+12,y*32+2,length)
 				return 1
 			}
 		}
@@ -378,6 +403,5 @@ object app extends JFXApp {
 		for (k <- 0 to this.Env.layerset.layers.length-1){ //Respect de l'empilement des layers
 			this.Env.layerset.layers(k).content.map( (e:LocatedSprite) => aff_image(e.x,e.y,e.image,e.orientation) )
 		}
-		print("\n")
 	}
 }

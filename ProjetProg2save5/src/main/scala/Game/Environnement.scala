@@ -49,6 +49,11 @@ class Environnement {
 		def aff_event(typage:Unit):Int={
 			app.load_refresh_layers()
 			app.aff_layers()
+			this.selected_unit match {
+				case None => ()
+				case Some(j) => val s = new Sheet(j.model)
+								s.afficher(this.layerset)
+			}
 			if (this.phase < 2) {app.aff_life_bars()} //On ne refresh pas les life bar en phase 3
 			return 1
 		}
@@ -164,22 +169,28 @@ class Environnement {
 		this.selected_unit = Some(j)
 		j.selected = true
 		//Affiche l'inventaire
-		val s = new Sheet(j.model)
-		s.afficher(this.layerset)
+		//val s = new Sheet(j.model)
+		//s.afficher(this.layerset)
 	}
 	
 	def tile_elem_effect(i:Int,j:Int,elem:Int)={
 		print("tile elem effect"+i.toString+" "+j.toString+" "+elem.toString+"\n")
 		//On va faire simple
 		if (this.tiles(i)(j) >= 2){ //On verifie qu'on est au dessus de l'eau
-			this.tiles(i)(j) += 2 + elem
-			var file = "sprite_tile_water_"+(if (elem == 0) { "fire" } 
-												else if (elem == 1) { "ice" } 
-												else if (elem == 2) { "poison" } 
-												else if (elem == 3) { "electricity" })
+			this.tiles(i)(j) = 2 + elem
+			val sprite1:LocatedSprite = this.layerset.get_layer("UpTiles").get(i*32,j*32)
+			val orient = sprite1.orientation
+			var fact_path = if (sprite1.path.contains("end-of-water")) { "end-of-" } else { "" }
+			var file = "sprite_tile_"+fact_path+"water_"+(if (elem == 1) { "fire" } 
+												else if (elem == 2) { "ice" } 
+												else if (elem == 3) { "poison" } 
+												else if (elem == 4) { "electricity" })+".png"
+			print(file,sprite1.path)
 			val ls = new LocatedSprite(file)
 			ls.x = i*32
 			ls.y = j*32
+			ls.set_orientation(sprite1.orientation)
+			this.layerset.get_layer("UpTiles").remove(sprite1)
 			this.layerset.get_layer("UpTiles").add_sprite(ls) //C'est très pas beau (on n'a pas enlevé celui d'en dessous)
 			this.layerset.get_layer("UpTiles").load_layer()
 		}
@@ -242,7 +253,7 @@ class Clock(env:Environnement) {
 													clock.iter_clock()
 												}
 												Thread.sleep((clock.micro_period*1000).toLong)
-												if (Env.phase == -1){ print("END\n");return 0 }
+												if (Env.phase == -1){ return 0 }
 												}
 											}
 										}

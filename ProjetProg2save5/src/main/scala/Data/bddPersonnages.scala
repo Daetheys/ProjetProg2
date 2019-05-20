@@ -21,7 +21,6 @@ object bddPersonnages {
 		turtle.player = player
 		turtle.actives("Move") = bddComp.create_move(turtle,0) //speed,type(0:ground,1:air)
 		turtle.actives("AutoAttack") = bddComp.create_autoattack(turtle) //range,dmg,speed
-		turtle.actives("Feu") = bddComp.create_fire_spell(turtle)
 		turtle.image_path = "sprite_character_turtle.png"
 		turtle.sheet_image = "sprite_sheet_turtle.png"
 		turtle.add_spawn_call("AutoAttack")
