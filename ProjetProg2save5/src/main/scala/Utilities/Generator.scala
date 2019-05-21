@@ -453,8 +453,8 @@ class Generator {
 
 
 class Generate(seed : Int) {
-	val address_model : String = "model_generator.txt"
-	val address_data : String = "generator.txt"
+	val address_model : String = "/src/main/scala/Utilities/model_generator.txt"
+	val address_data : String = "/src/main/scala/Utilities/generator.txt"
 	val r = new scala.util.Random(seed)
 	val range_str : Int = 10
 	val range_spd : Int = 10

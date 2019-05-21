@@ -8,6 +8,7 @@ import Layer._
 import bddLevel._
 import Graphics2._
 import Display._
+import Generator._
 
 class Donjon(taille:Int) {
 	val profondeur:Int = taille
@@ -17,8 +18,9 @@ class Donjon(taille:Int) {
 	var boss_stages:List[(Array[Array[Int]],Array[Array[Option[Personnage]]],LayerSet)] = List(bddLevel.create_sentinel_level())
 	val boss_stages_ref = boss_stages
 	val stages:Array[Environnement] = Array.ofDim[Environnement](profondeur)
-	val personnages:Array[Unit=>Array[Array[(Option[Personnage],Boolean)]]] = Array.ofDim[Unit=>Array[Array[(Option[Personnage],Boolean)]]](profondeur)
+	val personnages:Array[Unit=>Array[Array[Option[Personnage]]]] = Array.ofDim[Unit=>Array[Array[Option[Personnage]]]](profondeur)
 	
+	//Generation classique
 	for (i<-0 to profondeur-1){
 		if (index_boss_stages.contains(i)){
 			val h = boss_stages.last
@@ -29,10 +31,10 @@ class Donjon(taille:Int) {
 			env.tiles = tiles.transpose
 			layerset.transpose()
 			env.layerset = layerset
-			def get_personnages(e:Unit):Array[Array[(Option[Personnage],Boolean)]]={
-				var p = this.couple(personnages)
+			def get_personnages(e:Unit):Array[Array[Option[Personnage]]]={
+				var p = personnages
 				for (i<-0 to Game.Human.units.length-1){
-					p(15)(10+i) = (Some(Game.Human.units(i)),true)
+					p(15)(10+i) = Some(Game.Human.units(i))
 				}
 				return p
 			}
@@ -45,15 +47,31 @@ class Donjon(taille:Int) {
 	}
 	boss_stages = boss_stages_ref
 	
-	def couple(a:Array[Array[Option[Personnage]]]):Array[Array[(Option[Personnage],Boolean)]] ={
-		var r:Array[Array[(Option[Personnage],Boolean)]] = Array.ofDim(a.length,a(0).length)
-		for (i<- 0 to a.length-1){
-			for (j<- 0 to a(i).length-1){
-				r(i)(j) = (a(i)(j),false)
-			}
+	
+	/*
+	//Generation Parsing
+	{//Gen donjon
+	this.gen_donjon_parse()
+	//Gen boss
+	val h = boss_stages.last
+	val tiles = h._1
+	var personnages = h._2
+	var layerset = h._3
+	val env = new Environnement
+	env.tiles = tiles.transpose
+	layerset.transpose()
+	env.layerset = layerset
+	def get_personnages(e:Unit):Array[Array[Option[Personnage]]]={
+		var p = personnages
+		for (i<-0 to Game.Human.units.length-1){
+			p(15)(10+i) = Some(Game.Human.units(i))
 		}
-		return r
+		return p
 	}
+	this.personnages(4) = get_personnages
+	stages(4) = env}
+	*/
+
 	
 	def start():Unit={
 		if (index_current_stage == profondeur){
@@ -72,19 +90,74 @@ class Donjon(taille:Int) {
 		return this.stages(index_current_stage)
 	}
 	
-	def personnages_spawn(Env:Environnement,personnages:Array[Array[(Option[Personnage],Boolean)]])={
+	def personnages_spawn(Env:Environnement,personnages:Array[Array[Option[Personnage]]])={
 		//Spawn des unités sur l'environnement
 		for (i <- 0 to personnages.length-1){
 			for (j <- 0 to personnages(i).length-1){
 				Env.units(j)(i) = None
 				personnages(i)(j) match {
-					case (None,_) => ()
-					case (Some(p:Personnage),false) => println(false,p.name);Env.spawn_new_personnage(p,j,i) 
-					case (Some(p:Personnage),true) => println(true,p.name);Env.spawn_personnage(p,j,i)
+					case None => ()
+					case Some(p:Personnage) => if (p.player == Game.Human) 
+													{ Env.spawn_personnage(p,j,i) } 
+												else 
+													{ Env.spawn_new_personnage(p,j,i) }
 				}
 			}
 		}
 	}
+	
+	def gen_donjon_parse()={
+		var ge = new Generate(Game.seed); 
+		ge.generate(); 
+		var go = new Generator; 
+		go.get_model(); 
+		val init_team = go.team //list des perso
+		val init_inv = go.inventoryG //contents d'un mainInventory
+		val hl = go.alllevels //List[(Array[Array[Int]], Plan, Sprite_plan, LayerSet, List[(Personnage, Int, Int)])]
+		def create_envs(i:Int,h:(Array[Array[Int]], Plan, Sprite_plan, LayerSet, List[(Personnage, Int, Int)])) = {
+			val tiles = h._1
+			val plan = h._2
+			val sprite_plan = h._3
+			val layerset = h._4
+			val personnages_pos = h._5
+			var env = new Environnement
+			env.tiles  = tiles
+			env.plan = plan
+			env.sprite_grid = sprite_plan.sprite_grid
+			env.layerset = layerset
+			personnages(i) = ((t:Unit) => create_personnages_array(personnages_pos))
+			stages(i) = env
+		}
+		def iter_all(i:Int,l:List[(Array[Array[Int]], Plan, Sprite_plan, LayerSet, List[(Personnage, Int, Int)])]){
+			l match {
+				case Nil => ()
+				case t::q => create_envs(i,t);iter_all(i+1,q)
+			}
+		}
+		def create_personnages_array(l:List[(Personnage,Int,Int)]):Array[Array[Option[Personnage]]]={
+			val arr:Array[Array[Option[Personnage]]] = Array.ofDim(25,25)
+			for (i<-0 to 24){
+				for (j<-0 to 24){
+					arr(i)(j) = None
+				}
+			}
+			def func(e:(Personnage,Int,Int))={
+				val x = e._2
+				val y = e._3
+				arr(x)(y) = Some(e._1)
+			}
+			def iter(l:List[(Personnage,Int,Int)]){
+				l match {
+					case Nil => ()
+					case e::q => func(e);iter(q)
+				}
+			}
+			iter(l)
+			return arr
+		}
+		iter_all(0,hl)
+	}
+	
 	
 	def gen_level(i:Int):Environnement={
 		//Chargement de l'objet contenant l'initialisation du terrain
@@ -99,7 +172,7 @@ class Donjon(taille:Int) {
 		sprite_plan.everything.transpose()
 		Env.layerset = sprite_plan.everything //LAYERSET
 		val personnages = display.personnages.transpose
-		def get_personnages(typage:Unit) :Array[Array[(Option[Personnage],Boolean)]]= { return personnages}
+		def get_personnages(typage:Unit) :Array[Array[Option[Personnage]]]= { return personnages}
 		this.personnages(i) = get_personnages //LISTE ENNEMIS
 		//this.personnages_spawn(Env,personnages)
 		Env.tiles = sprite_plan.tile_type.transpose //ARRAY TILES 0-1-2

@@ -13,6 +13,8 @@ import bddItems.{bddItem=>bddi}
 
 object Game {
 
+	val seed = 123456
+
 	val Human = new Player
 	val IA  = new Player
 	for (i<-0 to 5){ //Ressources de base
