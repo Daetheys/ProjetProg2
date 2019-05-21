@@ -91,7 +91,7 @@ class mainInventory(p:Player) {
 		if (tab == 0) {
 			this.add_to_main(i)
 		} else {
-			val pos = Game.Human.units(tab).inventory.indexOf(None)
+			val pos = Game.Human.units(tab-1).inventory.indexOf(None)
 			if (pos > -1) {
 				Game.Human.units(tab-1).add_item(this.content(i).it)
 			}

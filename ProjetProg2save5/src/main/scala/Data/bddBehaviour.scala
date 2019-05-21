@@ -109,12 +109,14 @@ object bddBehaviour {
 			var computed = false
 			var chained_events:Unit=>Int = dummy_event
 			def compute(){
-				chained_events = chain(pattern_1((ref+1)%4) ::: pattern_2(ref%3) ::: pattern_3)
+				chained_events = chain(pattern_1((ref+1)%4) ::: pattern_2(ref%3) ::: pattern_1((ref%4)) ::: pattern_1((ref+2)%4) ::: pattern_3 
+				::: pattern_1((ref+3)%4) ::: pattern_1(ref%4) ::: pattern_1((ref+2)%4) ::: pattern_3 ::: pattern_1((ref+2)%4) ::: pattern_3
+				::: pattern_1((ref+3)%4) ::: pattern_1(ref%4) ::: pattern_1((ref+2)%4) ::: pattern_3 ::: pattern_1((ref+2)%4) ::: pattern_3 )
 				computed = true
 			}
 			def event(typage:Unit):Int={
 				if (!computed) { compute }
-				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(cooldowned(loop(),0.5));return 0}
+				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(loop());return 0}
 			}
 			ref += 1
 			return event(_)

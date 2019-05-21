@@ -11,7 +11,7 @@ import Display._
 
 class Donjon(taille:Int) {
 	val profondeur:Int = taille
-	val index_boss_stages:List[Int] = List(0)
+	val index_boss_stages:List[Int] = List(5)
 	var index_current_stage:Int = -1
 	// Attention boss_stages va etre remise a List() dans la suite
 	var boss_stages:List[(Array[Array[Int]],Array[Array[Option[Personnage]]],LayerSet)] = List(bddLevel.create_sentinel_level())

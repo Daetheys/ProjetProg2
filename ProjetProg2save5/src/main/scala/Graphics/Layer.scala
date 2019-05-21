@@ -33,11 +33,11 @@ class LayerSet(width:Int,height:Int) {
 	}
 	
 	def get_static_layers():List[Int]={ // Layers which do not need to be refresh during combat
-		return List(0,1,3,5,6)
+		return List(0,1,3,6)
 	}
 	
 	def get_refresh_layers():List[Int]={ //Layers which need to be refreshed each frame
-		return List(4,7)
+		return List(4,5,7)
 	}
 }
 	
