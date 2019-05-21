@@ -1,3 +1,4 @@
+package Generator
 import Personnage._
 import bddPersonnages.bddPersonnages._
 import Inventory._
