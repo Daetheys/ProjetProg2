@@ -180,7 +180,7 @@ class InventoryTabs {
 	}
 
 	def mainDisplay() = {
-		val l = app.Env.layerset
+		var l = app.Env.layerset
 		var ilist : List[LocatedSprite] = Nil
 		l.get_layer("UI").clear()
 		this.token = new LocatedSprite("background_inventory.png")
@@ -264,7 +264,7 @@ class InventoryTabs {
 			Game.Human.inventory.send_to(this.selected_item,i)
 			Game.Human.inventory.content(this.selected_item).quantity -= 1
 		} else {
-			val item = Game.Human.units(this.selected_tab-1).inventory(this.selected_item).get
+			val item = Game.Human.units(this.selected_tab-1).inventory(5-this.selected_item).get
 			Game.Human.units(this.selected_tab-1).remove_from_inventory(item)
 			Game.Human.units(i).add_item(item)
 		}

@@ -55,6 +55,7 @@ class Environnement {
 								s.afficher(this.layerset)
 			}
 			if (this.phase < 2) {app.aff_life_bars()} //On ne refresh pas les life bar en phase 3
+			if (this.phase == 2) {this.inv_tabs.afficher()}
 			return 1
 		}
 		

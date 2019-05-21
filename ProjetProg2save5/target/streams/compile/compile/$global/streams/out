@@ -1,7 +1,28 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:65:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Environnement.scala:288:42: a pure expression does nothing in statement position[0m
+[0m[[0m[33mwarn[0m] [0m[0m												if (Env.phase == -1){ return 0 }[0m
+[0m[[0m[33mwarn[0m] [0m[0m												                             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Environnement.scala:288:35: enclosing method run has result type Unit: return value discarded[0m
+[0m[[0m[33mwarn[0m] [0m[0m												if (Env.phase == -1){ return 0 }[0m
+[0m[[0m[33mwarn[0m] [0m[0m												                      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Environnement.scala:222:19: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
 [0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
 [0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
 [0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
-[0m[[0m[33mwarn[0m] [0m[0m			this.personnages_spawn(next_stage,this.personnages(index_current_stage)())[0m
-[0m[[0m[33mwarn[0m] [0m[0m			                                                                       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[33mwarn[0m] [0m[0m					personnage.ia()[0m
+[0m[[0m[33mwarn[0m] [0m[0m					             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Environnement.scala:252:19: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m					personnage.ia()[0m
+[0m[[0m[33mwarn[0m] [0m[0m					             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Environnement.scala:321:10: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (t()!=1){[0m
+[0m[[0m[33mwarn[0m] [0m[0m				     ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Environnement.scala:115:32: Personnage.Jeton and Option[Personnage.Jeton] are unrelated: they will most likely never compare equal[0m
+[0m[[0m[33mwarn[0m] [0m[0m				case Some(j:Jeton) => if (j==this.selected_unit) { this.selected_unit = None } [0m
+[0m[[0m[33mwarn[0m] [0m[0m				                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m6 warnings found[0m
