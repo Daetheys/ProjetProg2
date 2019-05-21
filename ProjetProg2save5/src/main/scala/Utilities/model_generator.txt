@@ -69,7 +69,7 @@ Code des positions (exemple : 'Hk'):
 
 Generator :
 
-Unit 0 « Turtle » (
+Unit 0 « Turtle » (
 Bonus de Statistiques :
 STR %
 SPD %
