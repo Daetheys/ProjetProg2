@@ -135,7 +135,7 @@ class Personnage {
 	
 	def get_cd_move_speed():Double={
 		if (this.get_vivacity()==0){ return 10000 }
-		return 100/(2.2*this.get_vivacity()+50)
+		return 50/(3.1*this.get_vivacity()+50)
 	}
 	
 	def get_cd_melee_attack():Double={

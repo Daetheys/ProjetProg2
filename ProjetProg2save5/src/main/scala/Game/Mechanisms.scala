@@ -66,6 +66,7 @@ class Sprite_plan(plan : Plan) {
          coord(0) = coord(0)-1;
       }
   }
+  
   def random_loot() {
     val r = scala.util.Random;
     var i = 0;
@@ -77,12 +78,12 @@ class Sprite_plan(plan : Plan) {
     var l = 0;
     for ( k <- 0 to 3 ) {
       for ( a <- this.circuits(k) ) {
-	i = a._1; j =a._2;
+		i = a._1; j =a._2;
         couple = this.random_couple(r);
-	c1 = couple._1; c2 = couple._2;
+		c1 = couple._1; c2 = couple._2;
         this.sprite_grid(i)(j) = Mechanisms.Circuit(c1,c2,k,false);
         coord(0) = i; coord(1) = j;
-	this.move(coord, k);
+		this.move(coord, k);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c1,k,false);
           this.move(coord, k);
@@ -94,7 +95,7 @@ class Sprite_plan(plan : Plan) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Jail(r.nextInt(this.animal.length),false);
         }
         l = (k+1)%4;
-	coord(0) = i; coord(1) = j;
+		coord(0) = i; coord(1) = j;
         this.move(coord, l);
         while ( (plan.grid(coord(0))(coord(1))).is_an_obstacle ) {
           this.sprite_grid(coord(0))(coord(1)) = Mechanisms.Pipe(c2,l,false);

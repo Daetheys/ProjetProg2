@@ -17,6 +17,7 @@ class Player {
 	}
 	
 	def add_unit(p:Personnage){
+		println("add_unit",p.name)
 		if (this.units.length < this.nb_max_units){
 			this.units += p
 		} else {

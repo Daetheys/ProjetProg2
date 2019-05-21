@@ -15,14 +15,17 @@ object Game {
 
 	val Human = new Player
 	val IA  = new Player
+	for (i<-0 to 5){ //Ressources de base
+		Human.inventory.send_to(0,0)
+	}
 	this.Human.add_unit(bddp.create_turtle(this.Human))
 	this.Human.units(0).add_item(bddi.create_recharge_electricity())
 	this.Human.units(0).add_item(bddi.create_recharge_electricity())
 	this.Human.units(0).add_item(bddi.create_recharge_electricity())
 	this.Human.units(0).add_item(bddi.create_first_aid_kit())
-	this.Human.units(0).add_item(bddi.create_gun_fire())
-	this.Human.units(0).equip_weapon(bddi.create_gun_electricity())
-	this.Human.units(0).equip_armor(bddi.create_vest_fire())
+	this.Human.units(0).add_item(bddi.create_gun_electricity())
+	this.Human.units(0).equip_weapon(bddi.create_gun_god())
+	this.Human.units(0).equip_armor(bddi.create_vest_god())
 	this.Human.add_unit(bddp.create_bird(this.Human))
 	this.Human.full_heal()
 	val Donjon = new Donjon(5)

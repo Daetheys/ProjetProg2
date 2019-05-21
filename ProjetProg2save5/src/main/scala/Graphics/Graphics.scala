@@ -25,6 +25,8 @@ import Sprite._
 import Utilities.utils._
 import Loot._
 import Inventory._
+import Mechanisms._
+import Schematics._
 
 object app extends JFXApp {
 	private var mousePosX: Double = .0
@@ -159,8 +161,17 @@ object app extends JFXApp {
 					this.Env.inv_tabs.right_tab()
 				case (KeyCode.Z,2) => this.Env.inv_tabs.down_item()
 				case (KeyCode.S,2) => this.Env.inv_tabs.up_item()
+				//Switch inv
+				case (KeyCode.Ampersand,2)|(KeyCode.DIGIT1,2) => if (Game.Human.units.length >= 1) {this.Env.inv_tabs.send_item(1)}
+				case (KeyCode.Undefined,2)|(KeyCode.DIGIT2,2) => if (Game.Human.units.length >= 2) {this.Env.inv_tabs.send_item(2)}
+				case (KeyCode.Quotedbl,2)|(KeyCode.DIGIT3,2) => if (Game.Human.units.length >= 3) {this.Env.inv_tabs.send_item(3)}
+				case (KeyCode.Quote,2)|(KeyCode.DIGIT4,2) => if (Game.Human.units.length >= 4) {this.Env.inv_tabs.send_item(4)}
+				case (KeyCode.Control,2)|(KeyCode.DIGIT5,2) => if (Game.Human.units.length >= 5) {this.Env.inv_tabs.send_item(5)}
+				case (KeyCode.LeftParenthesis,2)|(KeyCode.DIGIT6,2) => if (Game.Human.units.length >= 6) {this.Env.inv_tabs.send_item(6)}
+				case (KeyCode.A,2) => this.Env.inv_tabs.send_item(0)
+				//End Phase
 				case (KeyCode.E,2) => {this.Env.end_stage();Game.Donjon.start()}
-				case _ => print(ke.code.toString+"\n")
+				case _ => println("not found : ",ke.code.toString)
 			}
 		}
 	}
@@ -176,11 +187,24 @@ object app extends JFXApp {
 					//Casse les mécanismes (se ferra avec des compétences précises plus tard)
 					val x = (e.x/32).toInt
 					val y = (e.y/32).toInt
-					print("CASSER MECA! - Inserer la fonction SVP\n")
-					printf("x:%d y:%d\n",x,y)
 					count += this.Env.loot_phase.mainSwitch(x,y) //On a récupéré une récompense ou non 
+					//Affichage des changements de sprites
+					val sprite_grid = this.Env.loot_phase.sprite_grid
+					val sprite_plan = new Sprite_plan(this.Env.plan)
+					/*for (i<-0 to sprite_grid.length-1){
+						for (j<-0 to sprite_grid.length-1){
+							print(sprite_grid(i)(j))
+						}
+						println("")
+					}*/
+					sprite_plan.sprite_grid = sprite_grid.transpose
+					sprite_plan.fill_layer_0135()
+					sprite_plan.everything.get_layer("Mechanisms").transpose()
+					val layer = sprite_plan.everything.get_layer("Mechanisms")
+					val index = this.Env.layerset.get_index("Mechanisms") 
+					this.Env.layerset.layers(index) = layer
+					this.Env.layerset.layers(index).load_layer()
 					printf("count %d\n",count)
-
 					if (count >= 3) {
 						this.Env.phase = 2 //Passe en phase 3 
 						this.Env.start_inventory_phase()

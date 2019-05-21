@@ -1,4 +1,31 @@
-[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Personnage.scala:208:99: ';' expected but 'return' found.[0m
-[0m[[0m[31merror[0m] [0m[0m				case Some(o) => print("removed",this.inventory);remove_from_inventory(i);print(this.inventory)return ()[0m
-[0m[[0m[31merror[0m] [0m[0m				                                                                                              ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Data/bddBehaviour.scala:117:23: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(cooldowned(loop(),0.5));return 0}[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Data/bddBehaviour.scala:117:121: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: create_sentinel.loop(typage: Unit): Unit => Int[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: create_sentinel.loop((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(cooldowned(loop(),0.5));return 0}[0m
+[0m[[0m[33mwarn[0m] [0m[0m				                                                                                                                    ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Data/bddBehaviour.scala:159:12: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: load_tir_soutenu.attack(typage: Unit): Int[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: load_tir_soutenu.attack((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m					attack() //return déja un int[0m
+[0m[[0m[33mwarn[0m] [0m[0m					      ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Data/bddBehaviour.scala:287:20: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: create_sentinel.loop(typage: Unit): Unit => Int[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: create_sentinel.loop((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m		val result = loop()[0m
+[0m[[0m[33mwarn[0m] [0m[0m		                 ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:65:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m			this.personnages_spawn(next_stage,this.personnages(index_current_stage)())[0m
+[0m[[0m[33mwarn[0m] [0m[0m			                                                                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m5 warnings found[0m

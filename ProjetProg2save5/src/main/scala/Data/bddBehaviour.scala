@@ -114,7 +114,7 @@ object bddBehaviour {
 			}
 			def event(typage:Unit):Int={
 				if (!computed) { compute }
-				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(loop());return 0}
+				if (chained_events() == 1) {return 1} else {print("---RESET---\n");p.jeton.Env.clock.add_macro_event(cooldowned(loop(),0.5));return 0}
 			}
 			ref += 1
 			return event(_)
@@ -176,6 +176,7 @@ object bddBehaviour {
 				target.take_damages(dmg)
 				var count = 0
 				while ( sg*(sentinel.x + vecteur_dir._1*count) < sg*target.jeton.x && sg*(sentinel.y + vecteur_dir._2*count) < sg*target.jeton.y){ //+1 car on veut etre sur que la case sur laquelle le personnnage se trouve va etre prise en compte
+					print("tile_elem_effect", (sentinel.x + vecteur_dir._1*count+0.5).toInt,(sentinel.y + vecteur_dir._2*count+0.5).toInt)
 					Env.tile_elem_effect( (sentinel.x + vecteur_dir._1*count+0.5).toInt , (sentinel.y + vecteur_dir._2*count+0.5).toInt ,element)
 					count += 1
 				}

@@ -26,24 +26,24 @@ all the sprites that must be displayed on the screen (sorted by layers)
 
 class All_sprites(plan:Sprite_plan) {
   val layerset = new LayerSet(25,25)
-  var personnages:Array[Array[Option[Personnage]]] = Array()
+  var personnages:Array[Array[(Option[Personnage],Boolean)]] = Array()
   val robots_pos = Array((2,5),(9,5),(15,5),(22,5),(5,8),(19,8),(5,13),(19,13),(9,16),(15,16),(2,19),(22,19))
   val start_pos = Array((12,22),(12,20),(11,21),(12,21),(13,21),(13,22))
   def load_stage() {
-  	var p:Array[Array[Option[Personnage]]] = Array.ofDim[Option[Personnage]](25,25)
+  	var p:Array[Array[(Option[Personnage],Boolean)]] = Array.ofDim[(Option[Personnage],Boolean)](25,25)
   	for (i <- 0 to p.length-1){
   		for (j <- 0 to p(i).length-1){
-  			p(i)(j) = None
+  			p(i)(j) = (None,false)
   		}
   	}
   	//Creation des unités du joueur
   	for (i<-0 to Game.Human.units.length-1){
   		val h = start_pos(i)
-  		p(h._1)(h._2) = Some(Game.Human.units(i))
+  		p(h._1)(h._2) = (Some(Game.Human.units(i)),true)
   	}
   	//Creation des robots
     for ( (x,y) <- this.robots_pos ) {
-      p(x)(y) = (Some(bddP.create_robot(Game.IA)));
+      p(x)(y) = (Some(bddP.create_robot(Game.IA)),false);
     }
     this.personnages = p
     //Creation du layerset
@@ -110,7 +110,6 @@ class InventoryTabs {
 	var m = Game.Human.inventory
 	var selected_tab = 0
 	var selected_item = 0
-	var tab_limit = m.equipe.length //+ 1
 	var itemArray : Array[LocatedSprite] = Array()
 	var token = new LocatedSprite("")
 
@@ -127,10 +126,11 @@ class InventoryTabs {
 		this.token.x = inventory_slots.tabX*32+16
 		this.token.y = inventory_slots.tabY(0)*32+32
 		l.get_layer("UI").add_sprite(this.token)
-		this.tab_limit = m.equipe.length
-		for (i <- 0 to this.tab_limit - 1) {
+		val tab_limit = Game.Human.units.length
+		println("tab limit",tab_limit)
+		for (i <- 0 to tab_limit - 1) {
 			this.oneTab(i+1, "sprite_inventory_tab.png", l)
-			this.token = new LocatedSprite(m.equipe(i).image_path)
+			this.token = new LocatedSprite(Game.Human.units(i).image_path)
 			this.token.x = inventory_slots.tabX*32+16
 			this.token.y = inventory_slots.tabY(i+1)*32 + 32
 			l.get_layer("UI").add_sprite(this.token)
@@ -139,7 +139,7 @@ class InventoryTabs {
 	}
 
 	def persoDisplay(j : Int, l : LayerSet) = { //j est 1+l'indice dans units du perso sélectionné
-		var p = m.equipe(j-1)
+		var p = Game.Human.units(j-1)
 		var ilist : List[LocatedSprite] = Nil
 		l.get_layer("UI").clear()
 		this.token = new LocatedSprite("background_inventory.png")
@@ -202,6 +202,7 @@ class InventoryTabs {
 	}
 
 	def afficher() = {
+		println("human units",Game.Human.units)
 		val l = app.Env.layerset
 		if (this.selected_tab == 0) {
 			this.mainDisplay()
@@ -219,19 +220,21 @@ class InventoryTabs {
 	}
 
 	def right_tab() {
-		if (this.selected_tab < this.tab_limit) {
+		this.selected_item = 0
+		if (this.selected_tab < Game.Human.units.length) {
 			this.selected_tab += 1
 		} else {
-			this.selected_tab = 0
+			this.selected_tab = Game.Human.units.length-1
 		}
 		this.afficher()
 	}
 	
 	def left_tab() {
+		this.selected_item = 0
 		if (this.selected_tab > 0) {
 			this.selected_tab -= 1
 		} else {
-			this.selected_tab = this.tab_limit
+			this.selected_tab = 0
 		}
 		this.afficher()
 	}
@@ -250,6 +253,20 @@ class InventoryTabs {
 			this.selected_item -= 1
 		} else {
 			this.selected_item = this.itemArray.length-1
+		}
+		this.afficher()
+	}
+	
+	def send_item(i:Int) {
+		println("SEND_ITEM",i)
+		println(this.selected_tab,this.selected_item)
+		if (this.selected_tab == 0) {
+			Game.Human.inventory.send_to(this.selected_item,i)
+			Game.Human.inventory.content(this.selected_item).quantity -= 1
+		} else {
+			val item = Game.Human.units(this.selected_tab-1).inventory(this.selected_item).get
+			Game.Human.units(this.selected_tab-1).remove_from_inventory(item)
+			Game.Human.units(i).add_item(item)
 		}
 		this.afficher()
 	}

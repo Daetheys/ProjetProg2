@@ -2,6 +2,7 @@ package Inventory
 import Personnage._
 import Player._
 import bddItems.bddItem._
+import Game._
 
 
 class Item {
@@ -76,13 +77,12 @@ class mainInventory(p:Player) {
 		c(18) = new Empile (create_vest_poison())
 		c	
 	}
-	var equipe = p.units
 	var items_perso : List[Array[Option[Item]]] = List()
 	def add_inventory(c : Personnage) : Unit = {
 		this.items_perso +: c.inventory
 	}
 	def init_perso : Unit = {
-		equipe.foreach(add_inventory)
+		p.units.foreach(add_inventory)
 	}
 	def add_to_main(i : Int) : Unit = {
 		this.content(i).incr(1)
@@ -91,9 +91,9 @@ class mainInventory(p:Player) {
 		if (tab == 0) {
 			this.add_to_main(i)
 		} else {
-			val pos = this.items_perso.apply(tab-1).indexOf(None)
+			val pos = Game.Human.units(tab).inventory.indexOf(None)
 			if (pos > -1) {
-				this.items_perso.apply(tab-1)(pos) = Some(this.content(i).it)
+				Game.Human.units(tab-1).add_item(this.content(i).it)
 			}
 		}
 	}

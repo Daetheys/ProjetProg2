@@ -13,7 +13,7 @@ object bddItem {
 		o.id = 1
 		o.name = "Fist Aid Kit"
 		o.image_path = "sprite_item_first-aid-kit.png"
-		o.effect = "soigne"
+		o.effect = "soigne 50 pv"
 		def first_aid_kit(p:Personnage)= { p.take_damages(-50); p.remove_from_inventory(o) }
 		o.use = first_aid_kit
 		return o

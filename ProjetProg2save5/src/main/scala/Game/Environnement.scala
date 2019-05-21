@@ -61,7 +61,8 @@ class Environnement {
 		def check_win(typage:Unit):Int={
 			if (Game.Human.lost()) { app.lose_screen(); return 0 } //Le joueur a perdu
 			if (Game.IA.lost()) {
-				print("IA LOST\n")
+				println("IA units",Game.IA.units)
+				println("IA LOST")
 				this.phase = 1
 				this.loot_phase = new Loot_phase(Game.Human.inventory,this.sprite_grid,this.plan)
 				return 0 
@@ -195,6 +196,37 @@ class Environnement {
 			this.layerset.get_layer("UpTiles").load_layer()
 		}
 	}
+	
+	def spawn_new_personnage(personnage:Personnage,x:Int,y:Int):Unit={
+		//Instancie un jeton à partir d'un personnage et le place sur le terrain
+		if (this.units(x)(y) == None || this.units(x)(y) == null) {
+			val jeton = new Jeton(personnage,this)
+			jeton.x = x
+			jeton.y = y
+			personnage.jeton = jeton
+			this.units(x)(y) = Some(jeton)
+			personnage.player.add_unit(personnage)
+			val ls = new LocatedSprite(personnage.image_path)
+			ls.x = x*32
+			ls.y = y*32
+			this.layerset.get_layer("Units").add_sprite(ls)
+			personnage.jeton.located_sprite = ls
+			//Events de automatiques du jeton
+			personnage.call_when_spawn()
+			//Loading of AI
+			def load_ia(typage:Unit):Int={
+				if (personnage.jeton.died){
+					return 0
+				} else {
+					personnage.ia()
+					return 1
+				}
+			}
+			this.clock.add_macro_event( load_ia )
+		}else{
+			 throw new IllegalArgumentException("Someone is already there"); //Il y a deja quelqu'un ici
+		}
+	}
 
 	def spawn_personnage(personnage:Personnage,x:Int,y:Int):Unit={
 		//Instancie un jeton à partir d'un personnage et le place sur le terrain
@@ -202,7 +234,6 @@ class Environnement {
 			val jeton = new Jeton(personnage,this)
 			jeton.x = x
 			jeton.y = y
-			personnage.player.add_unit(personnage)
 			personnage.jeton = jeton
 			this.units(x)(y) = Some(jeton)
 			val ls = new LocatedSprite(personnage.image_path)
