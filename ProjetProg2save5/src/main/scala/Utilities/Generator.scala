@@ -480,7 +480,7 @@ class Generate(seed : Int) {
 	val couloirsC = Array("100", "010", "001", "200", "020", "002")
 	val ennemis = Array("defense_unit", "healer", "assault", "kamikaze")
 	val positions = Array("Aa", "Ab", "Ac", "Ad", "Ae", "Af", "Ag", "Ah", "Ai", "Aj", "Ak", "Al", "Am", "An", "Ao", "Ap", "Aq", "Ar", "As", "At", "Au", "Ba", "Bk", "Bu", "Ca", "Ck", "Cu", "Da", "Dd", "De", "Df", "Dg", "Dh", "Dk", "Dn", "Do", "Dp", "Dq", "Dr", "Du", "Ea", "Ed", "Eh", "Ek", "En", "Er", "Eu", "Fa", "Fd", "Fh", "Fk", "Fn", "Fr", "Fu", "Ga", "Gd", "Gh", "Gk", "Gn", "Gr", "Gu", "Ha", "Hd", "Hh", "Hk", "Hn", "Hr", "Hu", "Ia", "Id", "Ih", "Ik", "In", "Ir", "Iu", "Ja", "Jd", "Jh", "Jk", "Jn", "Jr", "Ju", "Ka", "Kd", "Kh", "Kk", "Kn", "Kr", "Ku", "La", "Ld", "Le", "Lf", "Lg", "Lh", "Lk", "Ln", "Lo", "Lp", "Lq", "Lr", "Lu", "Ma", "Mk", "Mu", "Na", "Nk", "Nu", "Oa", "Ob", "Oc", "Od", "Oe", "Of", "Og", "Oh", "Oi", "Oj", "Ok", "Ol", "Om", "On", "Oo", "Op", "Oq", "Or", "Os", "Ot", "Ou")
-	val proba_jail : Int = 12
+	val proba_jail : Int = 8
 	var last_element : String = ""
 	var occupe : List[String] = Nil
 
