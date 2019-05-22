@@ -9,6 +9,7 @@ import bddLevel._
 import Graphics2._
 import Display._
 import Generator._
+import bddPersonnages.bddPersonnages._
 
 class Donjon(taille:Int) {
 	val profondeur:Int = taille
@@ -21,6 +22,10 @@ class Donjon(taille:Int) {
 	val personnages:Array[Unit=>Array[Array[Option[Personnage]]]] = Array.ofDim[Unit=>Array[Array[Option[Personnage]]]](profondeur)
 	
 	{if (!(Game.gen_parseur)) {
+	Game.Human.add_unit(create_turtle(Game.Human))
+	Game.Human.add_unit(create_bird(Game.Human))
+	Game.Human.inventory.send_to(3,1)
+	Game.Human.inventory.send_to(17,1)
 	//Generation classique
 	for (i<-0 to profondeur-1){
 		if (index_boss_stages.contains(i)){

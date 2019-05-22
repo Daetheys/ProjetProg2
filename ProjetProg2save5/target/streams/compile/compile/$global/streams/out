@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:95:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:100:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
 [0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
 [0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
 [0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
