@@ -1,13 +1,13 @@
 clean
 compile
-clean
-compile
 run -error
 run -warn
 --error run
 run --error
 compile
 run 
+compile
+run
 compile
 run
 compile

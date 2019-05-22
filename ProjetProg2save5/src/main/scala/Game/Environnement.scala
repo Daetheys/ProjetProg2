@@ -13,6 +13,7 @@ import Game._
 import Utilities._
 import Display._
 import Loot._
+import Movable._
 
 class Environnement {
 	//Représente une carte
@@ -181,7 +182,7 @@ class Environnement {
 		if (this.tiles(i)(j) >= 2){ //On verifie qu'on est au dessus de l'eau
 			this.tiles(i)(j) = 2 + elem
 			val sprite1:LocatedSprite = this.layerset.get_layer("UpTiles").get(i*32,j*32)
-			val orient = sprite1.orientation
+			val orient = if (sprite1.orientation == null){Top()}else{sprite1.orientation}
 			var fact_path = if (sprite1.path.contains("end-of-water")) { "end-of-" } else { "" }
 			var file = "sprite_tile_"+fact_path+"water_"+(if (elem == 1) { "fire" } 
 												else if (elem == 2) { "ice" } 
