@@ -256,12 +256,11 @@ object bddPersonnages {
 		robot.dodge = 10
 		//Base Stat
 		robot.player = player
-		robot.actives("Move") = bddComp.create_move(robot,1) //Se déplace très vite
-		robot.actives("Explode") = bddComp.create_explode(robot,15)
+		robot.actives("Move") = bddComp.create_move(robot,1)
+		robot.actives("AutoAttack") = bddComp.create_autoattack(robot)
 		robot.image_path = "sprite_character_tank_plasma.png"
-		robot.add_spawn_call("Explode")
+		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
-		robot.add_spawn_call("Explode")
 		robot.refresh_hp_max()
 		robot.full_heal()
 		return robot

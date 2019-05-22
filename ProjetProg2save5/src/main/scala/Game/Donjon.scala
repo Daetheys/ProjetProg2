@@ -19,7 +19,7 @@ class Donjon(taille:Int) {
 	val boss_stages_ref = boss_stages
 	val stages:Array[Environnement] = Array.ofDim[Environnement](profondeur)
 	val personnages:Array[Unit=>Array[Array[Option[Personnage]]]] = Array.ofDim[Unit=>Array[Array[Option[Personnage]]]](profondeur)
-	
+	/*
 	//Generation classique
 	for (i<-0 to profondeur-1){
 		if (index_boss_stages.contains(i)){
@@ -45,10 +45,10 @@ class Donjon(taille:Int) {
 			stages(i) = this.gen_level(i)
 		}
 	}
-	boss_stages = boss_stages_ref
+	boss_stages = boss_stages_ref */
 	
 	
-	/*
+	
 	//Generation Parsing
 	{//Gen donjon
 	this.gen_donjon_parse()
@@ -70,8 +70,18 @@ class Donjon(taille:Int) {
 	}
 	this.personnages(4) = get_personnages
 	stages(4) = env}
-	*/
-
+	
+	def invert_1_0(l:Array[Array[Int]]){
+		for (i<-0 to l.length-1){
+			for (j<-0 to l(i).length-1){
+				l(i)(j) match {
+					case 0 => l(i)(j) = 1
+					case 1 => l(i)(j) = 0
+					case x => ()
+				}
+			}
+		}
+	}
 	
 	def start():Unit={
 		if (index_current_stage == profondeur){
@@ -121,11 +131,24 @@ class Donjon(taille:Int) {
 			val layerset = h._4
 			val personnages_pos = h._5
 			var env = new Environnement
-			env.tiles  = tiles
+			val start_pos = Array((12,22),(12,20),(11,21),(12,21),(13,21),(13,22))
+			this.invert_1_0(tiles)
+			env.tiles  = tiles.transpose
 			env.plan = plan
-			env.sprite_grid = sprite_plan.sprite_grid
+			env.sprite_grid = sprite_plan.sprite_grid.transpose
+			layerset.transpose()
+			def get_personnages_human():List[(Personnage,Int,Int)]={
+				var l:List[(Personnage,Int,Int)] = List()
+				for (i<-0 to Game.Human.units.length-1){
+					val h = start_pos(i)
+					val x = h._1
+					val y = h._2
+					l = (Game.Human.units(i),y,x)::l
+				}
+				return l
+			}
 			env.layerset = layerset
-			personnages(i) = ((t:Unit) => create_personnages_array(personnages_pos))
+			personnages(i) = ((t:Unit) => {create_personnages_array(personnages_pos ::: get_personnages_human())})
 			stages(i) = env
 		}
 		def iter_all(i:Int,l:List[(Array[Array[Int]], Plan, Sprite_plan, LayerSet, List[(Personnage, Int, Int)])]){
