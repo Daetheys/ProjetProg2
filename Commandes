@@ -11,3 +11,5 @@ Le jeu se joue sur plusieurs niveau et a 3 phases :
                       1 2 3 4 5 6 pour mettre l'objet selectionné dans l'inventaire du personnage i
                       A pour mettre l'objet dans l'inventaire principal
                       
+Vous pouvez choisir une seed (generation pseudo alea) dans le fichier Main.scala. De plus vous pouvez tester la generation
+avec parseur ou la generation sans parseur avec un booleen dans Main.scala
