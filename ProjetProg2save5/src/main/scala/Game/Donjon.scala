@@ -19,7 +19,8 @@ class Donjon(taille:Int) {
 	val boss_stages_ref = boss_stages
 	val stages:Array[Environnement] = Array.ofDim[Environnement](profondeur)
 	val personnages:Array[Unit=>Array[Array[Option[Personnage]]]] = Array.ofDim[Unit=>Array[Array[Option[Personnage]]]](profondeur)
-	/*
+	
+	{if (!(Game.gen_parseur)) {
 	//Generation classique
 	for (i<-0 to profondeur-1){
 		if (index_boss_stages.contains(i)){
@@ -45,8 +46,8 @@ class Donjon(taille:Int) {
 			stages(i) = this.gen_level(i)
 		}
 	}
-	boss_stages = boss_stages_ref */
-	
+	boss_stages = boss_stages_ref 
+	} else {
 	
 	
 	//Generation Parsing
@@ -70,6 +71,7 @@ class Donjon(taille:Int) {
 	}
 	this.personnages(4) = get_personnages
 	stages(4) = env}
+	}}
 	
 	def invert_1_0(l:Array[Array[Int]]){
 		for (i<-0 to l.length-1){
@@ -141,11 +143,11 @@ class Donjon(taille:Int) {
 			layerset.transpose()
 			def get_personnages_human():List[(Personnage,Int,Int)]={
 				var l:List[(Personnage,Int,Int)] = List()
-				for (i<-0 to Game.Human.units.length-1){
-					val h = start_pos(i)
+				for (j<-0 to Game.Human.units.length-1){
+					val h = start_pos(j)
 					val x = h._1
 					val y = h._2
-					l = (Game.Human.units(i),x,y)::l
+					l = (Game.Human.units(j),x,y)::l
 				}
 				return l
 			}

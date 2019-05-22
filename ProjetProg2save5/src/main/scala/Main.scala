@@ -13,7 +13,8 @@ import bddItems.{bddItem=>bddi}
 
 object Game {
 
-	val seed = 1234567
+	val seed = 12345678
+	val gen_parseur = true
 
 	val Human = new Player
 	Human.nb_max_units = 6

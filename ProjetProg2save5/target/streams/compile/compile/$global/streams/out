@@ -1,37 +1,7 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:137:41: value DIGIT1 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit1; DIGIT1 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Ampersand,0)|(KeyCode.DIGIT1,0) => if (Game.Human.units.length >= 1) {this.Env.select_unit(Game.Human.units(0).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:138:41: value DIGIT2 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit2; DIGIT2 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Undefined,0)|(KeyCode.DIGIT2,0) => if (Game.Human.units.length >= 2) {this.Env.select_unit(Game.Human.units(1).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:139:40: value DIGIT3 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit3; DIGIT3 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Quotedbl,0)|(KeyCode.DIGIT3,0) => if (Game.Human.units.length >= 3) {this.Env.select_unit(Game.Human.units(2).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                   ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:140:37: value DIGIT4 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit4; DIGIT4 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Quote,0)|(KeyCode.DIGIT4,0) => if (Game.Human.units.length >= 4) {this.Env.select_unit(Game.Human.units(3).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:141:39: value DIGIT5 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit5; DIGIT5 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Control,0)|(KeyCode.DIGIT5,0) => if (Game.Human.units.length >= 5) {this.Env.select_unit(Game.Human.units(4).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:142:47: value DIGIT6 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit6; DIGIT6 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.LeftParenthesis,0)|(KeyCode.DIGIT6,0) => if (Game.Human.units.length >= 6) {this.Env.select_unit(Game.Human.units(5).jeton)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                          ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:168:41: value DIGIT1 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit1; DIGIT1 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Ampersand,2)|(KeyCode.DIGIT1,2) => if (Game.Human.units.length >= 1) {this.Env.inv_tabs.send_item(1)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:169:41: value DIGIT2 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit2; DIGIT2 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Undefined,2)|(KeyCode.DIGIT2,2) => if (Game.Human.units.length >= 2) {this.Env.inv_tabs.send_item(2)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                    ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:170:40: value DIGIT3 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit3; DIGIT3 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Quotedbl,2)|(KeyCode.DIGIT3,2) => if (Game.Human.units.length >= 3) {this.Env.inv_tabs.send_item(3)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                   ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:171:37: value DIGIT4 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit4; DIGIT4 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Quote,2)|(KeyCode.DIGIT4,2) => if (Game.Human.units.length >= 4) {this.Env.inv_tabs.send_item(4)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:172:39: value DIGIT5 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit5; DIGIT5 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.Control,2)|(KeyCode.DIGIT5,2) => if (Game.Human.units.length >= 5) {this.Env.inv_tabs.send_item(5)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                  ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Graphics.scala:173:47: value DIGIT6 in object KeyCode is deprecated (since 8.0.60-R10): Use Digit6; DIGIT6 will be removed in a future release[0m
-[0m[[0m[33mwarn[0m] [0m[0m				case (KeyCode.LeftParenthesis,2)|(KeyCode.DIGIT6,2) => if (Game.Human.units.length >= 6) {this.Env.inv_tabs.send_item(6)}[0m
-[0m[[0m[33mwarn[0m] [0m[0m				                                          ^[0m
-[0m[[0m[33mwarn[0m] [0m[0m12 warnings found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:95:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
+[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
+[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
+[0m[[0m[33mwarn[0m] [0m[0m			this.personnages_spawn(next_stage,this.personnages(index_current_stage)())[0m
+[0m[[0m[33mwarn[0m] [0m[0m			                                                                       ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
