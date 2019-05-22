@@ -305,8 +305,8 @@ class Generator {
 		this.inventoryG = content;
 		val levels = this.split("&", parts.tail.tail.head, Nil);
 		var couloir = "";
-		var g : Array[Array[Int]] = Array.ofDim(25,25);
 		for (lvl <- levels) {
+			var g : Array[Array[Int]] = Array.ofDim[Int](25,25);
 			for (i <- 0 to 24 ; j <- 0 to 24) {
 				g(i)(j) = this.grid012(i)(j);
 			}
