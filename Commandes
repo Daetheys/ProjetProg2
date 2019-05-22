@@ -1,0 +1,13 @@
+Le jeu se joue sur plusieurs niveau et a 3 phases :
+  - Phase de combat : 1,2,3,4,5,6 pour selectionner les personnages
+                      A pour lancer une compétence si vous avez une arme et une recharge correspondante à l'arme
+                      F1,F2,F3,F4,F5,F6 pour utiliser l'item i dans l'inventaire (1<=i<=6)
+  - Phase de loot : Dès qu'il n'y a plus d'ennemis, vous pouvez cliquer sur les mécanismes pour les activer. VOus ne
+                        pouvez activer que les mecanismes associés a des elements dont vous avez une arme ou une armure
+                        equipée sur l'un de vos personnages
+  - Phase d'organisation : Une fois que vous avez activé 3 mécanismes, vous pouvez organiser votre inventaire : 
+                      Z S pour vous deplacer verticalement dans l'inventaire
+                      Q D pour changer d'inventaire
+                      1 2 3 4 5 6 pour mettre l'objet selectionné dans l'inventaire du personnage i
+                      A pour mettre l'objet dans l'inventaire principal
+                      
