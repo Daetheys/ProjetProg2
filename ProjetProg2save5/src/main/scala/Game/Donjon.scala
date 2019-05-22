@@ -143,7 +143,7 @@ class Donjon(taille:Int) {
 					val h = start_pos(i)
 					val x = h._1
 					val y = h._2
-					l = (Game.Human.units(i),y,x)::l
+					l = (Game.Human.units(i),x,y)::l
 				}
 				return l
 			}
@@ -167,7 +167,7 @@ class Donjon(taille:Int) {
 			def func(e:(Personnage,Int,Int))={
 				val x = e._2
 				val y = e._3
-				arr(x)(y) = Some(e._1)
+				arr(y)(x) = Some(e._1)
 			}
 			def iter(l:List[(Personnage,Int,Int)]){
 				l match {

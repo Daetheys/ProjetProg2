@@ -1,5 +1,3 @@
-run
-compile
 clean
 compile
 clean
@@ -10,6 +8,8 @@ run -warn
 run --error
 compile
 run 
+compile
+run
 compile
 run
 compile
