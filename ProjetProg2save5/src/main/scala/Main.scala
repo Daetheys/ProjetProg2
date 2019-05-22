@@ -16,6 +16,7 @@ object Game {
 	val seed = 123456
 
 	val Human = new Player
+	Human.nb_max_units = 6
 	val IA  = new Player
 	for (i<-0 to 5){ //Ressources de base
 		Human.inventory.send_to(0,0)

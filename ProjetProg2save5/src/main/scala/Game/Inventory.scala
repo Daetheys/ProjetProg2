@@ -55,7 +55,7 @@ class Empile (i : Item) {
 class mainInventory(p:Player) {
 
 	var content : Array[Empile] = {
-		val c = new Array[Empile](19)		
+		val c = new Array[Empile](21)		
 		c(0) = new Empile (create_first_aid_kit())
 		c(1) = new Empile (create_gun_confusion())
 		c(2) = new Empile (create_gun_electricity())
@@ -72,9 +72,11 @@ class mainInventory(p:Player) {
 		c(13) = new Empile (create_vest_confusion())
 		c(14) = new Empile (create_vest_electricity())
 		c(15) = new Empile (create_vest_fire())
-		c(16) = new Empile (create_vest_confusion())
+		c(16) = new Empile (create_vest_ice())
 		c(17) = new Empile (create_vest_ink())
 		c(18) = new Empile (create_vest_poison())
+		c(19) = new Empile (create_gun_god())
+		c(20) = new Empile (create_vest_god())
 		c	
 	}
 	var items_perso : List[Array[Option[Item]]] = List()

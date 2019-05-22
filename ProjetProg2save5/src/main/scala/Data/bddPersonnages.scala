@@ -237,6 +237,7 @@ object bddPersonnages {
 		robot.actives("Move") = bddComp.create_move(robot,1)
 		robot.actives("AutoAttack") = bddComp.create_autoattack(robot) //Ils font très mal
 		robot.image_path = "sprite_character_tank_fighter.png"
+		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
 		robot.refresh_hp_max()
 		robot.full_heal()
@@ -258,8 +259,9 @@ object bddPersonnages {
 		robot.actives("Move") = bddComp.create_move(robot,1) //Se déplace très vite
 		robot.actives("Explode") = bddComp.create_explode(robot,15)
 		robot.image_path = "sprite_character_tank_plasma.png"
-		robot.add_spawn_call("AutoAttack")
+		robot.add_spawn_call("Explode")
 		robot.ia = bddBehaviour.create_rage(robot)
+		robot.add_spawn_call("Explode")
 		robot.refresh_hp_max()
 		robot.full_heal()
 		return robot
@@ -282,6 +284,7 @@ object bddPersonnages {
 		robot.image_path = "sprite_character_tank_fire.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
+		robot.add_spawn_call("AutoAttack")
 		robot.refresh_hp_max()
 		robot.full_heal()
 		return robot
@@ -304,6 +307,7 @@ object bddPersonnages {
 		robot.image_path = "sprite_character_tank_ice.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
+		robot.add_spawn_call("AutoAttack")
 		robot.refresh_hp_max()
 		robot.full_heal()
 		return robot
@@ -326,6 +330,7 @@ object bddPersonnages {
 		robot.image_path = "sprite_character_tank_poison.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
+		robot.add_spawn_call("AutoAttack")
 		robot.refresh_hp_max()
 		robot.full_heal()
 		return robot
@@ -348,6 +353,7 @@ object bddPersonnages {
 		robot.image_path = "sprite_character_tank_electricity.png"
 		robot.add_spawn_call("AutoAttack")
 		robot.ia = bddBehaviour.create_rage(robot)
+		robot.add_spawn_call("AutoAttack")
 		robot.refresh_hp_max()
 		robot.full_heal()
 		return robot

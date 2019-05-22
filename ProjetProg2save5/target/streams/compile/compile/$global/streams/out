@@ -1,7 +1,6 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:83:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
-[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
-[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
-[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
-[0m[[0m[33mwarn[0m] [0m[0m			this.personnages_spawn(next_stage,this.personnages(index_current_stage)())[0m
-[0m[[0m[33mwarn[0m] [0m[0m			                                                                       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Display.scala:281:31: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : Int[0m
+[0m[[0m[31merror[0m] [0m[0m required: Inventory.Item[0m
+[0m[[0m[31merror[0m] [0m[0m												return inv(i).get.id[0m
+[0m[[0m[31merror[0m] [0m[0m												                  ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

@@ -5,7 +5,7 @@ import Inventory._
 
 class Player {
 	val units:ArrayBuffer[Personnage] = ArrayBuffer()
-	val nb_max_units = 10000
+	var nb_max_units = 10000
 	var inventory = new mainInventory(this)
 	
 	def lost():Boolean={

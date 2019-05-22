@@ -3,12 +3,16 @@ import Personnage._
 import bddPersonnages.bddPersonnages._
 import Inventory._
 import Layer._
-import java.io._
 import Schematics._
 import Mechanisms._
 import Player._
 import Game._
 import bddItems.bddItem._
+import Parser.Parseur._
+
+object dataP {
+	var d : String = ""
+}
 
 class Generator {
 	val circuits = Array(Array((6,21), (6,11), (9,8)), Array((6,3), (6,13), (9,16)), Array((18,3), (18,13), (15,6)), Array((18,21), (18,11), (15,18)))
@@ -38,7 +42,6 @@ class Generator {
 		Array(0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0),
 		Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0),
 		Array(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0))
-	val address : String = "generator.txt"
 	var model : List[String] = Nil
 	var team : List[Personnage] = Nil
 	var inventoryG : Array[Empile] = Array()
@@ -46,7 +49,7 @@ class Generator {
 
 	def split(s : String, l : List[String], acc : List[String]) : List[List[String]] = {
 		l match {
-			case Nil => return Nil
+			case Nil => return List(acc.reverse)
 			case x::t => {
 				if (x == s) {
 					return acc.reverse :: split(s, t, Nil)
@@ -262,7 +265,7 @@ class Generator {
 	
 
 	def get_model() : Unit = {
-		this.model = scala.io.Source.fromFile(this.address).getLines.flatMap(_.split("\\W+")).toList;
+		this.model = dataP.d.split(" ").toList;
 		val parts = this.split(";;", this.model, Nil);
 		val teammembers = this.split("&", parts.head, Nil);
 		this.team = (this.turtle(teammembers.head))::(this.team)
@@ -302,8 +305,11 @@ class Generator {
 		this.inventoryG = content;
 		val levels = this.split("&", parts.tail.tail.head, Nil);
 		var couloir = "";
+		var g : Array[Array[Int]] = Array.ofDim(25,25);
 		for (lvl <- levels) {
-			var g = this.grid012;
+			for (i <- 0 to 24 ; j <- 0 to 24) {
+				g(i)(j) = this.grid012(i)(j);
+			}
 			couloir = this.get_next(lvl, "TYPE_01234");
 			var xi = 0;
 			for (i <- 0 to 4) {
@@ -453,8 +459,8 @@ class Generator {
 
 
 class Generate(seed : Int) {
-	val address_model : String = "/src/main/scala/Utilities/model_generator.txt"
-	val address_data : String = "/src/main/scala/Utilities/generator.txt"
+	val address_model : String = "model_generator.txt"
+	val address_data : String = "generator.txt"
 	val r = new scala.util.Random(seed)
 	val range_str : Int = 10
 	val range_spd : Int = 10
@@ -656,7 +662,7 @@ class Generate(seed : Int) {
 				return s.toString()
 			}
 			case "RANGE" => {
-				val s = this.r.nextDouble()*this.range_range;
+				val s = this.r.nextInt(this.range_range);
 				return s.toString()
 			}
 			case "A_NAME" => {
@@ -737,21 +743,23 @@ class Generate(seed : Int) {
 	
 	def insert(model : List[String]) : List[String] = {
 		model match {
-			case x::("%"::t) =>
-				return x :: (this.replace(x) :: insert(t))
+			case x::(y::t) =>
+				if (y == "%") {
+					return x :: (this.replace(x) :: insert(t))
+				} else {
+					return x :: (insert(y::t))
+				}
 			case _ => Nil
 		}
 	}
 	
 	def generate() : Unit = {
-		val model = scala.io.Source.fromFile(this.address_model).getLines.flatMap(_.split("\\W+")).toList;
-		val newgame = this.insert(model);
-		val bw = new BufferedWriter(new FileWriter(this.address_data));
-		for (s <- newgame) {
-			bw.write(s);
-			bw.write("\n")
+		val model : List[String] = parser_model.split(" ").toList;
+		var newgame = "";
+		for (word <- this.insert(model)) {
+			newgame = newgame + word + " ";
 		}
-		bw.close()		
+		dataP.d = newgame;
 	}
 
 }

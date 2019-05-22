@@ -127,7 +127,6 @@ class InventoryTabs {
 		this.token.y = inventory_slots.tabY(0)*32+32
 		l.get_layer("UI").add_sprite(this.token)
 		val tab_limit = Game.Human.units.length
-		println("tab limit",tab_limit)
 		for (i <- 0 to tab_limit - 1) {
 			this.oneTab(i+1, "sprite_inventory_tab.png", l)
 			this.token = new LocatedSprite(Game.Human.units(i).image_path)
@@ -202,7 +201,6 @@ class InventoryTabs {
 	}
 
 	def afficher() = {
-		println("human units",Game.Human.units)
 		val l = app.Env.layerset
 		if (this.selected_tab == 0) {
 			this.mainDisplay()
@@ -257,16 +255,49 @@ class InventoryTabs {
 		this.afficher()
 	}
 	
+	def get_id_item_main():Int= {
+			var count = this.selected_item
+			for (i<-m.content.length-1 to 0 by -1){
+				print("count",i,m.content(i).quantity,count)
+				if (m.content(i).quantity > 0){
+					count -= 1
+					if (count < 0) {
+					 	return i
+					}
+				}
+				println("-->",m.content(i).quantity,count)
+			}
+			return -7 //Ne doit pas arriver
+		}
+		
+	def get_id_item_units():Item={
+			val inv = Game.Human.units(this.selected_tab-1).inventory
+			var count = this.selected_item
+			for (i<-inv.length-1 to 0 by -1){
+				inv(i) match {
+					case None => ()
+					case Some(e:Item) => 	count -= 1
+											if (count<0){
+												return inv(i).get
+											}
+				}
+			}
+			return null //Ne devrait pas arriver
+		}
+		
 	def send_item(i:Int) {
-		println("SEND_ITEM",i)
-		println(this.selected_tab,this.selected_item)
 		if (this.selected_tab == 0) {
-			Game.Human.inventory.send_to(this.selected_item,i)
-			Game.Human.inventory.content(this.selected_item).quantity -= 1
+			val id_item = get_id_item_main()
+			Game.Human.inventory.send_to(id_item,i)
+			Game.Human.inventory.content(id_item).quantity -= 1
 		} else {
-			val item = Game.Human.units(this.selected_tab-1).inventory(5-this.selected_item).get
+			val item = get_id_item_units()
 			Game.Human.units(this.selected_tab-1).remove_from_inventory(item)
-			Game.Human.units(i).add_item(item)
+			if (i==0){
+				Game.Human.inventory.send_to(item.id,0)
+			} else {
+				Game.Human.units(i-1).add_item(item)
+			}
 		}
 		this.afficher()
 	}
