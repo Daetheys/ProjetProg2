@@ -4,7 +4,7 @@ import scala.collection.mutable.{ListBuffer,ArrayBuffer}
 import Inventory._
 
 class Player {
-	val units:ArrayBuffer[Personnage] = ArrayBuffer()
+	var units:ArrayBuffer[Personnage] = ArrayBuffer()
 	var nb_max_units = 10000
 	var inventory = new mainInventory(this)
 	

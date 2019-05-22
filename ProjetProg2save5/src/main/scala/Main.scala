@@ -13,7 +13,7 @@ import bddItems.{bddItem=>bddi}
 
 object Game {
 
-	val seed = 123456
+	val seed = 1234567
 
 	val Human = new Player
 	Human.nb_max_units = 6
@@ -21,16 +21,8 @@ object Game {
 	for (i<-0 to 5){ //Ressources de base
 		Human.inventory.send_to(0,0)
 	}
-	this.Human.add_unit(bddp.create_turtle(this.Human))
-	this.Human.units(0).add_item(bddi.create_recharge_electricity())
-	this.Human.units(0).add_item(bddi.create_recharge_electricity())
-	this.Human.units(0).add_item(bddi.create_recharge_electricity())
-	this.Human.units(0).add_item(bddi.create_first_aid_kit())
-	this.Human.units(0).add_item(bddi.create_gun_god())
-	this.Human.units(0).equip_weapon(bddi.create_gun_electricity())
-	this.Human.units(0).equip_armor(bddi.create_vest_poison())
-	this.Human.add_unit(bddp.create_bird(this.Human))
-	this.Human.full_heal()
+	this.Human.inventory.send_to(19,0)
+	this.Human.inventory.send_to(20,0)
 	val Donjon = new Donjon(5)
 
 	def initialize(){

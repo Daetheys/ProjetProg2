@@ -122,7 +122,9 @@ class Donjon(taille:Int) {
 		var go = new Generator; 
 		go.get_model(); 
 		val init_team = go.team //list des perso
+		init_team.foreach((p:Personnage) => Game.Human.add_unit(p))
 		val init_inv = go.inventoryG //contents d'un mainInventory
+		Game.Human.inventory.content = init_inv
 		val hl = go.alllevels //List[(Array[Array[Int]], Plan, Sprite_plan, LayerSet, List[(Personnage, Int, Int)])]
 		def create_envs(i:Int,h:(Array[Array[Int]], Plan, Sprite_plan, LayerSet, List[(Personnage, Int, Int)])) = {
 			val tiles = h._1

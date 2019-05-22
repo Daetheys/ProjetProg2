@@ -154,6 +154,9 @@ object app extends JFXApp {
 				case (KeyCode.F4,0) => use_item(3)
 				case (KeyCode.F5,0) => use_item(4)
 				case (KeyCode.F6,0) => use_item(5)
+				//Phase 1
+				case (KeyCode.E,1) => this.Env.phase = 2 //Passe en phase 3 
+									this.Env.start_inventory_phase()
 				//Phase 2
 				case (KeyCode.Q,2) =>
 					this.Env.inv_tabs.left_tab()

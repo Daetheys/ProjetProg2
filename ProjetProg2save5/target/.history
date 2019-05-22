@@ -1,11 +1,11 @@
-clean
 compile
-run -error
-run -warn
---error run
-run --error
+run
 compile
-run 
+run
+compile
+run
+compile
+run
 compile
 run
 compile
