@@ -86,7 +86,7 @@ object app extends JFXApp {
 	
 	def aff_text(x:Int,y:Int,text:String){
 		this.gc.fill = Black
-		this.gc.fillText(text,x,y,text.length)
+		this.gc.fillText(text,x,y,text.length*5)
 	}
 		
 	def load_colored_cursors()={
@@ -148,12 +148,12 @@ object app extends JFXApp {
 											j.model.actives("Spell_Ball").refresh(Array())
 										}
 				//Use items
-				case (KeyCode.F1,0) => use_item(0)
-				case (KeyCode.F2,0) => use_item(1)
-				case (KeyCode.F3,0) => use_item(2)
-				case (KeyCode.F4,0) => use_item(3)
-				case (KeyCode.F5,0) => use_item(4)
-				case (KeyCode.F6,0) => use_item(5)
+				case (KeyCode.W,0) => use_item(0)
+				case (KeyCode.X,0) => use_item(1)
+				case (KeyCode.C,0) => use_item(2)
+				case (KeyCode.V,0) => use_item(3)
+				case (KeyCode.B,0) => use_item(4)
+				case (KeyCode.N,0) => use_item(5)
 				//Phase 1
 				case (KeyCode.E,1) => this.Env.phase = 2 //Passe en phase 3 
 									this.Env.start_inventory_phase()
