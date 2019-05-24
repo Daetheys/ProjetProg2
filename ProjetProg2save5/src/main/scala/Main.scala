@@ -13,7 +13,7 @@ import bddItems.{bddItem=>bddi}
 
 object Game {
 
-	val seed = 12345678
+	val seed = 65536
 	val gen_parseur = true
 
 	val Human = new Player
