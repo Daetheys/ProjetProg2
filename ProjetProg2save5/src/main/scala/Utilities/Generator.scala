@@ -262,7 +262,6 @@ class Generator {
 		
 	}
 	
-	
 
 	def get_model() : Unit = {
 		this.model = dataP.d.split(" ").toList;
