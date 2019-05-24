@@ -1,7 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Game/Donjon.scala:100:75: Adaptation of argument list by inserting () is deprecated: this is unlikely to be what you want.[0m
-[0m[[0m[33mwarn[0m] [0m[0m        signature: Function1.apply(v1: T1): R[0m
-[0m[[0m[33mwarn[0m] [0m[0m  given arguments: <none>[0m
-[0m[[0m[33mwarn[0m] [0m[0m after adaptation: Function1((): Unit)[0m
-[0m[[0m[33mwarn[0m] [0m[0m			this.personnages_spawn(next_stage,this.personnages(index_current_stage)())[0m
-[0m[[0m[33mwarn[0m] [0m[0m			                                                                       ^[0m
-[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
+[0m[[0m[31merror[0m] [0m[0m/home/daetheys/Documents/ProjProg2/ProjProg2/ProjetProg2save5/src/main/scala/Graphics/Display.scala:304:5: not found: value foribidden[0m
+[0m[[0m[31merror[0m] [0m[0m				foribidden -= 1[0m
+[0m[[0m[31merror[0m] [0m[0m				^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

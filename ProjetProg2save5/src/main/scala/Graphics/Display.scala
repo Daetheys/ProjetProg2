@@ -273,6 +273,13 @@ class InventoryTabs {
 	def get_id_item_units():Item={
 			val inv = Game.Human.units(this.selected_tab-1).inventory
 			var count = this.selected_item
+			if (Game.Human.units(this.selected_tab-1).weapon != None){
+				count -= 1
+			}
+			if (Game.Human.units(this.selected_tab-1).armor != None){
+				count -= 1
+			}
+			
 			for (i<-inv.length-1 to 0 by -1){
 				inv(i) match {
 					case None => ()
@@ -285,21 +292,31 @@ class InventoryTabs {
 			return null //Ne devrait pas arriver
 		}
 		
-	def send_item(i:Int) {
+	def send_item(i:Int) :Unit ={
 		if (this.selected_tab == 0) {
 			val id_item = get_id_item_main()
 			Game.Human.inventory.send_to(id_item,i)
 			Game.Human.inventory.content(id_item).quantity -= 1
 		} else {
 			val item = get_id_item_units()
+			var forbidden = 0
+			if (Game.Human.units(this.selected_tab-1).weapon != None){
+				forbidden += 1
+			}
+			if (Game.Human.units(this.selected_tab-1).armor != None){
+				forbidden += 1
+			}
+			if (forbidden > this.selected_item) { return () }
 			Game.Human.units(this.selected_tab-1).remove_from_inventory(item)
 			if (i==0){
-				Game.Human.inventory.send_to(item.id,0)
+				Game.Human.inventory.send_to(item.id-1,0)
 			} else {
 				Game.Human.units(i-1).add_item(item)
 			}
 		}
-		this.afficher()
+		this.mainDisplay()
+		this.selected_item -= 1
+		if (this.selected_item < 0) { this.selected_item = 0 }
 	}
 }
 
